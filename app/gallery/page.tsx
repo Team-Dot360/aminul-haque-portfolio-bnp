@@ -1,33 +1,38 @@
-import type { Metadata } from 'next';
+"use client";
+import { motion } from 'framer-motion';
 import GalleryClient from './GalleryClient';
-
-export const metadata: Metadata = {
-  title: 'Gallery',
-  description: 'A curated gallery of leadership moments and community work.',
-};
-
-// Client state and filtering moved into GalleryClient
 
 export default function GalleryPage() {
   return (
-    <div className="mx-auto max-w-7xl px-4 py-16">
-      <div className="flex items-end justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold text-slate-900">Gallery</h1>
-          <p className="mt-2 text-slate-600">Moments from the journey — events, programs, and people.</p>
+    <main className="overflow-hidden">
+      {/* Hero Section */}
+      <section className="relative py-20 md:py-32 px-4 bg-gradient-to-br from-green-900 via-green-800 to-red-900 text-white overflow-hidden">
+        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
+        
+        <div className="relative z-10 mx-auto max-w-7xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center"
+          >
+            <span className="text-green-300 font-bold text-sm md:text-base uppercase tracking-wider">প্রচারণা</span>
+            <h1 className="text-5xl md:text-7xl font-black mt-3 mb-6">
+              প্রচারণার মুহূর্ত
+            </h1>
+            <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto">
+              প্রতিদিনের প্রচারণা কার্যক্রম — জনগণের সাথে সরাসরি সংযোগ এবং সমাবেশের ছবি
+            </p>
+          </motion.div>
         </div>
-      </div>
+      </section>
 
-      <GalleryClient />
-
-      <div className="mt-10 rounded-xl border border-slate-200 bg-[url('/bnp-story.avif')] bg-cover bg-center p-8 text-white">
-        <div className="backdrop-blur-sm bg-black/40 p-6 rounded-lg">
-          <h2 className="text-xl font-semibold">Share Your Photos</h2>
-          <p className="mt-2 text-sm text-white/90">Have a moment to feature? Send it to contact@example.com</p>
+      {/* Gallery Grid */}
+      <section className="py-20 px-4">
+        <div className="mx-auto max-w-7xl">
+          <GalleryClient />
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }
-
-
