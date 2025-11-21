@@ -3,6 +3,13 @@ import { motion } from 'framer-motion';
 import { FaFileAlt, FaFlag, FaCheck } from 'react-icons/fa';
 
 export default function BNP31PointPage() {
+  const vision_2030 = [
+    {
+      title: 'বিসমিল্লাহির রাহমানির রাহিম',
+      description: 'মহান মুক্তিযুদ্ধের মধ্য দিয়ে বাংলাদেশের জনগণ স্বপ্ন দেখেছিল। সেই স্বপ্ন ছিল ন্যায়বিচার, মানবিক মর্যাদা ও সাম্যের। জনগণের এই স্বপ্ন আজও সফল হয়নি। স্বৈরশাসন ও দুঃশাসনের যাঁতাকলে স্বপ্নগুলো চুরমার হয়ে গেছে। আজ আমাদের সকলকে সম্মিলিতভাবে সেই স্বপ্ন পূরণের জন্য নতুন করে শপথ নিতে হবে। বাংলাদেশের সকল ধর্ম বিশ্বাসের মানুষ, ক্ষুদ্র জাতি-গোষ্ঠীসহ সকল জাতি-গোষ্ঠী ও মানুষের চিন্তা চেতনা ও আশা আকাক্সক্ষাকে ধারণ করে একটি অংশীদারিত্বমূলক সামাজিক ও অর্থনৈতিক ন্যায়বিচারসম্পন্ন, জনকল্যাণমূলক, সহিষ্ণু, মানবিক, শান্তিকামী ও সমৃদ্ধ গণতান্ত্রিক সমাজ গঠন বাংলাদেশ জাতীয়তাবাদী দলের (BNP) লক্ষ্য। বিএনপি বিশ্বাস করে জনগণই হবে সকল উন্নয়নের কেন্দ্রবিন্দু। যে সব বাধা জনগণের মেধা, শ্রম, উদ্যোগ এবং উৎসাহকে দমিয়ে দেয় সেগুলোকে দূর করে বিএনপি বাংলাদেশকে একটি সুখী, সমৃদ্ধ, আধুনিক ও আত্মমর্যাদাশীল রাষ্ট্রে পরিণত করার লক্ষ্য নিয়ে ভিশন - ২০৩০ প্রণয়ন করেছে।',
+      img: 'image.png'
+    }
+  ]
   const points = [
     {
       title: 'সংবিধান সংস্কার কমিশন গঠন',
@@ -207,8 +214,8 @@ export default function BNP31PointPage() {
                 <div className="relative bg-white rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all border border-slate-200 h-full flex flex-col">
                   <div className="flex flex-col items-center text-center mb-4">
                     <div className="w-14 h-14 bg-gradient-to-br from-red-500 to-orange-600 rounded-xl flex items-center justify-center text-white font-black text-2xl shadow-lg mb-3">
-                      {idx + 1}
-                    </div>
+                    {idx + 1}
+                  </div>
                     <h3 className="text-lg font-black text-slate-900 leading-tight">
                       {point.title}
                     </h3>

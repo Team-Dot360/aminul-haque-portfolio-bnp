@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden bg-white">
+    <section className="relative overflow-hidden bg-gradient-to-b from-white to-slate-50">
       <div className="mx-auto max-w-7xl px-4 py-20 md:py-32 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
