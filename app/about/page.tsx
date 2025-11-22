@@ -175,7 +175,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Club Career */}
+      {/* Career & Honors Timeline */}
       <section className="py-20 px-4 bg-gradient-to-b from-slate-50 to-white">
         <div className="mx-auto max-w-7xl">
           <motion.div
@@ -185,65 +185,120 @@ export default function AboutPage() {
             className="text-center mb-16"
           >
             <h2 className="text-5xl md:text-6xl font-black text-slate-900 mb-4">
-              ক্লাব ক্যারিয়ার
+              ক্যারিয়ার ও সম্মাননা
             </h2>
+            <p className="text-xl text-slate-600">
+              একজন কিংবদন্তি খেলোয়াড়ের যাত্রা
+            </p>
           </motion.div>
 
-          <div className="space-y-8 max-w-4xl mx-auto">
-            {[
-              {
-                year: '১৯৯৪–১৯৯৫',
-                club: 'মোহামেডান এসসি',
-                description: 'ঢাকা প্রিমিয়ার ডিভিশন লীগে ক্যারিয়ার শুরু',
-                color: 'from-emerald-500 to-green-600',
-              },
-              {
-                year: '১৯৯৭–১৯৯৮',
-                club: 'মুক্তিযোদ্ধা সংসদ',
-                description: 'প্রথম লীগ শিরোপা এবং মোহননগরী কাপ জয়',
-                color: 'from-blue-500 to-cyan-600',
-              },
-              {
-                year: '১৯৯৯-২০০০',
-                club: 'ঢাকা আবাহনী',
-                description: 'ফেডারেশন কাপ এবং জাতীয় লীগ শিরোপা',
-                color: 'from-purple-500 to-pink-600',
-              },
-              {
-                year: '২০০৮-২০১০',
-                club: 'মোহামেডান এসসি',
-                description: '২০০৯ সুপার কাপ জয় এবং সেরা গোলরক্ষক পুরষ্কার',
-                color: 'from-amber-500 to-orange-600',
-              },
-              {
-                year: '২০১১–২০১২',
-                club: 'শেখ জামাল ডিসি',
-                description: 'প্রিমিয়ার লীগ এবং ফেডারেশন কাপ শিরোপা',
-                color: 'from-rose-500 to-red-600',
-              },
-            ].map((item, idx) => (
-              <motion.div
-                key={item.year}
-                initial={{ opacity: 0, x: idx % 2 === 0 ? -30 : 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="relative"
-              >
-                <div className={`absolute inset-0 bg-gradient-to-r ${item.color} rounded-2xl blur opacity-20`}></div>
-                <div className="relative bg-white rounded-2xl p-6 md:p-8 shadow-xl border border-slate-200">
-                  <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
-                    <div className={`px-4 py-2 bg-gradient-to-r ${item.color} text-white font-black rounded-xl text-sm`}>
-                      {item.year}
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-2xl font-black text-slate-900 mb-2">{item.club}</h3>
-                      <p className="text-slate-700">{item.description}</p>
+          {/* Timeline Container */}
+          <div className="relative max-w-6xl mx-auto">
+            {/* Vertical Line */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-emerald-200 via-blue-200 to-purple-200 hidden md:block"></div>
+
+            <div className="space-y-12">
+              {[
+                {
+                  date: '১৯৯৪–১৯৯৫',
+                  title: 'মোহামেডান এসসি',
+                  description: 'ঢাকা প্রিমিয়ার ডিভিশন লীগে ক্যারিয়ার শুরু',
+                  badge: 'ক্লাব',
+                  badgeColor: 'bg-emerald-100 text-emerald-700',
+                  align: 'left',
+                },
+                {
+                  date: '১৯৯৭–১৯৯৮',
+                  title: 'মুক্তিযোদ্ধা সংসদ',
+                  description: 'প্রথম লীগ শিরোপা এবং মোহননগরী কাপ জয়',
+                  badge: 'ক্লাব',
+                  badgeColor: 'bg-blue-100 text-blue-700',
+                  align: 'right',
+                },
+                {
+                  date: '১৯৯৯-২০০০',
+                  title: 'ঢাকা আবাহনী',
+                  description: 'ফেডারেশন কাপ এবং জাতীয় লীগ শিরোপা',
+                  badge: 'ক্লাব',
+                  badgeColor: 'bg-purple-100 text-purple-700',
+                  align: 'left',
+                },
+                {
+                  date: '২০০৩',
+                  title: 'SAFF চ্যাম্পিয়নশিপ বিজয়',
+                  description: 'টুর্নামেন্টের সেরা গোলরক্ষক - বাংলাদেশের প্রথম SAFF চ্যাম্পিয়নশিপ জয়ে গুরুত্বপূর্ণ ভূমিকা',
+                  badge: 'সম্মাননা',
+                  badgeColor: 'bg-amber-100 text-amber-700',
+                  align: 'right',
+                },
+                {
+                  date: '২০০৮-২০১০',
+                  title: 'মোহামেডান এসসি',
+                  description: '২০০৯ সুপার কাপ জয় এবং সেরা গোলরক্ষক পুরষ্কার',
+                  badge: 'ক্লাব',
+                  badgeColor: 'bg-rose-100 text-rose-700',
+                  align: 'left',
+                },
+                {
+                  date: '২০১০',
+                  title: 'দক্ষিণ এশীয় গেমস স্বর্ণপদক',
+                  description: 'অধিনায়ক হিসেবে বাংলাদেশ অনূর্ধ্ব-২৩ দলকে স্বর্ণপদক জেতানোর নেতৃত্ব',
+                  badge: 'সম্মাননা',
+                  badgeColor: 'bg-yellow-100 text-yellow-700',
+                  align: 'right',
+                },
+                {
+                  date: '২০১১–২০১২',
+                  title: 'শেখ জামাল ডিসি',
+                  description: 'প্রিমিয়ার লীগ এবং ফেডারেশন কাপ শিরোপা',
+                  badge: 'ক্লাব',
+                  badgeColor: 'bg-teal-100 text-teal-700',
+                  align: 'left',
+                },
+                {
+                  date: '২০০৩-২০১২',
+                  title: 'ফেডারেশন কাপ চ্যাম্পিয়ন',
+                  description: '৫ বার ফেডারেশন কাপ জয় - বিভিন্ন ক্লাবের হয়ে অসাধারণ পারফরম্যান্স',
+                  badge: 'পুরস্কার',
+                  badgeColor: 'bg-indigo-100 text-indigo-700',
+                  align: 'right',
+                },
+              ].map((item, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, x: item.align === 'left' ? -50 : 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: idx * 0.1 }}
+                  className={`relative flex items-center ${
+                    item.align === 'left' ? 'md:justify-start' : 'md:justify-end'
+                  }`}
+                >
+                  {/* Timeline Dot */}
+                  <div className="absolute left-1/2 transform -translate-x-1/2 hidden md:flex">
+                    <div className="w-4 h-4 bg-white border-4 border-emerald-500 rounded-full shadow-lg"></div>
+                  </div>
+
+                  {/* Card */}
+                  <div className={`w-full md:w-[38%] ${item.align === 'left' ? 'md:ml-[100px]' : 'md:mr-[100px]'}`}>
+                    <div className="bg-white rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all border border-slate-200">
+                      <div className="flex items-start justify-between mb-3">
+                        <span className="text-sm text-slate-500 font-semibold">{item.date}</span>
+                        <span className={`px-3 py-1 ${item.badgeColor} rounded-full text-xs font-bold uppercase tracking-wider`}>
+                          {item.badge}
+                        </span>
+                      </div>
+                      <h3 className="text-xl md:text-2xl font-black text-slate-900 mb-2">
+                        {item.title}
+                      </h3>
+                      <p className="text-slate-700 leading-relaxed">
+                        {item.description}
+                      </p>
                     </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -287,51 +342,6 @@ export default function AboutPage() {
                 </p>
               </div>
             </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Honors Section */}
-      <section className="py-20 px-4 bg-gradient-to-b from-white to-slate-50">
-        <div className="mx-auto max-w-7xl">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-5xl md:text-6xl font-black text-slate-900 mb-4">
-              সম্মাননা ও পুরস্কার
-            </h2>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { title: 'SAFF চ্যাম্পিয়নশিপ', year: '২০০৩', icon: FaTrophy, color: 'from-emerald-500 to-green-600' },
-              { title: 'দক্ষিণ এশীয় গেমস স্বর্ণ', year: '২০১০', icon: FaMedal, color: 'from-amber-500 to-orange-600' },
-              { title: 'সুপার কাপ সেরা গোলরক্ষক', year: '২০০৯', icon: FaAward, color: 'from-blue-500 to-cyan-600' },
-              { title: 'প্রিমিয়ার লীগ শিরোপা', year: '৩ বার', icon: FaTrophy, color: 'from-purple-500 to-pink-600' },
-              { title: 'ফেডারেশন কাপ', year: '৫ বার', icon: FaTrophy, color: 'from-rose-500 to-red-600' },
-              { title: 'জাতীয় লীগ', year: '২ বার', icon: FaTrophy, color: 'from-teal-500 to-cyan-600' },
-            ].map((honor, idx) => (
-              <motion.div
-                key={honor.title}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: idx * 0.1 }}
-                className="group relative"
-              >
-                <div className={`absolute inset-0 bg-gradient-to-r ${honor.color} rounded-2xl blur opacity-25 group-hover:opacity-50 transition-all`}></div>
-                <div className="relative bg-white rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all text-center border border-slate-200">
-                  <div className={`inline-flex p-4 bg-gradient-to-br ${honor.color} rounded-xl mb-4`}>
-                    <honor.icon className="text-3xl text-white" />
-                  </div>
-                  <h3 className="text-xl font-black text-slate-900 mb-2">{honor.title}</h3>
-                  <p className="text-slate-600 font-semibold">{honor.year}</p>
-                </div>
-              </motion.div>
-            ))}
           </div>
         </div>
       </section>
@@ -397,7 +407,7 @@ export default function AboutPage() {
             className="max-w-4xl mx-auto"
           >
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-rose-500 rounded-3xl blur-2xl opacity-20"></div>
+              <div className="absolute inset-0 rounded-3xl blur-2xl opacity-20"></div>
               <div className="relative bg-white rounded-3xl p-8 md:p-12 shadow-2xl border border-slate-200">
                 <div className="space-y-6 text-lg text-slate-700 leading-relaxed">
                   <p className="text-xl font-semibold text-slate-900">

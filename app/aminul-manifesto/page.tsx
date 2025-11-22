@@ -38,7 +38,7 @@ export default function AminulManifestoPage() {
             viewport={{ once: true }}
             className="relative"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-green-500 rounded-3xl blur-2xl opacity-20"></div>
+            <div className="absolute inset-0 rounded-3xl blur-2xl opacity-20"></div>
             <div className="relative bg-white rounded-3xl p-8 md:p-12 shadow-2xl border border-slate-200">
               <div className="text-center mb-8">
                 <FaHeart className="text-6xl text-emerald-600 mx-auto mb-4" />
@@ -148,8 +148,8 @@ export default function AminulManifestoPage() {
                 transition={{ duration: 0.6, delay: idx * 0.1 }}
                 className="group relative"
               >
-                <div className={`absolute inset-0 bg-gradient-to-r ${promise.color} rounded-2xl blur-xl opacity-20 group-hover:opacity-40 transition-all`}></div>
-                <div className="relative bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all border border-slate-200">
+                <div className={`absolute inset-0 rounded-2xl blur-xl opacity-20 group-hover:opacity-40 transition-all`}></div>
+                <div className="relative bg-white rounded-2xl p-8 shadow-xl transition-all border border-slate-200">
                   <div className={`inline-flex p-4 bg-gradient-to-br ${promise.color} rounded-xl mb-6`}>
                     <promise.icon className="text-3xl text-white" />
                   </div>
@@ -207,7 +207,7 @@ export default function AminulManifestoPage() {
       </section>
 
       {/* Final Commitment */}
-      <section className="py-20 px-4 bg-gradient-to-b from-white to-slate-50">
+      <section className="py-20 px-4">
         <div className="mx-auto max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -215,7 +215,7 @@ export default function AminulManifestoPage() {
             viewport={{ once: true }}
             className="relative"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 via-green-500 to-emerald-500 rounded-3xl blur-2xl opacity-30"></div>
+            <div className="absolute inset-0 rounded-3xl blur-2xl opacity-30"></div>
             <div className="relative bg-white rounded-3xl p-12 md:p-16 shadow-2xl text-center border border-slate-200">
               <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6">
                 আমার অঙ্গীকার
@@ -232,6 +232,8 @@ export default function AminulManifestoPage() {
     </main>
   );
 }
+
+
 
 
 

@@ -7,7 +7,8 @@ const CAMPAIGN_EVENTS = [
   {
     date: '১৫ অক্টোবর ২০২৩',
     location: 'ঢাকা বিশ্ববিদ্যালয় প্রাঙ্গণ',
-    description: 'যুব নেতৃত্ব সেমিনার এবং ছাত্র মিথস্ক্রিয়া',
+    title: 'যুব নেতৃত্ব সেমিনার এবং ছাত্র মিথস্ক্রিয়া',
+    description: 'দেশের ভবিষ্যৎ নেতৃত্ব গড়ে তোলার লক্ষ্যে ছাত্র-যুবদের সাথে মতবিনিময় এবং তাদের স্বপ্ন ও আকাঙ্ক্ষা নিয়ে আলোচনা করা হয়েছে।',
     images: [
       '/aminul_haque.jpg',
       '/aminul_nomination_post.webp',
@@ -19,7 +20,8 @@ const CAMPAIGN_EVENTS = [
   {
     date: '২ অক্টোবর ২০২৩',
     location: 'ময়মনসিংহ কৃষি সমবায়',
-    description: 'কৃষক মিলনায়তন এবং প্রশিক্ষণ সেশন',
+    title: 'কৃষক মিলনায়তন এবং প্রশিক্ষণ সেশন',
+    description: 'কৃষকদের সমস্যা সমাধান এবং আধুনিক কৃষি পদ্ধতি সম্পর্কে প্রশিক্ষণ প্রদান করা হয়েছে। কৃষি উন্নয়নে সরকারি সহায়তা বৃদ্ধির বিষয়েও আলোচনা হয়েছে।',
     images: [
       '/aminul_haque.jpg',
       '/aminul_nomination_post.webp',
@@ -30,7 +32,8 @@ const CAMPAIGN_EVENTS = [
   {
     date: '২০ সেপ্টেম্বর ২০২৩',
     location: 'চট্টগ্রাম সাংস্কৃতিক কেন্দ্র',
-    description: 'লোক সঙ্গীত উৎসব এবং কারুশিল্প প্রদর্শনী',
+    title: 'লোক সঙ্গীত উৎসব এবং কারুশিল্প প্রদর্শনী',
+    description: 'বাংলার ঐতিহ্যবাহী সংস্কৃতি এবং কারুশিল্পের প্রচার ও সংরক্ষণের উদ্যোগ। স্থানীয় শিল্পীদের সাথে মতবিনিময় এবং সাংস্কৃতিক উন্নয়নে সহায়তার প্রতিশ্রুতি প্রদান করা হয়েছে।',
     images: [
       '/aminul_haque.jpg',
       '/aminul_nomination_post.webp',
@@ -43,7 +46,8 @@ const CAMPAIGN_EVENTS = [
   {
     date: '৮ সেপ্টেম্বর ২০২৩',
     location: 'সিলেট গ্রামীণ স্কুল ভিজিট',
-    description: 'বৃত্তি প্রোগ্রাম চালু এবং স্কুল সরবরাহ বিতরণ',
+    title: 'বৃত্তি প্রোগ্রাম চালু এবং স্কুল সরবরাহ বিতরণ',
+    description: 'মেধাবী ও দরিদ্র শিক্ষার্থীদের জন্য বৃত্তি প্রোগ্রাম চালু এবং প্রয়োজনীয় শিক্ষা উপকরণ বিতরণ করা হয়েছে। শিক্ষার মান উন্নয়নে প্রতিশ্রুতিবদ্ধ থাকার অঙ্গীকার করা হয়েছে।',
     images: [
       '/aminul_haque.jpg',
       '/aminul_nomination_post.webp',
@@ -96,10 +100,13 @@ export default function GalleryClient() {
               transition={{ duration: 0.6, delay: idx * 0.1 }}
               className="relative"
             >
-              <div className={`absolute inset-0 bg-gradient-to-r ${event.color} rounded-3xl blur-2xl opacity-20`}></div>
+              <div className={`absolute inset-0 rounded-3xl blur-2xl opacity-20`}></div>
               <div className="relative bg-white rounded-3xl p-8 md:p-12 shadow-2xl border border-slate-200">
                 {/* Event Header */}
                 <div className="mb-8">
+                  <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-2">
+                    {event.title}
+                  </h2>
                   <div className="flex flex-wrap items-center gap-4 mb-4">
                     <div className="flex items-center gap-2 text-slate-700">
                       <div className={`p-2 bg-gradient-to-r ${event.color} rounded-lg`}>
@@ -120,9 +127,9 @@ export default function GalleryClient() {
                       <span>{event.images.length} ফটো</span>
                     </div>
                   </div>
-                  <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-2">
+                  <p className="text-slate-600 text-lg leading-relaxed mt-4">
                     {event.description}
-                  </h2>
+                  </p>
                 </div>
 
                 {/* Images Grid */}
@@ -134,10 +141,10 @@ export default function GalleryClient() {
                       onClick={() => openLightbox(image, event.images)}
                       className="group relative cursor-pointer rounded-xl overflow-hidden aspect-square shadow-lg hover:shadow-2xl transition-all"
                     >
-                      <div className={`absolute inset-0 bg-gradient-to-t ${event.color} opacity-0 group-hover:opacity-75 transition-all z-10`}></div>
+                      <div className={`absolute inset-0 opacity-0 group-hover:opacity-75 transition-all z-10`}></div>
                       <img
                         src={image}
-                        alt={`${event.description} - ছবি ${imageIdx + 1}`}
+                        alt={`${event.title} - ছবি ${imageIdx + 1}`}
                         className="w-full h-full object-cover"
                       />
                       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all z-20">

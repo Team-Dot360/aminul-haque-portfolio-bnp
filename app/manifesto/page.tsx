@@ -196,7 +196,7 @@ export default function ManifestoPage() {
             viewport={{ once: true }}
             className="relative"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-rose-500 rounded-3xl blur-2xl opacity-30"></div>
+            <div className="absolute inset-0 rounded-3xl blur-2xl opacity-30"></div>
             <div className="relative bg-white rounded-3xl p-12 md:p-16 shadow-2xl text-center border border-slate-200">
               <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6">
                 আমাদের প্রতিশ্রুতি

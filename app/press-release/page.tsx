@@ -96,7 +96,7 @@ export default function PressReleasePage() {
       </section>
 
       {/* Contact for Press Section */}
-      <section className="py-20 px-4 bg-gradient-to-b from-white to-slate-50">
+      <section className="py-20 px-4">
         <div className="mx-auto max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -104,7 +104,7 @@ export default function PressReleasePage() {
             viewport={{ once: true }}
             className="relative"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-3xl blur-2xl opacity-30"></div>
+            <div className="absolute inset-0 rounded-3xl blur-2xl opacity-30"></div>
             <div className="relative bg-white rounded-3xl p-12 md:p-16 shadow-2xl text-center border border-slate-200">
               <FaNewspaper className="text-5xl text-blue-600 mx-auto mb-6" />
               <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6">

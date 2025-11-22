@@ -156,7 +156,7 @@ export default function CommentsPage() {
                 className="sticky top-24"
               >
                 <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-rose-500 rounded-3xl blur-xl opacity-20"></div>
+                  <div className="absolute inset-0 rounded-3xl blur-xl opacity-20"></div>
                   <div className="relative bg-white rounded-3xl p-8 shadow-2xl border border-slate-200">
                     <div className="flex items-center gap-3 mb-6">
                       <div className="p-3 bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl shadow-lg">
@@ -238,7 +238,7 @@ export default function CommentsPage() {
                     transition={{ duration: 0.4, delay: idx * 0.05 }}
                     className="relative group"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-pink-500/10 to-rose-500/10 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-all"></div>
+                    <div className="absolute inset-0 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-all"></div>
                     <div className="relative bg-white rounded-2xl p-6 md:p-8 shadow-xl hover:shadow-2xl transition-all border border-slate-200">
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex items-center gap-3">
@@ -276,7 +276,7 @@ export default function CommentsPage() {
       </section>
 
       {/* Call to Action */}
-      <section className="py-20 px-4 bg-gradient-to-b from-white to-slate-50">
+      <section className="py-20 px-4">
         <div className="mx-auto max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -284,7 +284,7 @@ export default function CommentsPage() {
             viewport={{ once: true }}
             className="relative"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-rose-500 rounded-3xl blur-2xl opacity-30"></div>
+            <div className="absolute inset-0 rounded-3xl blur-2xl opacity-30"></div>
             <div className="relative bg-white rounded-3xl p-12 md:p-16 shadow-2xl text-center border border-slate-200">
               <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6">
                 আপনার মতামত গুরুত্বপূর্ণ

@@ -17,7 +17,9 @@ import {
   FaTree,
   FaChartLine,
   FaFileAlt,
-  FaFlag
+  FaFlag,
+  FaCalendarAlt,
+  FaImages
 } from 'react-icons/fa';
 
 export default function Home() {
@@ -390,29 +392,72 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.05 }}
-                className="group relative aspect-square rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all cursor-pointer"
-              >
-                <img
-                  src={idx % 2 === 0 ? '/aminul_haque.jpg' : '/aminul_nomination_post.webp'}
-                  alt={`গ্যালারি ছবি ${idx}`}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-all duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-all flex items-end p-4">
-                  <span className="text-white font-bold text-sm">ক্যাম্পেইন #{idx}</span>
+          <div className="space-y-16">
+            {/* Featured Event Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="relative"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-orange-600 rounded-3xl blur-2xl opacity-20"></div>
+              <div className="relative bg-white rounded-3xl p-8 md:p-12 shadow-2xl border border-slate-200">
+                {/* Event Header */}
+                <div className="mb-8">
+                  <h3 className="text-3xl md:text-4xl font-black text-slate-900 mb-2">
+                    যুব নেতৃত্ব সেমিনার এবং ছাত্র মিথস্ক্রিয়া
+                  </h3>
+                  <div className="flex flex-wrap items-center gap-4 mb-4">
+                    <div className="flex items-center gap-2 text-slate-700">
+                      <div className="p-2 bg-gradient-to-r from-amber-500 to-orange-600 rounded-lg">
+                        <FaCalendarAlt className="text-white" />
+                      </div>
+                      <span className="font-bold">১৫ অক্টোবর ২০২৩</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-slate-700">
+                      <div className="p-2 bg-gradient-to-r from-amber-500 to-orange-600 rounded-lg">
+                        <FaMapMarkerAlt className="text-white" />
+                      </div>
+                      <span>ঢাকা বিশ্ববিদ্যালয় প্রাঙ্গণ</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-slate-700">
+                      <div className="p-2 bg-gradient-to-r from-amber-500 to-orange-600 rounded-lg">
+                        <FaImages className="text-white" />
+                      </div>
+                      <span>৪ ফটো</span>
+                    </div>
+                  </div>
+                  <p className="text-slate-600 text-lg leading-relaxed mt-4">
+                    দেশের ভবিষ্যৎ নেতৃত্ব গড়ে তোলার লক্ষ্যে ছাত্র-যুবদের সাথে মতবিনিময় এবং তাদের স্বপ্ন ও আকাঙ্ক্ষা নিয়ে আলোচনা করা হয়েছে।
+                  </p>
                 </div>
-              </motion.div>
-            ))}
+
+                {/* Images Grid */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {[1, 2, 3, 4].map((idx) => (
+                    <motion.div
+                      key={idx}
+                      whileHover={{ scale: 1.05 }}
+                      className="group relative cursor-pointer rounded-xl overflow-hidden aspect-square shadow-lg hover:shadow-2xl transition-all"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-t from-amber-500 to-orange-600 opacity-0 group-hover:opacity-75 transition-all z-10"></div>
+                      <img
+                        src={idx % 2 === 0 ? '/aminul_haque.jpg' : '/aminul_nomination_post.webp'}
+                        alt={`গ্যালারি ছবি ${idx}`}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all z-20">
+                        <FaImages className="text-4xl text-white" />
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
           </div>
 
-          <div className="text-center">
+          <div className="text-center mt-16">
             <Link href="/gallery" className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold text-lg rounded-xl shadow-xl hover:shadow-2xl hover:from-amber-600 hover:to-orange-700 transition-all transform hover:scale-105">
               সম্পূর্ণ গ্যালারি দেখুন <FaArrowRight />
             </Link>
