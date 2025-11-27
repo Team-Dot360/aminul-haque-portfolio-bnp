@@ -382,7 +382,7 @@ export default function EventDetail() {
       )}
 
       {/* Confirmation Info (For Upcoming Events) */}
-      {!event.isPast && event.confirmationMessage && (
+      {/* {!event.isPast && event.confirmationMessage && (
         <section className="py-12 px-4">
           <div className="mx-auto max-w-6xl">
             <motion.div
@@ -407,7 +407,7 @@ export default function EventDetail() {
             </motion.div>
           </div>
         </section>
-      )}
+      )} */}
 
       {/* CTA Section */}
       <section className="py-20 px-4">

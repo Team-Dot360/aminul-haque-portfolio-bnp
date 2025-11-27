@@ -19,8 +19,10 @@ import {
   FaFileAlt,
   FaFlag,
   FaCalendarAlt,
-  FaImages
+  FaImages,
+  FaQuoteLeft
 } from 'react-icons/fa';
+import Image from 'next/image';
 
 export default function Home() {
   const keyPrograms = [
@@ -168,9 +170,265 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-
-      {/* Key Programs Section */}
+      
+      {/* Gallery Preview */}
       <section className="py-20 px-4 bg-white">
+        <div className="mx-auto max-w-7xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <span className="inline-block px-6 py-2 bg-amber-100 text-amber-700 rounded-full font-bold text-sm uppercase tracking-wider mb-4">
+              ক্যাম্পেইন গ্যালারি
+            </span>
+            <h2 className="text-5xl md:text-6xl font-black text-slate-900 mb-6">
+              মুহূর্ত <span className="bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">ক্যাপচার</span>
+            </h2>
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+              জনগণের সাথে আমাদের যাত্রার অবিস্মরণীয় মুহূর্তগুলো
+            </p>
+          </motion.div>
+
+          <div className="space-y-16">
+
+            {/* Gallery 2: Community Health Camp */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="relative"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-green-600 rounded-3xl blur-2xl opacity-20"></div>
+              <div className="relative bg-white rounded-3xl p-8 md:p-12 shadow-2xl border border-slate-200">
+                {/* Event Header */}
+                <div className="mb-8">
+                  <h3 className="text-3xl md:text-4xl font-black text-slate-900 mb-2">
+                    সম্প্রদায় স্বাস্থ্য ক্যাম্প
+                  </h3>
+                  <div className="flex flex-wrap items-center gap-4 mb-4">
+                    <div className="flex items-center gap-2 text-slate-700">
+                      <div className="p-2 bg-gradient-to-r from-emerald-500 to-green-600 rounded-lg">
+                        <FaCalendarAlt className="text-white" />
+                      </div>
+                      <span className="font-bold">২২ নভেম্বর ২০২৩</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-slate-700">
+                      <div className="p-2 bg-gradient-to-r from-emerald-500 to-green-600 rounded-lg">
+                        <FaMapMarkerAlt className="text-white" />
+                      </div>
+                      <span>মিরপুর-১০, ঢাকা</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-slate-700">
+                      <div className="p-2 bg-gradient-to-r from-emerald-500 to-green-600 rounded-lg">
+                        <FaImages className="text-white" />
+                      </div>
+                      <span>৮ ফটো</span>
+                    </div>
+                  </div>
+                  <p className="text-slate-600 text-lg leading-relaxed mt-4">
+                    সাধারণ মানুষের জন্য বিনামূল্যে স্বাস্থ্য পরীক্ষা, ডায়াবেটিস স্ক্রিনিং, রক্তচাপ পরীক্ষা এবং বিশেষজ্ঞ ডাক্তারদের পরামর্শ প্রদান করা হয়েছে।
+                  </p>
+                </div>
+
+                {/* Images Grid */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {[1, 2, 3, 4].map((idx) => (
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: idx * 0.1 }}
+                      whileHover={{ scale: 1.05 }}
+                      className="group relative cursor-pointer rounded-xl overflow-hidden aspect-square shadow-lg hover:shadow-2xl transition-all"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-t from-emerald-500 to-green-600 opacity-0 group-hover:opacity-75 transition-all z-10"></div>
+                      <img
+                        src={idx % 3 === 0 ? '/aminul_haque.jpg' : idx % 3 === 1 ? '/aminul_nomination_post.webp' : '/aminul_haque.jpg'}
+                        alt={`স্বাস্থ্য ক্যাম্প - ছবি ${idx}`}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all z-20">
+                        <FaImages className="text-4xl text-white" />
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Gallery 3: Cultural Program */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="relative"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-600 rounded-3xl blur-2xl opacity-20"></div>
+              <div className="relative bg-white rounded-3xl p-8 md:p-12 shadow-2xl border border-slate-200">
+                {/* Event Header */}
+                <div className="mb-8">
+                  <h3 className="text-3xl md:text-4xl font-black text-slate-900 mb-2">
+                    সাংস্কৃতিক অনুষ্ঠান ও জনসভা
+                  </h3>
+                  <div className="flex flex-wrap items-center gap-4 mb-4">
+                    <div className="flex items-center gap-2 text-slate-700">
+                      <div className="p-2 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg">
+                        <FaCalendarAlt className="text-white" />
+                      </div>
+                      <span className="font-bold">১০ ডিসেম্বর ২০২৩</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-slate-700">
+                      <div className="p-2 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg">
+                        <FaMapMarkerAlt className="text-white" />
+                      </div>
+                      <span>সোহরাওয়ার্দী উদ্যান, ঢাকা</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-slate-700">
+                      <div className="p-2 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg">
+                        <FaImages className="text-white" />
+                      </div>
+                      <span>৫ ফটো</span>
+                    </div>
+                  </div>
+                  <p className="text-slate-600 text-lg leading-relaxed mt-4">
+                    ঐতিহ্যবাহী সাংস্কৃতিক অনুষ্ঠান, গান, নৃত্য এবং জনসভার মাধ্যমে জনগণের সাথে সরাসরি যোগাযোগ স্থাপন করা হয়েছে।
+                  </p>
+                </div>
+
+                {/* Images Grid */}
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                  {[1, 2, 3, 4, 5].map((idx) => (
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: idx * 0.1 }}
+                      whileHover={{ scale: 1.05 }}
+                      className="group relative cursor-pointer rounded-xl overflow-hidden aspect-square shadow-lg hover:shadow-2xl transition-all"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-t from-purple-500 to-pink-600 opacity-0 group-hover:opacity-75 transition-all z-10"></div>
+                      <img
+                        src={idx % 2 === 0 ? '/aminul_nomination_post.webp' : '/aminul_haque.jpg'}
+                        alt={`সাংস্কৃতিক অনুষ্ঠান - ছবি ${idx}`}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all z-20">
+                        <FaImages className="text-4xl text-white" />
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          <div className="text-center mt-16">
+            <Link href="/gallery" className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold text-lg rounded-xl shadow-xl hover:shadow-2xl hover:from-amber-600 hover:to-orange-700 transition-all transform hover:scale-105">
+              সম্পূর্ণ গ্যালারি দেখুন <FaArrowRight />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Quotes Section */}
+      <section className="py-20 px-4 bg-gradient-to-b from-slate-50 to-white">
+        <div className="mx-auto max-w-7xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <span className="inline-block px-6 py-2 bg-indigo-100 text-indigo-700 rounded-full font-bold text-sm uppercase tracking-wider mb-4">
+              অনুপ্রেরণা
+            </span>
+            <h2 className="text-5xl md:text-6xl font-black text-slate-900 mb-6">
+              <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">উক্তি</span> ও <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">বাণী</span>
+            </h2>
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+              জনগণের জন্য, জনগণের সাথে - আমিনুল হকের অনুপ্রেরণাদায়ক বাণী
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            {/* Image Section */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="relative"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-3xl blur-2xl opacity-20"></div>
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+                <div className="relative aspect-[3/4]">
+                  <Image
+                    src="/aminul_haque.jpg"
+                    alt="আমিনুল হক"
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Quotes Section */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="space-y-6"
+            >
+              {[
+                {
+                  quote: "জনগণই সবচেয়ে বড় শক্তি। তাদের সাথে থাকলে, তাদের জন্য কাজ করলে, সাফল্য অবশ্যম্ভাবী।",
+                  author: "আমিনুল হক"
+                },
+                {
+                  quote: "শিক্ষা, স্বাস্থ্য, এবং উন্নয়ন - এই তিনটি স্তম্ভের উপর ভিত্তি করেই আমরা একটি সমৃদ্ধ বাংলাদেশ গড়ে তুলব।",
+                  author: "আমিনুল হক"
+                },
+                {
+                  quote: "সত্য, ন্যায় এবং জনগণের কল্যাণ - এই তিনটি নীতির উপর ভিত্তি করেই আমাদের রাজনীতি পরিচালিত হবে।",
+                  author: "আমিনুল হক"
+                }
+              ].map((item, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.2 }}
+                  className="relative bg-white rounded-2xl p-6 md:p-8 shadow-xl border border-slate-200 hover:shadow-2xl transition-all"
+                >
+                  <div className="absolute top-4 left-4 text-indigo-200">
+                    <FaQuoteLeft className="text-4xl" />
+                  </div>
+                  <p className="text-lg md:text-xl text-slate-700 leading-relaxed mb-4 relative z-10 pl-8">
+                    "{item.quote}"
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <div className="h-1 w-12 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full"></div>
+                    <p className="text-sm font-bold text-indigo-600">— {item.author}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Key Programs Section */}
+      {/* <section className="py-20 px-4 bg-white">
         <div className="mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -221,7 +479,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Quick Services Section - Enhanced */}
       <section className="py-20 px-4 bg-gradient-to-b from-slate-50 to-white">
@@ -320,7 +578,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 px-4 bg-gradient-to-b from-white to-slate-50">
+      {/* <section className="py-20 px-4 bg-gradient-to-b from-white to-slate-50">
         <div className="mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -370,164 +628,7 @@ export default function Home() {
             ]}
           />
         </div>
-      </section>
-
-      {/* Gallery Preview */}
-      <section className="py-20 px-4 bg-white">
-        <div className="mx-auto max-w-7xl">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <span className="inline-block px-6 py-2 bg-amber-100 text-amber-700 rounded-full font-bold text-sm uppercase tracking-wider mb-4">
-              ক্যাম্পেইন গ্যালারি
-            </span>
-            <h2 className="text-5xl md:text-6xl font-black text-slate-900 mb-6">
-              মুহূর্ত <span className="bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">ক্যাপচার</span>
-            </h2>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-              জনগণের সাথে আমাদের যাত্রার অবিস্মরণীয় মুহূর্তগুলো
-            </p>
-          </motion.div>
-
-          <div className="space-y-16">
-            {/* Featured Event Card */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="relative"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-orange-600 rounded-3xl blur-2xl opacity-20"></div>
-              <div className="relative bg-white rounded-3xl p-8 md:p-12 shadow-2xl border border-slate-200">
-                {/* Event Header */}
-                <div className="mb-8">
-                  <h3 className="text-3xl md:text-4xl font-black text-slate-900 mb-2">
-                    যুব নেতৃত্ব সেমিনার এবং ছাত্র মিথস্ক্রিয়া
-                  </h3>
-                  <div className="flex flex-wrap items-center gap-4 mb-4">
-                    <div className="flex items-center gap-2 text-slate-700">
-                      <div className="p-2 bg-gradient-to-r from-amber-500 to-orange-600 rounded-lg">
-                        <FaCalendarAlt className="text-white" />
-                      </div>
-                      <span className="font-bold">১৫ অক্টোবর ২০২৩</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-slate-700">
-                      <div className="p-2 bg-gradient-to-r from-amber-500 to-orange-600 rounded-lg">
-                        <FaMapMarkerAlt className="text-white" />
-                      </div>
-                      <span>ঢাকা বিশ্ববিদ্যালয় প্রাঙ্গণ</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-slate-700">
-                      <div className="p-2 bg-gradient-to-r from-amber-500 to-orange-600 rounded-lg">
-                        <FaImages className="text-white" />
-                      </div>
-                      <span>৪ ফটো</span>
-                    </div>
-                  </div>
-                  <p className="text-slate-600 text-lg leading-relaxed mt-4">
-                    দেশের ভবিষ্যৎ নেতৃত্ব গড়ে তোলার লক্ষ্যে ছাত্র-যুবদের সাথে মতবিনিময় এবং তাদের স্বপ্ন ও আকাঙ্ক্ষা নিয়ে আলোচনা করা হয়েছে।
-                  </p>
-                </div>
-
-                {/* Images Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {[1, 2, 3, 4].map((idx) => (
-                    <motion.div
-                      key={idx}
-                      whileHover={{ scale: 1.05 }}
-                      className="group relative cursor-pointer rounded-xl overflow-hidden aspect-square shadow-lg hover:shadow-2xl transition-all"
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-t from-amber-500 to-orange-600 opacity-0 group-hover:opacity-75 transition-all z-10"></div>
-                      <img
-                        src={idx % 2 === 0 ? '/aminul_haque.jpg' : '/aminul_nomination_post.webp'}
-                        alt={`গ্যালারি ছবি ${idx}`}
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all z-20">
-                        <FaImages className="text-4xl text-white" />
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          </div>
-
-          <div className="text-center mt-16">
-            <Link href="/gallery" className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold text-lg rounded-xl shadow-xl hover:shadow-2xl hover:from-amber-600 hover:to-orange-700 transition-all transform hover:scale-105">
-              সম্পূর্ণ গ্যালারি দেখুন <FaArrowRight />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Blog Preview */}
-      <section className="py-20 px-4 bg-gradient-to-b from-slate-50 to-white">
-        <div className="mx-auto max-w-7xl">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <span className="inline-block px-6 py-2 bg-rose-100 text-rose-700 rounded-full font-bold text-sm uppercase tracking-wider mb-4">
-              সর্বশেষ আপডেট
-            </span>
-            <h2 className="text-5xl md:text-6xl font-black text-slate-900 mb-6">
-              খবর ও <span className="bg-gradient-to-r from-rose-600 to-red-600 bg-clip-text text-transparent">গল্প</span>
-            </h2>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-              আমাদের সর্বশেষ উদ্যোগ এবং সফলতার গল্প
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { title: 'গ্রামীণ শিক্ষা উন্নয়ন কর্মসূচি', category: 'শিক্ষা', color: 'from-emerald-500 to-green-600', excerpt: 'বৃত্তি প্রদান ও স্কুল উন্নয়নে নতুন উদ্যোগ' },
-              { title: 'কৃষক সমবায় প্রকল্পের সাফল্য', category: 'কৃষি', color: 'from-blue-500 to-cyan-600', excerpt: 'ন্যায্যমূল্য নিশ্চিতে কৃষকদের সংগঠিত করা' },
-              { title: 'সাংস্কৃতিক উৎসব আয়োজন', category: 'সংস্কৃতি', color: 'from-purple-500 to-pink-600', excerpt: 'ঐতিহ্যবাহী শিল্প ও সংস্কৃতি সংরক্ষণে উদ্যোগ' },
-            ].map((post, idx) => (
-              <motion.div
-                key={post.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: idx * 0.1 }}
-                className="group relative"
-              >
-                <div className={`absolute inset-0 bg-gradient-to-br ${post.color} rounded-3xl blur-xl opacity-20 group-hover:opacity-40 transition-all`}></div>
-                <Link href="/blog" className="relative block bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all overflow-hidden border border-slate-200 h-full hover:-translate-y-2">
-                  <div className={`h-48 bg-gradient-to-br ${post.color} relative`}>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                  </div>
-                  <div className="p-6">
-                    <span className={`inline-block px-3 py-1 bg-gradient-to-r ${post.color} text-white text-xs font-bold rounded-full mb-3`}>
-                      {post.category}
-                    </span>
-                    <h3 className="text-xl font-black text-slate-900 mb-2 leading-tight">{post.title}</h3>
-                    <p className="text-slate-600 mb-4 text-sm leading-relaxed">
-                      {post.excerpt}
-                    </p>
-                    <div className={`inline-flex items-center gap-2 text-sm font-bold bg-gradient-to-r ${post.color} bg-clip-text text-transparent group-hover:gap-3 transition-all`}>
-                      আরও পড়ুন <FaArrowRight />
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <Link href="/blog" className="inline-flex items-center gap-3 px-8 py-4 bg-white text-slate-900 border-2 border-slate-200 font-bold text-lg rounded-xl shadow-lg hover:shadow-xl hover:border-slate-300 transition-all">
-              সব আর্টিকেল দেখুন <FaArrowRight />
-            </Link>
-          </div>
-        </div>
-      </section>
+      </section> */}
 
       {/* CTA Section */}
       <section className="py-20 px-4 bg-white">

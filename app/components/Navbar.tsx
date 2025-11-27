@@ -32,14 +32,15 @@ const navItems = [
     dropdownItems: [
       { href: '/gallery', label: 'গ্যালারি' },
       { href: '/press-release', label: 'প্রেস রিলিজ' },
-      { href: '/blog', label: 'ব্লগ' },
+      { href: '/surveys', label: 'জরিপ' },
     ]
   },
   { 
-    label: 'যোগাযোগ ও সেবা',
+    label: 'সেবা',
     hasDropdown: true,
     dropdownItems: [
       { href: '/voter-center', label: 'ভোট কেন্দ্র' },
+      { href: '/volunteer', label: 'স্বেচ্ছাসেবক' },
       { href: '/complaints', label: 'অভিযোগ' },
       { href: '/comments', label: 'মন্তব্য' },
     ]

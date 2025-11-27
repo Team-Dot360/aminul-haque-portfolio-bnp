@@ -1,5 +1,13 @@
 import Link from 'next/link';
-import { FaFacebook, FaTwitter, FaInstagram, FaYoutube, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
+import { 
+  FaFacebook, 
+  FaTwitter, 
+  FaInstagram, 
+  FaYoutube, 
+  FaEnvelope, 
+  FaPhone, 
+  FaMapMarkerAlt 
+} from 'react-icons/fa';
 
 export default function SiteFooter() {
   const quickLinks = [
@@ -8,7 +16,6 @@ export default function SiteFooter() {
     { title: 'কর্মসূচি', href: '/programs' },
     { title: 'রূপকল্প', href: '/manifesto' },
     { title: 'গ্যালারি', href: '/gallery' },
-    { title: 'ব্লগ', href: '/blog' },
     { title: 'মন্তব্য', href: '/comments' },
     { title: 'যোগাযোগ', href: '/contact' },
   ];
@@ -26,7 +33,7 @@ export default function SiteFooter() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* About Section */}
           <div>
-            <div className="flex items-center space-x-3 mb-6">
+            <div className="flex items-center mb-6">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-green-600 rounded-xl blur opacity-50"></div>
               </div>
@@ -137,14 +144,6 @@ export default function SiteFooter() {
             <p className="text-slate-600 font-semibold text-center md:text-left">
               © {new Date().getFullYear()} আমিনুল হক। সর্বস্বত্ব সংরক্ষিত।
             </p>
-            <div className="flex gap-6">
-              <Link href="/privacy" className="text-slate-600 hover:text-emerald-600 font-semibold transition-colors">
-                গোপনীয়তা নীতি
-              </Link>
-              <Link href="/terms" className="text-slate-600 hover:text-emerald-600 font-semibold transition-colors">
-                শর্তাবলী
-              </Link>
-            </div>
           </div>
         </div>
       </div>

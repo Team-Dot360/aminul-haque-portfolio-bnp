@@ -1,11 +1,18 @@
 "use client";
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaSearch, FaMapMarkerAlt, FaIdCard, FaPhone, FaMapPin, FaBuilding, FaDirections } from 'react-icons/fa';
+import { 
+  FaSearch, 
+  FaMapMarkerAlt, 
+  FaIdCard, 
+  FaPhone, 
+  FaMapPin, 
+  FaBuilding, 
+  FaDirections,
+  FaTimes
+} from 'react-icons/fa';
 
-// Sample data - In production, this would come from a database or API
 const voterData: { [key: string]: any } = {
-  // ===== NID-based lookup =====
   '1234567890': {
     name: 'মোহাম্মদ করিম উদ্দিন',
     nid: '1234567890',
@@ -322,6 +329,7 @@ export default function VoterCenterPage() {
   const [searchResult, setSearchResult] = useState<any>(null);
   const [isSearching, setIsSearching] = useState(false);
   const [notFound, setNotFound] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -331,13 +339,15 @@ export default function VoterCenterPage() {
     // Simulate API call delay
     setTimeout(() => {
       const result = voterData[searchQuery] || voterData[searchQuery.toLowerCase()];
-      
+
       if (result) {
         setSearchResult(result);
         setNotFound(false);
+        setShowModal(true);
       } else {
         setSearchResult(null);
         setNotFound(true);
+        setShowModal(true);
       }
       setIsSearching(false);
     }, 1000);
@@ -349,7 +359,6 @@ export default function VoterCenterPage() {
 
   return (
     <main className="bg-gradient-to-b from-slate-50 via-white to-slate-50">
-      {/* Hero Section */}
       <section className="relative py-32 px-4 bg-gradient-to-br from-blue-50 via-white to-cyan-50">
         <div className="mx-auto max-w-7xl text-center">
           <motion.div
@@ -388,22 +397,59 @@ export default function VoterCenterPage() {
               <h2 className="text-4xl md:text-5xl font-black text-slate-900 mt-3 mb-6">
                 আপনার ভোট কেন্দ্র খুঁজতে আমরা সাহায্য করছি
               </h2>
-              <div className="space-y-4 text-lg text-slate-700 leading-relaxed">
-                <p>
-                  গণতন্ত্রের মূল ভিত্তি হলো ভোট। প্রতিটি নাগরিকের ভোট প্রদানের অধিকার নিশ্চিত করা আমাদের দায়িত্ব।
-                </p>
-                <p>
-                  এই সেবার মাধ্যমে আপনি খুব সহজেই আপনার ভোট কেন্দ্র, নির্বাচনী এলাকা এবং ভোট কেন্দ্রের অবস্থান জানতে পারবেন।
-                </p>
-                <p className="font-semibold text-blue-700">
-                  আপনার ভোট আপনার অধিকার - এটি ব্যবহার করুন এবং দেশের ভবিষ্যৎ নির্ধারণে অংশগ্রহণ করুন।
-                </p>
-              </div>
-              <div className="mt-6 p-6 bg-blue-50 rounded-2xl border-l-4 border-blue-600">
-                <p className="text-slate-700">
-                  <strong className="text-blue-700">সহজ প্রক্রিয়া:</strong> শুধু আপনার এনআইডি, মোবাইল নম্বর বা এলাকার নাম দিয়ে খুঁজুন এবং তাৎক্ষণিক ফলাফল পান।
-                </p>
-              </div>
+              <section>
+                <div className="mx-auto max-w-4xl">
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    className="relative"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-3xl blur-2xl opacity-20"></div>
+                    <div className="relative bg-white rounded-3xl p-8 md:p-12 shadow-2xl border border-slate-200">
+                      {/* Search Form */}
+                      <form onSubmit={handleSearch} className="space-y-6">
+                        <div>
+                          <label className="block text-slate-700 font-bold mb-3 text-lg flex items-center gap-2 flex-wrap">
+                            <FaIdCard className="text-blue-600" />
+                            <span>এনআইডি নম্বর /</span>
+                            <FaPhone className="text-blue-600" />
+                            <span>মোবাইল নম্বর /</span>
+                            <FaMapPin className="text-blue-600" />
+                            <span>এলাকার নাম লিখুন</span>
+                          </label>
+                          <input
+                            type="text"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            placeholder="উদাহরণ: 1234567890 / 01712345678 / উত্তরা"
+                            className="w-full px-6 py-4 bg-slate-50 text-slate-900 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 transition-all text-lg"
+                            required
+                          />
+                        </div>
+
+                        <button
+                          type="submit"
+                          disabled={isSearching}
+                          className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-bold rounded-xl shadow-xl hover:shadow-2xl hover:from-blue-700 hover:to-cyan-700 transition-all transform disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 text-lg"
+                        >
+                          {isSearching ? (
+                            <>
+                              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+                              খোঁজা হচ্ছে...
+                            </>
+                          ) : (
+                            <>
+                              <FaSearch />
+                              খুঁজুন
+                            </>
+                          )}
+                        </button>
+                      </form>
+                    </div>
+                  </motion.div>
+                </div>
+              </section>
             </motion.div>
 
             {/* Image */}
@@ -428,212 +474,197 @@ export default function VoterCenterPage() {
       </section>
 
       {/* Search Section */}
-      <section className="py-20 px-4 bg-gradient-to-b from-slate-50 to-white">
-        <div className="mx-auto max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-3xl blur-2xl opacity-20"></div>
-            <div className="relative bg-white rounded-3xl p-8 md:p-12 shadow-2xl border border-slate-200">
-              {/* Search Form */}
-              <form onSubmit={handleSearch} className="space-y-6">
-                <div>
-                  <label className="block text-slate-700 font-bold mb-3 text-lg flex items-center gap-2 flex-wrap">
-                    <FaIdCard className="text-blue-600" />
-                    <span>এনআইডি নম্বর /</span>
-                    <FaPhone className="text-blue-600" />
-                    <span>মোবাইল নম্বর /</span>
-                    <FaMapPin className="text-blue-600" />
-                    <span>এলাকার নাম লিখুন</span>
-                  </label>
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="উদাহরণ: 1234567890 / 01712345678 / উত্তরা"
-                    className="w-full px-6 py-4 bg-slate-50 text-slate-900 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 transition-all text-lg"
-                    required
-                  />
-                </div>
 
-                <button
-                  type="submit"
-                  disabled={isSearching}
-                  className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-bold rounded-xl shadow-xl hover:shadow-2xl hover:from-blue-700 hover:to-cyan-700 transition-all transform disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 text-lg"
-                >
-                  {isSearching ? (
-                    <>
-                      <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
-                      খোঁজা হচ্ছে...
-                    </>
-                  ) : (
-                    <>
-                      <FaSearch />
-                      খুঁজুন
-                    </>
-                  )}
-                </button>
-              </form>
-            </div>
-          </motion.div>
-        </div>
-      </section>
 
-      {/* Search Results */}
+      {/* Modal for Search Results */}
       <AnimatePresence>
-        {notFound && (
-          <section className="py-12 px-4">
-            <div className="mx-auto max-w-4xl">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                className="bg-red-50 border-2 border-red-200 rounded-2xl p-8 text-center"
-              >
-                <div className="text-6xl mb-4">❌</div>
-                <h3 className="text-2xl font-bold text-red-800 mb-2">তথ্য পাওয়া যায়নি</h3>
-                <p className="text-red-600">
-                  দয়া করে আপনার তথ্য যাচাই করে আবার চেষ্টা করুন
-                </p>
-              </motion.div>
-            </div>
-          </section>
-        )}
+        {showModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+            onClick={() => setShowModal(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+            >
+              {/* Modal Header */}
+              <div className="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between z-10">
+                <h2 className="text-2xl font-black text-slate-900">
+                  {notFound ? 'তথ্য পাওয়া যায়নি' : 'ভোট কেন্দ্র তথ্য'}
+                </h2>
+                <button
+                  onClick={() => {
+                    setShowModal(false);
+                    setSearchResult(null);
+                    setNotFound(false);
+                  }}
+                  className="p-2 hover:bg-slate-100 rounded-xl transition-all"
+                >
+                  <FaTimes className="text-2xl text-slate-600" />
+                </button>
+              </div>
 
-        {searchResult && (
-          <section className="py-12 px-4">
-            <div className="mx-auto max-w-6xl">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 30 }}
-                className="space-y-6"
-              >
-                {/* Success Message */}
-                <div className="bg-green-50 border-2 border-green-200 rounded-2xl p-6 text-center">
-                  <div className="text-5xl mb-3">✅</div>
-                  <h3 className="text-2xl font-bold text-green-800">তথ্য পাওয়া গেছে!</h3>
-                </div>
-
-                {/* Voter Information */}
-                {searchResult.name && (
+              {/* Modal Content */}
+              <div className="p-6 space-y-6">
+                {notFound ? (
                   <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 }}
-                    className="bg-white rounded-3xl p-8 shadow-2xl border border-slate-200"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="bg-red-50 border-2 border-red-200 rounded-2xl p-8 text-center"
                   >
-                    <h3 className="text-2xl font-black text-slate-900 mb-6 flex items-center gap-3">
-                      <FaIdCard className="text-blue-600" />
-                      ব্যক্তিগত তথ্য
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {searchResult.name !== 'ভোটার তথ্য' && (
-                        <div className="p-4 bg-slate-50 rounded-xl">
-                          <p className="text-sm text-slate-600 mb-1">নাম</p>
-                          <p className="text-lg font-bold text-slate-900">{searchResult.name}</p>
-                        </div>
-                      )}
-                      {searchResult.nid && (
-                        <div className="p-4 bg-slate-50 rounded-xl">
-                          <p className="text-sm text-slate-600 mb-1">এনআইডি নম্বর</p>
-                          <p className="text-lg font-bold text-slate-900">{searchResult.nid}</p>
-                        </div>
-                      )}
-                      {searchResult.mobile && (
-                        <div className="p-4 bg-slate-50 rounded-xl">
-                          <p className="text-sm text-slate-600 mb-1">মোবাইল নম্বর</p>
-                          <p className="text-lg font-bold text-slate-900">{searchResult.mobile}</p>
-                        </div>
-                      )}
-                    </div>
+                    <div className="text-6xl mb-4">❌</div>
+                    <h3 className="text-2xl font-bold text-red-800 mb-2">তথ্য পাওয়া যায়নি</h3>
+                    <p className="text-red-600">
+                      দয়া করে আপনার তথ্য যাচাই করে আবার চেষ্টা করুন
+                    </p>
                   </motion.div>
-                )}
+                ) : searchResult ? (
+                  <>
+                    {/* Success Message */}
+                    <div className="bg-green-50 border-2 border-green-200 rounded-2xl p-6 text-center">
+                      <div className="text-5xl mb-3">✅</div>
+                      <h3 className="text-2xl font-bold text-green-800">তথ্য পাওয়া গেছে!</h3>
+                    </div>
 
-                {/* Constituency Information */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="bg-white rounded-3xl p-8 shadow-2xl border border-slate-200"
-                >
-                  <h3 className="text-2xl font-black text-slate-900 mb-6 flex items-center gap-3">
-                    <FaBuilding className="text-emerald-600" />
-                    নির্বাচনী তথ্য
-                  </h3>
-                  <div className="space-y-4">
-                    <div className="p-6 bg-gradient-to-r from-emerald-50 to-green-50 rounded-xl border-l-4 border-emerald-600">
-                      <p className="text-sm text-slate-600 mb-1">নির্বাচনী এলাকা</p>
-                      <p className="text-2xl font-black text-slate-900">{searchResult.constituency}</p>
-                    </div>
-                    <div className="p-6 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl border-l-4 border-blue-600">
-                      <p className="text-sm text-slate-600 mb-1">ভোট কেন্দ্র</p>
-                      <p className="text-2xl font-black text-slate-900">{searchResult.pollingCenter}</p>
-                    </div>
-                    <div className="p-6 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl border-l-4 border-purple-600">
-                      <p className="text-sm text-slate-600 mb-2">ঠিকানা</p>
-                      <p className="text-lg font-bold text-slate-900 flex items-start gap-3">
-                        <FaMapMarkerAlt className="text-purple-600 mt-1 flex-shrink-0" />
-                        {searchResult.address}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
+                    {/* Voter Information */}
+                    {searchResult.name && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 }}
+                        className="bg-white rounded-2xl p-6 shadow-lg border border-slate-200"
+                      >
+                        <h3 className="text-xl font-black text-slate-900 mb-4 flex items-center gap-3">
+                          <FaIdCard className="text-blue-600" />
+                          ব্যক্তিগত তথ্য
+                        </h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {searchResult.name !== 'ভোটার তথ্য' && (
+                            <div className="p-4 bg-slate-50 rounded-xl">
+                              <p className="text-sm text-slate-600 mb-1">নাম</p>
+                              <p className="text-lg font-bold text-slate-900">{searchResult.name}</p>
+                            </div>
+                          )}
+                          {searchResult.nid && (
+                            <div className="p-4 bg-slate-50 rounded-xl">
+                              <p className="text-sm text-slate-600 mb-1">এনআইডি নম্বর</p>
+                              <p className="text-lg font-bold text-slate-900">{searchResult.nid}</p>
+                            </div>
+                          )}
+                          {searchResult.mobile && (
+                            <div className="p-4 bg-slate-50 rounded-xl">
+                              <p className="text-sm text-slate-600 mb-1">মোবাইল নম্বর</p>
+                              <p className="text-lg font-bold text-slate-900">{searchResult.mobile}</p>
+                            </div>
+                          )}
+                        </div>
+                      </motion.div>
+                    )}
 
-                {/* Google Maps */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="bg-white rounded-3xl p-8 shadow-2xl border border-slate-200"
-                >
-                  <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-                    <h3 className="text-2xl font-black text-slate-900 flex items-center gap-3">
-                      <FaMapPin className="text-red-600" />
-                      মানচিত্রে অবস্থান
-                    </h3>
-                    <button
-                      onClick={() => getDirections(searchResult.mapLocation.lat, searchResult.mapLocation.lng)}
-                      className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-600 to-pink-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:from-red-700 hover:to-pink-700 transition-all transform hover:scale-105"
+                    {/* Constituency Information */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 }}
+                      className="bg-white rounded-2xl p-6 shadow-lg border border-slate-200"
                     >
-                      <FaDirections />
-                      দিক নির্দেশনা
-                    </button>
-                  </div>
-                  <div className="aspect-video rounded-2xl overflow-hidden shadow-xl">
-                    <iframe
-                      src={searchResult.mapLocation.embedUrl}
-                      width="100%"
-                      height="100%"
-                      style={{ border: 0 }}
-                      allowFullScreen
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      title="ভোট কেন্দ্রের অবস্থান"
-                    />
-                  </div>
-                </motion.div>
+                      <h3 className="text-xl font-black text-slate-900 mb-4 flex items-center gap-3">
+                        <FaBuilding className="text-emerald-600" />
+                        নির্বাচনী তথ্য
+                      </h3>
+                      <div className="space-y-4">
+                        <div className="p-4 bg-gradient-to-r from-emerald-50 to-green-50 rounded-xl border-l-4 border-emerald-600">
+                          <p className="text-sm text-slate-600 mb-1">নির্বাচনী এলাকা</p>
+                          <p className="text-xl font-black text-slate-900">{searchResult.constituency}</p>
+                        </div>
+                        <div className="p-4 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl border-l-4 border-blue-600">
+                          <p className="text-sm text-slate-600 mb-1">ভোট কেন্দ্র</p>
+                          <p className="text-xl font-black text-slate-900">{searchResult.pollingCenter}</p>
+                        </div>
+                        <div className="p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl border-l-4 border-purple-600">
+                          <p className="text-sm text-slate-600 mb-2">ঠিকানা</p>
+                          <p className="text-base font-bold text-slate-900 flex items-start gap-3">
+                            <FaMapMarkerAlt className="text-purple-600 mt-1 flex-shrink-0" />
+                            {searchResult.address}
+                          </p>
+                        </div>
+                      </div>
+                    </motion.div>
 
-                {/* Important Notice */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 }}
-                  className="bg-amber-50 border-2 border-amber-200 rounded-2xl p-6"
+                    {/* Google Maps */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 }}
+                      className="bg-white rounded-2xl p-6 shadow-lg border border-slate-200"
+                    >
+                      <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+                        <h3 className="text-xl font-black text-slate-900 flex items-center gap-3">
+                          <FaMapPin className="text-red-600" />
+                          মানচিত্রে অবস্থান
+                        </h3>
+                        <button
+                          onClick={() => getDirections(searchResult.mapLocation.lat, searchResult.mapLocation.lng)}
+                          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-600 to-pink-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:from-red-700 hover:to-pink-700 transition-all transform hover:scale-105 text-sm"
+                        >
+                          <FaDirections />
+                          দিক নির্দেশনা
+                        </button>
+                      </div>
+                      <div className="aspect-video rounded-xl overflow-hidden shadow-xl">
+                        <iframe
+                          src={searchResult.mapLocation.embedUrl}
+                          width="100%"
+                          height="100%"
+                          style={{ border: 0 }}
+                          allowFullScreen
+                          loading="lazy"
+                          referrerPolicy="no-referrer-when-downgrade"
+                          title="ভোট কেন্দ্রের অবস্থান"
+                        />
+                      </div>
+                    </motion.div>
+
+                    {/* Important Notice */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 }}
+                      className="bg-amber-50 border-2 border-amber-200 rounded-2xl p-5"
+                    >
+                      <h4 className="text-base font-bold text-amber-900 mb-2">📋 গুরুত্বপূর্ণ নির্দেশনা</h4>
+                      <ul className="space-y-1.5 text-sm text-amber-800">
+                        <li>• ভোট দিতে যাওয়ার সময় অবশ্যই আপনার জাতীয় পরিচয়পত্র সাথে নিন</li>
+                        <li>• ভোট কেন্দ্রে যাওয়ার আগে সময়সূচী যাচাই করে নিন</li>
+                        <li>• কোনো সমস্যা হলে ভোট কেন্দ্রের কর্মকর্তাদের সাথে যোগাযোগ করুন</li>
+                      </ul>
+                    </motion.div>
+                  </>
+                ) : null}
+              </div>
+
+              {/* Modal Footer */}
+              <div className="sticky bottom-0 bg-white border-t border-slate-200 px-6 py-4 flex justify-end">
+                <button
+                  onClick={() => {
+                    setShowModal(false);
+                    setSearchResult(null);
+                    setNotFound(false);
+                    setSearchQuery('');
+                  }}
+                  className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:from-emerald-600 hover:to-green-700 transition-all transform hover:scale-105"
                 >
-                  <h4 className="text-lg font-bold text-amber-900 mb-2">📋 গুরুত্বপূর্ণ নির্দেশনা</h4>
-                  <ul className="space-y-2 text-amber-800">
-                    <li>• ভোট দিতে যাওয়ার সময় অবশ্যই আপনার জাতীয় পরিচয়পত্র সাথে নিন</li>
-                    <li>• ভোট কেন্দ্রে যাওয়ার আগে সময়সূচী যাচাই করে নিন</li>
-                    <li>• কোনো সমস্যা হলে ভোট কেন্দ্রের কর্মকর্তাদের সাথে যোগাযোগ করুন</li>
-                  </ul>
-                </motion.div>
-              </motion.div>
-            </div>
-          </section>
+                  বন্ধ করুন
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
 
