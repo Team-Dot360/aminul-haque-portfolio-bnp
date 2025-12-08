@@ -6,7 +6,7 @@ import { FaNewspaper, FaBullhorn } from 'react-icons/fa';
 
 interface NewsDetail {
   id: number;
-  title: string;
+  title: string | null;
   description: string;
   image_small?: string;
   image_medium?: string;
@@ -14,12 +14,23 @@ interface NewsDetail {
   image_original?: string;
 }
 
+interface Category {
+  id: number;
+  name: string;
+}
+
 interface News {
   id: number;
   uuid: string;
   slug: string;
+  name: string;
   status: string;
+  is_published: number;
   news_datetime: string;
+  news_type: string;
+  categories: Category[];
+  subcategories: any[];
+  tags: any[];
   details: NewsDetail[];
 }
 
@@ -43,11 +54,13 @@ export default function PressReleasePage() {
         }
 
         const data = await response.json();
+        console.log('News API Response:', data);
         
-        // Handle the API response structure
+        // Handle the API response structure - new format: data.data.data
         let newsData: News[] = [];
         if (data.success && data.data) {
           if (data.data.data && Array.isArray(data.data.data)) {
+            // New API structure: success -> data -> data -> data (array)
             newsData = data.data.data;
           } else if (Array.isArray(data.data)) {
             newsData = data.data;
@@ -58,8 +71,10 @@ export default function PressReleasePage() {
           newsData = data.data;
         }
 
-        // Filter only active news
-        const activeNews = newsData.filter((item: News) => item.status === 'active');
+        // Filter only active and published news
+        const activeNews = newsData.filter((item: News) => 
+          item.status === 'active' && item.is_published === 1
+        );
         
         setNews(activeNews);
       } catch (err) {
@@ -92,6 +107,10 @@ export default function PressReleasePage() {
       imageUrl = firstDetail.image_original.startsWith('http')
         ? firstDetail.image_original
         : `${apiBaseUrl}/${firstDetail.image_original}`;
+    } else if (firstDetail?.image_small) {
+      imageUrl = firstDetail.image_small.startsWith('http')
+        ? firstDetail.image_small
+        : `${apiBaseUrl}/${firstDetail.image_small}`;
     }
     
     // Extract text from HTML description and create summary
@@ -102,12 +121,21 @@ export default function PressReleasePage() {
       ? descriptionText.substring(0, 150) + '...'
       : descriptionText || 'সংবাদের বিবরণ';
     
+    // Use 'name' from main item as title (new API structure)
+    const title = item.name || firstDetail?.title || 'সংবাদ';
+    
+    // Check if news has video/audio type
+    const hasVideo = item.news_type === 'audio' || item.news_type === 'video';
+    
     return {
-      title: firstDetail?.title || 'সংবাদ',
+      title: title,
       summary: summary,
       date: item.news_datetime || '',
       slug: item.slug || item.uuid,
       image: imageUrl,
+      hasVideo: hasVideo,
+      categories: item.categories || [],
+      newsType: item.news_type || 'text',
     };
   });
 
@@ -174,7 +202,14 @@ export default function PressReleasePage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: idx * 0.1 }}
                 >
-                  <PressReleaseCard {...release} />
+                  <PressReleaseCard 
+                    title={release.title}
+                    summary={release.summary}
+                    date={release.date}
+                    image={release.image}
+                    slug={release.slug}
+                    hasVideo={release.hasVideo}
+                  />
                 </motion.div>
               ))}
             </div>

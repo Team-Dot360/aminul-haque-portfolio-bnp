@@ -129,22 +129,44 @@ export default function GalleryClient() {
   const [currentEventImages, setCurrentEventImages] = useState<string[]>([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [selectedDate, setSelectedDate] = useState<string>('');
+  const [titleFilter, setTitleFilter] = useState<string>('');
+  const [dataFilter, setDataFilter] = useState<string>('');
 
-  // Filter albums by selected date
+  // Filter albums by all criteria (date, title, and data/description)
   const filterAlbumsByDate = useMemo(() => {
-    if (!selectedDate) {
-      return allAlbums;
+    let filtered = allAlbums;
+
+    // Filter by date
+    if (selectedDate) {
+      const filterDate = new Date(selectedDate);
+      const filterDateStart = new Date(filterDate.getFullYear(), filterDate.getMonth(), filterDate.getDate());
+      const filterDateEnd = new Date(filterDate.getFullYear(), filterDate.getMonth(), filterDate.getDate(), 23, 59, 59);
+
+      filtered = filtered.filter((album) => {
+        const albumDate = parseBengaliDate(album.date, album.originalDate || '');
+        return albumDate >= filterDateStart && albumDate <= filterDateEnd;
+      });
     }
 
-    const filterDate = new Date(selectedDate);
-    const filterDateStart = new Date(filterDate.getFullYear(), filterDate.getMonth(), filterDate.getDate());
-    const filterDateEnd = new Date(filterDate.getFullYear(), filterDate.getMonth(), filterDate.getDate(), 23, 59, 59);
+    // Filter by title
+    if (titleFilter.trim()) {
+      const searchTerm = titleFilter.trim().toLowerCase();
+      filtered = filtered.filter((album) => {
+        return album.title.toLowerCase().includes(searchTerm);
+      });
+    }
 
-    return allAlbums.filter((album) => {
-      const albumDate = parseBengaliDate(album.date, album.originalDate || '');
-      return albumDate >= filterDateStart && albumDate <= filterDateEnd;
-    });
-  }, [allAlbums, selectedDate]);
+    // Filter by data/description
+    if (dataFilter.trim()) {
+      const searchTerm = dataFilter.trim().toLowerCase();
+      filtered = filtered.filter((album) => {
+        return album.description.toLowerCase().includes(searchTerm) ||
+               album.location.toLowerCase().includes(searchTerm);
+      });
+    }
+
+    return filtered;
+  }, [allAlbums, selectedDate, titleFilter, dataFilter]);
 
   // Update filtered albums when filter changes
   useEffect(() => {
@@ -368,35 +390,79 @@ export default function GalleryClient() {
     <>
       <section className="py-20 px-4">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 space-y-8">
-          {/* Date Filter */}
-          <div className="mb-8 text-center">
-            <div className="flex flex-wrap items-center justify-center gap-4 mb-6">
-              <div className="flex items-center gap-2 text-amber-700 font-bold">
+          {/* Filters Section */}
+          <div className="mb-8">
+            <div className="bg-white rounded-2xl p-6 shadow-xl border border-slate-200">
+              <div className="flex items-center gap-2 text-amber-700 font-bold mb-6 text-lg">
                 <FaFilter />
-                <span>তারিখ ফিল্টার:</span>
+                <span>ফিল্টার অপশন</span>
               </div>
-              <div className="flex flex-wrap items-center justify-center gap-3">
-                <input
-                  type="date"
-                  value={selectedDate}
-                  onChange={(e) => setSelectedDate(e.target.value)}
-                  className="px-4 py-2 rounded-xl font-bold border-2 border-slate-300 focus:border-amber-500 focus:outline-none shadow-lg text-slate-700"
-                />
-                {selectedDate && (
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                {/* Date Filter */}
+                <div>
+                  <label className="block text-slate-700 font-bold mb-2 text-sm">
+                    তারিখ ফিল্টার
+                  </label>
+                  <input
+                    type="date"
+                    value={selectedDate}
+                    onChange={(e) => setSelectedDate(e.target.value)}
+                    className="w-full px-4 py-2 rounded-xl font-bold border-2 border-slate-300 focus:border-amber-500 focus:outline-none shadow-lg text-slate-700"
+                  />
+                </div>
+
+                {/* Title Filter */}
+                <div>
+                  <label className="block text-slate-700 font-bold mb-2 text-sm">
+                    শিরোনাম ফিল্টার
+                  </label>
+                  <input
+                    type="text"
+                    value={titleFilter}
+                    onChange={(e) => setTitleFilter(e.target.value)}
+                    placeholder="শিরোনাম অনুসন্ধান করুন..."
+                    className="w-full px-4 py-2 rounded-xl font-bold border-2 border-slate-300 focus:border-amber-500 focus:outline-none shadow-lg text-slate-700"
+                  />
+                </div>
+
+                {/* Data/Description Filter
+                <div>
+                  <label className="block text-slate-700 font-bold mb-2 text-sm">
+                    বিবরণ/স্থান ফিল্টার
+                  </label>
+                  <input
+                    type="text"
+                    value={dataFilter}
+                    onChange={(e) => setDataFilter(e.target.value)}
+                    placeholder="বিবরণ বা স্থান অনুসন্ধান করুন..."
+                    className="w-full px-4 py-2 rounded-xl font-bold border-2 border-slate-300 focus:border-amber-500 focus:outline-none shadow-lg text-slate-700"
+                  />
+                </div> */}
+              </div>
+
+              {/* Filter Summary and Clear Button */}
+              <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-200">
+                <div className="text-sm text-slate-600 font-medium">
+                  {filteredAlbums.length} টি অ্যালবাম পাওয়া গেছে
+                  {selectedDate && ` (তারিখ: ${formatDateInputToBengali(selectedDate)})`}
+                  {titleFilter && ` (শিরোনাম: ${titleFilter})`}
+                  {dataFilter && ` (বিবরণ: ${dataFilter})`}
+                </div>
+                {(selectedDate || titleFilter || dataFilter) && (
                   <button
-                    onClick={() => setSelectedDate('')}
-                    className="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl transition-all shadow-lg"
+                    onClick={() => {
+                      setSelectedDate('');
+                      setTitleFilter('');
+                      setDataFilter('');
+                    }}
+                    className="px-6 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl transition-all shadow-lg"
                   >
-                    ফিল্টার সরান
+                    সব ফিল্টার সরান
                   </button>
                 )}
               </div>
             </div>
-            {selectedDate && (
-              <div className="text-sm text-slate-600 font-medium">
-                {filteredAlbums.length} টি অ্যালবাম পাওয়া গেছে ({formatDateInputToBengali(selectedDate)})
-              </div>
-            )}
           </div>
 
           {albums.length > 0 ? (
@@ -471,14 +537,18 @@ export default function GalleryClient() {
               </div>
             )
           )}
-          {!loading && filteredAlbums.length === 0 && allAlbums.length > 0 && selectedDate && (
+          {!loading && filteredAlbums.length === 0 && allAlbums.length > 0 && (selectedDate || titleFilter || dataFilter) && (
             <div className="text-center py-20">
-              <p className="text-xl text-slate-600">এই তারিখে কোনো অ্যালবাম পাওয়া যায়নি</p>
+              <p className="text-xl text-slate-600">এই ফিল্টার অনুসারে কোনো অ্যালবাম পাওয়া যায়নি</p>
               <button
-                onClick={() => setSelectedDate('')}
+                onClick={() => {
+                  setSelectedDate('');
+                  setTitleFilter('');
+                  setDataFilter('');
+                }}
                 className="mt-4 px-6 py-3 bg-amber-600 text-white font-bold rounded-xl hover:bg-amber-700 transition-all"
               >
-                ফিল্টার সরান
+                সব ফিল্টার সরান
               </button>
             </div>
           )}

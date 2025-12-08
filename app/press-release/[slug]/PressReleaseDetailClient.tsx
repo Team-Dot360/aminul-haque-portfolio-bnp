@@ -7,7 +7,17 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 interface PressReleaseDetailClientProps {
-  pressRelease: any;
+  pressRelease: {
+    title: string;
+    summary: string;
+    date: string;
+    fullDescription: string;
+    images: string[];
+    videos?: any[];
+    newsLink?: string;
+    reporterName?: string;
+    categories?: any[];
+  } | null;
 }
 
 export default function PressReleaseDetailClient({ pressRelease }: PressReleaseDetailClientProps) {
@@ -203,13 +213,13 @@ export default function PressReleaseDetailClient({ pressRelease }: PressReleaseD
         </section>
       )}
 
-      {/* Videos */}
+      {/* Audio/Video */}
       {pressRelease.videos && pressRelease.videos.length > 0 && (
         <section className="py-12 px-4 bg-gradient-to-b from-white to-slate-50">
           <div className="mx-auto max-w-4xl">
             <h2 className="text-3xl font-black text-slate-900 mb-8 flex items-center gap-3">
               <FaVideo className="text-red-600" />
-              ভিডিও
+              {pressRelease.videos[0]?.type === 'audio' ? 'অডিও' : 'ভিডিও'}
             </h2>
             <div className="space-y-8">
               {pressRelease.videos.map((video: any, idx: number) => (
@@ -226,18 +236,60 @@ export default function PressReleaseDetailClient({ pressRelease }: PressReleaseD
                       <h3 className="text-xl font-bold text-slate-900">{video.title}</h3>
                     </div>
                   )}
-                  <div className="aspect-video">
-                    <iframe
-                      src={video.url}
-                      title={video.title || `Video ${idx + 1}`}
-                      className="w-full h-full"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  </div>
+                  {video.type === 'audio' ? (
+                    <div className="p-8">
+                      <audio controls className="w-full">
+                        <source src={video.url} type="audio/mpeg" />
+                        <source src={video.url} type="audio/mp3" />
+                        আপনার ব্রাউজার অডিও সমর্থন করে না।
+                      </audio>
+                    </div>
+                  ) : (
+                    <div className="aspect-video">
+                      {video.url.includes('youtube.com') || video.url.includes('youtu.be') ? (
+                        <iframe
+                          src={video.url}
+                          title={video.title || `Video ${idx + 1}`}
+                          className="w-full h-full"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      ) : (
+                        <video controls className="w-full h-full">
+                          <source src={video.url} type="video/mp4" />
+                          আপনার ব্রাউজার ভিডিও সমর্থন করে না।
+                        </video>
+                      )}
+                    </div>
+                  )}
                 </motion.div>
               ))}
             </div>
+          </div>
+        </section>
+      )}
+
+      {/* External News Link */}
+      {pressRelease.newsLink && (
+        <section className="py-8 px-4">
+          <div className="mx-auto max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-blue-50 border-2 border-blue-200 rounded-xl p-6 text-center"
+            >
+              <p className="text-slate-700 mb-4 font-semibold">মূল সংবাদ পড়ুন:</p>
+              <a
+                href={pressRelease.newsLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-all transform hover:scale-105"
+              >
+                <FaLink />
+                সংবাদ লিঙ্ক
+              </a>
+            </motion.div>
           </div>
         </section>
       )}

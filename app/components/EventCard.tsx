@@ -32,7 +32,7 @@ export default function EventCard({
             <img
               src={image}
               alt={title}
-              className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
             {isPast && hasVideo && (
               <div className="absolute top-4 right-4 px-3 py-1.5 bg-red-600 text-white rounded-full text-xs font-bold shadow-lg flex items-center gap-1.5 z-10">

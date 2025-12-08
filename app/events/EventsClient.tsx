@@ -15,13 +15,9 @@ function convertBengaliToEnglish(bengaliStr: string): string {
   return bengaliStr.split('').map(char => bengaliToEnglish[char] || char).join('');
 }
 
-// Parse date string that may contain Bengali numerals
 function parseBengaliDate(dateStr: string): Date {
-  // Convert Bengali numerals to English
   const englishDateStr = convertBengaliToEnglish(dateStr);
   
-  // Parse the date - format: "YYYY-MM-DD HH:mm:ss"
-  // Replace any non-standard separators and parse
   const cleaned = englishDateStr.replace(/\s+/g, ' ').trim();
   return new Date(cleaned);
 }
@@ -49,6 +45,8 @@ export default function EventsClient({ upcomingEvents: initialUpcomingEvents, pa
   const [upcomingEvents, setUpcomingEvents] = useState<Event[]>(initialUpcomingEvents);
   const [pastEvents, setPastEvents] = useState<Event[]>(initialPastEvents);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [titleFilter, setTitleFilter] = useState<string>('');
+  const [dateFilter, setDateFilter] = useState<string>('');
 
   // Poll for updates every 10 seconds
   useEffect(() => {
@@ -173,7 +171,52 @@ export default function EventsClient({ upcomingEvents: initialUpcomingEvents, pa
     return html.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim();
   };
 
-  const displayEvents = filter === 'upcoming' ? upcomingEvents : pastEvents;
+  // Format date input value (YYYY-MM-DD) to Bengali format
+  const formatDateInputToBengali = (dateString: string): string => {
+    try {
+      const date = new Date(dateString);
+      const months = ['জানুয়ারি', 'ফেব্রুয়ারি', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর'];
+      const day = date.getDate();
+      const month = months[date.getMonth()];
+      const year = date.getFullYear();
+      return `${day} ${month} ${year}`;
+    } catch (error) {
+      return dateString;
+    }
+  };
+
+  // Filter events by title and date
+  const filteredEvents = (() => {
+    let events = filter === 'upcoming' ? upcomingEvents : pastEvents;
+
+    // Filter by title
+    if (titleFilter.trim()) {
+      const searchTerm = titleFilter.trim().toLowerCase();
+      events = events.filter((event) => {
+        return event.title.toLowerCase().includes(searchTerm);
+      });
+    }
+
+    // Filter by date
+    if (dateFilter) {
+      const filterDate = new Date(dateFilter);
+      const filterDateStart = new Date(filterDate.getFullYear(), filterDate.getMonth(), filterDate.getDate());
+      const filterDateEnd = new Date(filterDate.getFullYear(), filterDate.getMonth(), filterDate.getDate(), 23, 59, 59);
+
+      events = events.filter((event) => {
+        if (!event.event_date_time) return false;
+        const eventDateTime = parseBengaliDate(event.event_date_time);
+        if (isNaN(eventDateTime.getTime())) return false;
+        
+        const eventDate = new Date(eventDateTime.getFullYear(), eventDateTime.getMonth(), eventDateTime.getDate());
+        return eventDate >= filterDateStart && eventDate <= filterDateEnd;
+      });
+    }
+
+    return events;
+  })();
+
+  const displayEvents = filteredEvents;
 
   return (
     <main className="bg-gradient-to-b from-slate-50 via-white to-slate-50">
@@ -204,16 +247,13 @@ export default function EventsClient({ upcomingEvents: initialUpcomingEvents, pa
       {/* Filter Section */}
       <section className="py-12 px-4">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          {/* Type Filter (Upcoming/Past) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="flex flex-wrap justify-center gap-3"
+            className="flex flex-wrap justify-center gap-3 mb-8"
           >
-            <div className="flex items-center gap-2 text-emerald-700 font-bold">
-              <FaFilter />
-              <span>ফিল্টার:</span>
-            </div>
             <button
               onClick={() => setFilter('upcoming')}
               className={`px-8 py-3 rounded-xl font-bold transition-all transform hover:scale-105 ${
@@ -234,6 +274,68 @@ export default function EventsClient({ upcomingEvents: initialUpcomingEvents, pa
             >
               অতীতের ইভেন্ট ({pastEvents.length})
             </button>
+          </motion.div>
+
+          {/* Title and Date Filters */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="bg-white rounded-2xl p-6 shadow-xl border border-slate-200"
+          >
+            <div className="flex items-center gap-2 text-emerald-700 font-bold mb-6 text-lg">
+              <FaFilter />
+              <span>ফিল্টার অপশন</span>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              {/* Title Filter */}
+              <div>
+                <label className="block text-slate-700 font-bold mb-2 text-sm">
+                  শিরোনাম ফিল্টার
+                </label>
+                <input
+                  type="text"
+                  value={titleFilter}
+                  onChange={(e) => setTitleFilter(e.target.value)}
+                  placeholder="ইভেন্ট শিরোনাম অনুসন্ধান করুন..."
+                  className="w-full px-4 py-2 rounded-xl font-bold border-2 border-slate-300 focus:border-emerald-500 focus:outline-none shadow-lg text-slate-700"
+                />
+              </div>
+
+              {/* Date Filter */}
+              <div>
+                <label className="block text-slate-700 font-bold mb-2 text-sm">
+                  তারিখ ফিল্টার
+                </label>
+                <input
+                  type="date"
+                  value={dateFilter}
+                  onChange={(e) => setDateFilter(e.target.value)}
+                  className="w-full px-4 py-2 rounded-xl font-bold border-2 border-slate-300 focus:border-emerald-500 focus:outline-none shadow-lg text-slate-700"
+                />
+              </div>
+            </div>
+
+            {/* Filter Summary and Clear Button */}
+            <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-200">
+              <div className="text-sm text-slate-600 font-medium">
+                {filteredEvents.length} টি ইভেন্ট পাওয়া গেছে
+                {dateFilter && ` (তারিখ: ${formatDateInputToBengali(dateFilter)})`}
+                {titleFilter && ` (শিরোনাম: ${titleFilter})`}
+              </div>
+              {(titleFilter || dateFilter) && (
+                <button
+                  onClick={() => {
+                    setTitleFilter('');
+                    setDateFilter('');
+                  }}
+                  className="px-6 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl transition-all shadow-lg"
+                >
+                  সব ফিল্টার সরান
+                </button>
+              )}
+            </div>
           </motion.div>
         </div>
       </section>
@@ -276,9 +378,24 @@ export default function EventsClient({ upcomingEvents: initialUpcomingEvents, pa
               <h3 className="text-2xl font-bold text-slate-700 mb-2">
                 কোন ইভেন্ট নেই
               </h3>
-              <p className="text-slate-500">
-                {filter === 'upcoming' ? 'শীঘ্রই নতুন ইভেন্ট যুক্ত করা হবে' : 'অতীতের কোন ইভেন্ট পাওয়া যায়নি'}
+              <p className="text-slate-500 mb-4">
+                {(titleFilter || dateFilter) 
+                  ? 'এই ফিল্টার অনুসারে কোনো ইভেন্ট পাওয়া যায়নি'
+                  : filter === 'upcoming' 
+                    ? 'শীঘ্রই নতুন ইভেন্ট যুক্ত করা হবে' 
+                    : 'অতীতের কোন ইভেন্ট পাওয়া যায়নি'}
               </p>
+              {(titleFilter || dateFilter) && (
+                <button
+                  onClick={() => {
+                    setTitleFilter('');
+                    setDateFilter('');
+                  }}
+                  className="px-6 py-3 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 transition-all"
+                >
+                  সব ফিল্টার সরান
+                </button>
+              )}
             </div>
           )}
         </div>
