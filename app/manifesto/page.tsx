@@ -4,13 +4,20 @@ import { FaFileAlt } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
+interface ProposalContent {
+  id: number;
+  title: string | null;
+  description: string;
+}
+
 interface Proposal {
   id: number;
   uuid: string;
-  pdf: string;
-  bang_title: string;
-  bang_description: string;
+  title: string;
+  description: string;
   serial: string;
+  contents: ProposalContent[];
+  created_at: string;
 }
 
 interface ManifestoPoint {
@@ -83,10 +90,10 @@ export default function ManifestoPage() {
         // Map API proposals to manifesto points
         const mappedPoints: ManifestoPoint[] = proposalsData.map((proposal: Proposal, index: number) => ({
           number: proposal.serial || String(index + 1),
-          title: proposal.bang_title || '',
-          description: proposal.bang_description || '',
+          title: proposal.title || '',
+          description: proposal.description || '',
           color: defaultColors[index % defaultColors.length],
-          pdfUrl: proposal.pdf || '',
+          pdfUrl: '', // No PDF in new API structure
           uuid: proposal.uuid || proposal.id.toString(),
         }));
 

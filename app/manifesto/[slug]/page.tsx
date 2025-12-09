@@ -1,12 +1,19 @@
 import ProposalDetailClient from './ProposalDetailClient';
 
+interface ProposalContent {
+  id: number;
+  title: string | null;
+  description: string;
+}
+
 interface Proposal {
   id: number;
   uuid: string;
-  pdf: string;
-  bang_title: string;
-  bang_description: string;
+  title: string;
+  description: string;
   serial: string;
+  contents: ProposalContent[];
+  created_at: string;
 }
 
 // Fetch all proposals to generate static params
