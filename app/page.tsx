@@ -3,9 +3,9 @@
 import Link from 'next/link';
 import Hero from './components/Hero';
 import { motion } from 'framer-motion';
-import WelcomeModal from './components/WelcomeModal';
 import { useState, useEffect } from 'react';
-// import TestimonialCarousel from './components/TestimonialCarousel';
+import WelcomeModal from './components/WelcomeModal';
+import ImageLightbox from './components/ImageLightbox';
 import { 
   FaArrowRight, 
   FaMapMarkerAlt, 
@@ -16,14 +16,9 @@ import {
   FaFlag,
   FaCalendarAlt,
   FaImages,
-  FaQuoteLeft,
-  FaTimes,
-  FaChevronLeft,
-  FaChevronRight,
-  FaPlus
+  FaQuoteLeft
 } from 'react-icons/fa';
 import Image from 'next/image';
-import { AnimatePresence } from 'framer-motion';
 
 interface Album {
   id: number;
@@ -443,66 +438,14 @@ export default function Home() {
       </section>
 
       {/* Lightbox */}
-      <AnimatePresence>
-        {lightboxOpen && selectedImage && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
-            onClick={closeLightbox}
-          >
-            <button
-              onClick={closeLightbox}
-              className="absolute top-4 right-4 p-3 bg-white/10 hover:bg-white/20 text-white rounded-full transition-all z-10"
-            >
-              <FaTimes className="text-2xl" />
-            </button>
-
-            {/* Navigation Buttons */}
-            {currentEventImages.length > 1 && (
-              <>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    navigateImage('prev');
-                  }}
-                  className="absolute left-4 p-4 bg-white/10 hover:bg-white/20 text-white rounded-full transition-all"
-                >
-                  <FaChevronLeft className="text-2xl" />
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    navigateImage('next');
-                  }}
-                  className="absolute right-4 p-4 bg-white/10 hover:bg-white/20 text-white rounded-full transition-all"
-                >
-                  <FaChevronRight className="text-2xl" />
-                </button>
-              </>
-            )}
-
-            <motion.img
-              key={selectedImage}
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              src={selectedImage}
-              alt="Full size"
-              className="max-w-full max-h-full object-contain rounded-2xl"
-              onClick={(e) => e.stopPropagation()}
-            />
-
-            {/* Image Counter */}
-            {currentEventImages.length > 1 && (
-              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 px-6 py-3 bg-white/10 backdrop-blur-lg text-white rounded-full font-bold">
-                {currentImageIndex + 1} / {currentEventImages.length}
-              </div>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <ImageLightbox
+        isOpen={lightboxOpen}
+        selectedImage={selectedImage}
+        images={currentEventImages}
+        currentIndex={currentImageIndex}
+        onClose={closeLightbox}
+        onNavigate={navigateImage}
+      />
 
       {/* Quotes Section */}
       <section className="py-20 px-4 bg-gradient-to-b from-slate-50 to-white">
@@ -688,59 +631,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Testimonials */}
-      {/* <section className="py-20 px-4 bg-gradient-to-b from-white to-slate-50">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <span className="inline-block px-6 py-2 bg-purple-100 text-purple-700 rounded-full font-bold text-sm uppercase tracking-wider mb-4">
-              জনগণের মতামত
-            </span>
-            <h2 className="text-5xl md:text-6xl font-black text-slate-900 mb-6">
-              সাফল্যের <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">গল্প</span>
-            </h2>
-          </motion.div>
-          <TestimonialCarousel 
-            testimonials={[
-              {
-                quote: 'আমিনুল হক আমাদের এলাকায় শিক্ষার মান উন্নয়নে অসাধারণ কাজ করেছেন। তার বৃত্তি কর্মসূচির কারণে আমার সন্তান উচ্চশিক্ষা গ্রহণ করতে পারছে।',
-                author: 'করিম উদ্দিন',
-                role: 'গ্রামীণ শিক্ষক',
-                rating: 5
-              },
-              {
-                quote: 'কৃষি সমবায় প্রকল্পের মাধ্যমে আমরা আমাদের ফসলের ন্যায্য মূল্য পাচ্ছি। আমিনুল হকের নেতৃত্বে আমরা সংগঠিত হয়েছি এবং আমাদের জীবনযাত্রা উন্নত হয়েছে।',
-                author: 'রহিমা খাতুন',
-                role: 'কৃষক',
-                rating: 5
-              },
-              {
-                quote: 'যুব নেতৃত্ব প্রশিক্ষণ প্রোগ্রাম আমার জীবন বদলে দিয়েছে। আজ আমি নিজের একটি সামাজিক উদ্যোগ চালাচ্ছি এবং সমাজে অবদান রাখতে পারছি।',
-                author: 'সাকিব হাসান',
-                role: 'উদ্যোক্তা',
-                rating: 5
-              },
-              {
-                quote: 'সাংস্কৃতিক কর্মসূচির মাধ্যমে আমাদের ঐতিহ্যবাহী শিল্পকলা রক্ষা পাচ্ছে। স্থানীয় শিল্পীরা এখন তাদের প্রতিভা প্রদর্শনের সুযোগ পাচ্ছেন।',
-                author: 'নাসিমা আক্তার',
-                role: 'লোক শিল্পী',
-                rating: 5
-              },
-              {
-                quote: 'আমিনুল হকের দূরদর্শী নেতৃত্বে আমাদের অঞ্চলে অনেক উন্নয়ন হয়েছে। তিনি সাধারণ মানুষের কথা শোনেন এবং তাদের সমস্যার সমাধান করেন।',
-                author: 'আব্দুল করিম',
-                role: 'সমাজসেবক',
-                rating: 5
-              },
-            ]}
-          />
-        </div>
-      </section> */}
 
       {/* CTA Section */}
       <section className="py-20 px-4 bg-white">

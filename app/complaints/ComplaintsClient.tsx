@@ -1,7 +1,18 @@
 "use client";
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaExclamationTriangle, FaUser, FaPhone, FaIdCard, FaMapMarkerAlt, FaList, FaFileAlt, FaCamera, FaPaperPlane, FaCheckCircle } from 'react-icons/fa';
+import { 
+  FaExclamationTriangle, 
+  FaUser, 
+  FaPhone,
+   FaIdCard, 
+   FaMapMarkerAlt, 
+   FaList,
+   FaFileAlt, 
+   FaCamera, 
+   FaPaperPlane,
+    FaCheckCircle 
+  } from 'react-icons/fa';
 
 interface Category {
   id: number;

@@ -24,6 +24,7 @@ const navItems = [
     hasDropdown: true,
     dropdownItems: [
       { href: '/gallery', label: 'গ্যালারি' },
+      { href: '/kheladhula', label: 'খেলাধুলা' },
       { href: '/events', label: 'ইভেন্ট' },
       { href: '/press-release', label: 'প্রেস রিলিজ' },
       { href: '/surveys', label: 'জরিপ' },

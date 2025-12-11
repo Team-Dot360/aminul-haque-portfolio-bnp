@@ -1,8 +1,8 @@
 "use client";
+import { motion } from 'framer-motion';
 import { useState, useEffect, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaCalendarAlt, FaMapMarkerAlt, FaImages, FaTimes, FaAngleLeft, FaAngleRight, FaFilter } from 'react-icons/fa';
 import ImageLightbox from '../components/ImageLightbox';
+import { FaCalendarAlt, FaMapMarkerAlt, FaImages, FaAngleLeft, FaAngleRight, FaFilter } from 'react-icons/fa';
 
 interface Album {
   id: number;
@@ -16,21 +16,12 @@ interface Album {
   media: Array<{
     id: number;
     uuid: string;
-    path: string | null;
-    type: string | null;
-    youtube_url: string | null;
-    video_thumbnail: string | null;
+    path: string;
+    type: string;
   }>;
 }
 
-interface MediaItem {
-  path: string | null;
-  youtube_url: string | null;
-  video_thumbnail: string | null;
-  type: string | null;
-}
-
-interface GalleryEvent {
+interface KheladhulaEvent {
   id: number;
   uuid: string;
   date: string;
@@ -39,7 +30,6 @@ interface GalleryEvent {
   title: string;
   description: string;
   images: string[];
-  media: MediaItem[]; // Store all media items (images and videos)
   color: string;
 }
 
@@ -120,17 +110,10 @@ interface PaginationMeta {
   to: number;
 }
 
-interface PaginationLinks {
-  first: string | null;
-  last: string | null;
-  prev: string | null;
-  next: string | null;
-}
-
-export default function GalleryClient() {
-  const [albums, setAlbums] = useState<GalleryEvent[]>([]);
-  const [allAlbums, setAllAlbums] = useState<GalleryEvent[]>([]); // Store all albums for client-side pagination
-  const [filteredAlbums, setFilteredAlbums] = useState<GalleryEvent[]>([]); // Filtered albums
+export default function KheladhulaClient() {
+  const [events, setEvents] = useState<KheladhulaEvent[]>([]);
+  const [allEvents, setAllEvents] = useState<KheladhulaEvent[]>([]); // Store all events for client-side pagination
+  const [filteredEvents, setFilteredEvents] = useState<KheladhulaEvent[]>([]); // Filtered events
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -139,15 +122,13 @@ export default function GalleryClient() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentEventImages, setCurrentEventImages] = useState<string[]>([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [videoModalOpen, setVideoModalOpen] = useState(false);
-  const [selectedVideoUrl, setSelectedVideoUrl] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [titleFilter, setTitleFilter] = useState<string>('');
   const [dataFilter, setDataFilter] = useState<string>('');
 
-  // Filter albums by all criteria (date, title, and data/description)
-  const filterAlbumsByDate = useMemo(() => {
-    let filtered = allAlbums;
+  // Filter events by all criteria (date, title, and data/description)
+  const filterEventsByDate = useMemo(() => {
+    let filtered = allEvents;
 
     // Filter by date
     if (selectedDate) {
@@ -155,79 +136,79 @@ export default function GalleryClient() {
       const filterDateStart = new Date(filterDate.getFullYear(), filterDate.getMonth(), filterDate.getDate());
       const filterDateEnd = new Date(filterDate.getFullYear(), filterDate.getMonth(), filterDate.getDate(), 23, 59, 59);
 
-      filtered = filtered.filter((album) => {
-        const albumDate = parseBengaliDate(album.date, album.originalDate || '');
-        return albumDate >= filterDateStart && albumDate <= filterDateEnd;
+      filtered = filtered.filter((event) => {
+        const eventDate = parseBengaliDate(event.date, event.originalDate || '');
+        return eventDate >= filterDateStart && eventDate <= filterDateEnd;
       });
     }
 
     // Filter by title
     if (titleFilter.trim()) {
       const searchTerm = titleFilter.trim().toLowerCase();
-      filtered = filtered.filter((album) => {
-        return album.title.toLowerCase().includes(searchTerm);
+      filtered = filtered.filter((event) => {
+        return event.title.toLowerCase().includes(searchTerm);
       });
     }
 
     // Filter by data/description
     if (dataFilter.trim()) {
       const searchTerm = dataFilter.trim().toLowerCase();
-      filtered = filtered.filter((album) => {
-        return album.description.toLowerCase().includes(searchTerm) ||
-               album.location.toLowerCase().includes(searchTerm);
+      filtered = filtered.filter((event) => {
+        return event.description.toLowerCase().includes(searchTerm) ||
+               event.location.toLowerCase().includes(searchTerm);
       });
     }
 
     return filtered;
-  }, [allAlbums, selectedDate, titleFilter, dataFilter]);
+  }, [allEvents, selectedDate, titleFilter, dataFilter]);
 
-  // Update filtered albums when filter changes
+  // Update filtered events when filter changes
   useEffect(() => {
-    setFilteredAlbums(filterAlbumsByDate);
+    setFilteredEvents(filterEventsByDate);
     setCurrentPage(1); // Reset to first page when filter changes
-  }, [filterAlbumsByDate]);
+  }, [filterEventsByDate]);
 
-  // Calculate paginated albums using useMemo for immediate updates
-  const paginatedAlbums = useMemo(() => {
-    if (filteredAlbums.length === 0) return [];
+  // Calculate paginated events using useMemo for immediate updates
+  const paginatedEvents = useMemo(() => {
+    if (filteredEvents.length === 0) return [];
     
     const perPage = 5;
     const startIndex = (currentPage - 1) * perPage;
     const endIndex = startIndex + perPage;
-    return filteredAlbums.slice(startIndex, endIndex);
-  }, [currentPage, filteredAlbums]);
+    return filteredEvents.slice(startIndex, endIndex);
+  }, [currentPage, filteredEvents]);
 
-  // Update pagination meta and albums when filteredAlbums or currentPage changes
+  // Update pagination meta and events when filteredEvents or currentPage changes
   useEffect(() => {
-    if (filteredAlbums.length > 0) {
+    if (filteredEvents.length > 0) {
       const perPage = 5;
-      const totalPages = Math.ceil(filteredAlbums.length / perPage);
+      const totalPages = Math.ceil(filteredEvents.length / perPage);
       const startIndex = (currentPage - 1) * perPage;
       const endIndex = startIndex + perPage;
       
       setPaginationMeta({
         current_page: currentPage,
         last_page: totalPages,
-        total: filteredAlbums.length,
+        total: filteredEvents.length,
         per_page: perPage,
         from: startIndex + 1,
-        to: Math.min(endIndex, filteredAlbums.length),
+        to: Math.min(endIndex, filteredEvents.length),
       });
     } else {
       setPaginationMeta(null);
     }
-  }, [currentPage, filteredAlbums]);
+  }, [currentPage, filteredEvents]);
 
-  // Update albums state when paginatedAlbums changes
+  // Update events state when paginatedEvents changes
   useEffect(() => {
-    setAlbums(paginatedAlbums);
-  }, [paginatedAlbums]);
+    setEvents(paginatedEvents);
+  }, [paginatedEvents]);
 
-  // Fetch all albums once on mount
+  // Fetch all events once on mount
   useEffect(() => {
-    const fetchAlbums = async () => {
-      // If we already have all albums, skip fetch
-      if (allAlbums.length > 0) {
+    const fetchEvents = async () => {
+      // If we already have all events, skip fetch
+      if (allEvents.length > 0) {
         return;
       }
 
@@ -237,6 +218,7 @@ export default function GalleryClient() {
         const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://admin.arsonconsultancy.org/api/v1';
         
         // Always fetch all albums without pagination parameters
+        // You can change this endpoint if there's a specific API for sports/playground activities
         const url = `${apiBaseUrl}/albums/list`;
         
         const response = await fetch(url, {
@@ -248,7 +230,7 @@ export default function GalleryClient() {
 
         if (!response.ok) {
           // Get error details
-          let errorMessage = `Failed to fetch albums (${response.status}): ${response.statusText}`;
+          let errorMessage = `Failed to fetch events (${response.status}): ${response.statusText}`;
           
           try {
             const errorText = await response.text();
@@ -295,22 +277,14 @@ export default function GalleryClient() {
           albumsData = data.data;
         }
 
-        // Filter only active albums and map to gallery events
-        const mappedAlbums: GalleryEvent[] = albumsData
+        // Filter only active albums and map to kheladhula events
+        const mappedEvents: KheladhulaEvent[] = albumsData
           .filter((album: Album) => album.status === 'active')
           .map((album: Album, index: number) => {
-            // Process all media items (images and videos)
-            const mediaItems: MediaItem[] = album.media.map((media) => ({
-              path: media.path || null,
-              youtube_url: media.youtube_url || null,
-              video_thumbnail: media.video_thumbnail || null,
-              type: media.type || null,
-            }));
-
-            // Get image paths for backward compatibility and lightbox
-            const images = mediaItems
-              .filter((media) => !media.youtube_url && media.path)
-              .map((media) => media.path!);
+            // Get only image media
+            const images = album.media
+              .filter((media) => media.type === 'image')
+              .map((media) => media.path);
 
             return {
               id: album.id,
@@ -321,24 +295,23 @@ export default function GalleryClient() {
               title: album.bang_name || '',
               description: album.bang_description || '',
               images: images,
-              media: mediaItems,
               color: defaultColors[index % defaultColors.length],
             };
           });
 
-        // Store all albums for client-side pagination
-        setAllAlbums(mappedAlbums);
+        // Store all events for client-side pagination
+        setAllEvents(mappedEvents);
       } catch (err) {
-        console.error('Error fetching albums:', err);
-        setError(err instanceof Error ? err.message : 'Failed to fetch albums');
-        setAlbums([]);
+        console.error('Error fetching events:', err);
+        setError(err instanceof Error ? err.message : 'Failed to fetch events');
+        setEvents([]);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchAlbums();
-  }, [allAlbums.length]);
+    fetchEvents();
+  }, [allEvents.length]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -357,24 +330,6 @@ export default function GalleryClient() {
     setLightboxOpen(false);
     setSelectedImage(null);
   };
-
-  // Extract YouTube video ID from URL
-  const getYouTubeVideoId = (url: string): string | null => {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
-    return (match && match[2].length === 11) ? match[2] : null;
-  };
-
-  const openVideoModal = (youtubeUrl: string) => {
-    setSelectedVideoUrl(youtubeUrl);
-    setVideoModalOpen(true);
-  };
-
-  const closeVideoModal = () => {
-    setVideoModalOpen(false);
-    setSelectedVideoUrl(null);
-  };
-
 
   const navigateImage = (direction: 'prev' | 'next') => {
     if (direction === 'prev') {
@@ -415,12 +370,12 @@ export default function GalleryClient() {
     );
   }
 
-  // Only show empty message if we've finished loading and have no albums at all
-  if (!loading && allAlbums.length === 0) {
+  // Only show empty message if we've finished loading and have no events at all
+  if (!loading && allEvents.length === 0) {
     return (
       <section className="py-20 px-4">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-xl text-slate-600">কোনো অ্যালবাম পাওয়া যায়নি</p>
+          <p className="text-xl text-slate-600">কোনো ইভেন্ট পাওয়া যায়নি</p>
         </div>
       </section>
     );
@@ -465,26 +420,12 @@ export default function GalleryClient() {
                     className="w-full px-4 py-2 rounded-xl font-bold border-2 border-slate-300 focus:border-amber-500 focus:outline-none shadow-lg text-slate-700"
                   />
                 </div>
-
-                {/* Data/Description Filter
-                <div>
-                  <label className="block text-slate-700 font-bold mb-2 text-sm">
-                    বিবরণ/স্থান ফিল্টার
-                  </label>
-                  <input
-                    type="text"
-                    value={dataFilter}
-                    onChange={(e) => setDataFilter(e.target.value)}
-                    placeholder="বিবরণ বা স্থান অনুসন্ধান করুন..."
-                    className="w-full px-4 py-2 rounded-xl font-bold border-2 border-slate-300 focus:border-amber-500 focus:outline-none shadow-lg text-slate-700"
-                  />
-                </div> */}
               </div>
 
               {/* Filter Summary and Clear Button */}
               <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-200">
                 <div className="text-sm text-slate-600 font-medium">
-                  {filteredAlbums.length} টি অ্যালবাম পাওয়া গেছে
+                  {filteredEvents.length} টি ইভেন্ট পাওয়া গেছে
                   {selectedDate && ` (তারিখ: ${formatDateInputToBengali(selectedDate)})`}
                   {titleFilter && ` (শিরোনাম: ${titleFilter})`}
                   {dataFilter && ` (বিবরণ: ${dataFilter})`}
@@ -505,8 +446,8 @@ export default function GalleryClient() {
             </div>
           </div>
 
-          {albums.length > 0 ? (
-            albums.map((event, idx) => (
+          {events.length > 0 ? (
+            events.map((event, idx) => (
             <motion.div
               key={`${event.uuid || event.id}-${currentPage}`}
               initial={{ opacity: 0, y: 50 }}
@@ -538,7 +479,7 @@ export default function GalleryClient() {
                       <div className={`p-2 bg-gradient-to-r ${event.color} rounded-lg`}>
                         <FaImages className="text-white" />
                       </div>
-                      <span>{event.media.length} মিডিয়া</span>
+                      <span>{event.images.length} ফটো</span>
                     </div>
                   </div>
                   <p className="text-slate-600 text-lg leading-relaxed mt-4">
@@ -546,64 +487,40 @@ export default function GalleryClient() {
                   </p>
                 </div>
 
-                {/* Media Grid (Images and Videos) */}
+                {/* Images Grid */}
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                  {event.media.map((mediaItem, mediaIdx) => {
-                    const isVideo = !!mediaItem.youtube_url;
-                    const imageSrc = isVideo ? mediaItem.video_thumbnail : mediaItem.path;
-                    
-                    if (!imageSrc) return null;
-
-                    return (
-                      <motion.div
-                        key={mediaIdx}
-                        whileHover={{ scale: 1.05 }}
-                        onClick={() => {
-                          if (isVideo && mediaItem.youtube_url) {
-                            openVideoModal(mediaItem.youtube_url);
-                          } else if (mediaItem.path) {
-                            openLightbox(mediaItem.path, event.images);
-                          }
-                        }}
-                        className="group relative cursor-pointer rounded-xl overflow-hidden aspect-square shadow-lg hover:shadow-2xl transition-all"
-                      >
-                        <div className={`absolute inset-0 opacity-0 group-hover:opacity-75 transition-all z-10 ${isVideo ? 'bg-black/50' : ''}`}></div>
-                        <img
-                          src={imageSrc}
-                          alt={isVideo ? `${event.title} - ভিডিও ${mediaIdx + 1}` : `${event.title} - ছবি ${mediaIdx + 1}`}
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all z-20">
-                          {isVideo ? (
-                            <div className="flex flex-col items-center gap-2">
-                              <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center shadow-2xl">
-                                <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                                  <path d="M8 5v14l11-7z"/>
-                                </svg>
-                              </div>
-                              <span className="text-white font-bold text-sm bg-black/50 px-3 py-1 rounded-full">YouTube</span>
-                            </div>
-                          ) : (
-                            <FaImages className="text-4xl text-white" />
-                          )}
-                        </div>
-                      </motion.div>
-                    );
-                  })}
+                  {event.images.map((image, imageIdx) => (
+                    <motion.div
+                      key={imageIdx}
+                      whileHover={{ scale: 1.05 }}
+                      onClick={() => openLightbox(image, event.images)}
+                      className="group relative cursor-pointer rounded-xl overflow-hidden aspect-square shadow-lg hover:shadow-2xl transition-all"
+                    >
+                      <div className={`absolute inset-0 opacity-0 group-hover:opacity-75 transition-all z-10`}></div>
+                      <img
+                        src={image}
+                        alt={`${event.title} - ছবি ${imageIdx + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all z-20">
+                        <FaImages className="text-4xl text-white" />
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
               </div>
             </motion.div>
             ))
           ) : (
-            !loading && filteredAlbums.length > 0 && (
+            !loading && filteredEvents.length > 0 && (
               <div className="text-center py-20">
-                <p className="text-xl text-slate-600">এই পাতায় কোনো অ্যালবাম নেই</p>
+                <p className="text-xl text-slate-600">এই পাতায় কোনো ইভেন্ট নেই</p>
               </div>
             )
           )}
-          {!loading && filteredAlbums.length === 0 && allAlbums.length > 0 && (selectedDate || titleFilter || dataFilter) && (
+          {!loading && filteredEvents.length === 0 && allEvents.length > 0 && (selectedDate || titleFilter || dataFilter) && (
             <div className="text-center py-20">
-              <p className="text-xl text-slate-600">এই ফিল্টার অনুসারে কোনো অ্যালবাম পাওয়া যায়নি</p>
+              <p className="text-xl text-slate-600">এই ফিল্টার অনুসারে কোনো ইভেন্ট পাওয়া যায়নি</p>
               <button
                 onClick={() => {
                   setSelectedDate('');
@@ -617,7 +534,7 @@ export default function GalleryClient() {
             </div>
           )}
 
-          {/* Pagination - Only show if there are more than 5 filtered albums */}
+          {/* Pagination - Only show if there are more than 5 filtered events */}
           {paginationMeta && paginationMeta.total > 5 && paginationMeta.last_page > 1 && (
             <div className="mt-16 flex items-center justify-center gap-2">
             {/* Previous Button */}
@@ -690,44 +607,7 @@ export default function GalleryClient() {
         onClose={closeLightbox}
         onNavigate={navigateImage}
       />
-
-      {/* Video Modal */}
-      <AnimatePresence>
-        {videoModalOpen && selectedVideoUrl && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
-            onClick={closeVideoModal}
-          >
-            <button
-              onClick={closeVideoModal}
-              className="absolute top-4 right-4 p-3 bg-white/10 hover:bg-white/20 text-white rounded-full transition-all z-10"
-            >
-              <FaTimes className="text-2xl" />
-            </button>
-
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              className="relative w-full max-w-4xl aspect-video bg-black rounded-2xl overflow-hidden"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {getYouTubeVideoId(selectedVideoUrl) && (
-                <iframe
-                  src={`https://www.youtube.com/embed/${getYouTubeVideoId(selectedVideoUrl)}?autoplay=1&rel=0`}
-                  title="YouTube video player"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                  className="w-full h-full"
-                />
-              )}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </>
   );
 }
+

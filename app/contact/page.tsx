@@ -2,6 +2,7 @@
 import { motion } from 'framer-motion';
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
 import ContactForm from '../components/ContactForm';
+import ChatWidget from '../components/ChatWidget';
 
 export default function ContactPage() {
   return (
@@ -180,6 +181,9 @@ export default function ContactPage() {
           </motion.div>
         </div>
       </section>
+
+      {/* Chat Widget */}
+      <ChatWidget />
     </main>
   );
 }
