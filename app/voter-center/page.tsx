@@ -4,357 +4,366 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   FaSearch, 
   FaMapMarkerAlt, 
-  FaIdCard, 
   FaPhone, 
-  FaMapPin, 
   FaBuilding, 
-  FaDirections,
-  FaTimes
+  FaTimes,
+  FaUser,
+  FaGraduationCap,
+  FaPrint
 } from 'react-icons/fa';
 
-const voterData: { [key: string]: any } = {
-  '1234567890': {
-    name: 'মোহাম্মদ করিম উদ্দিন',
-    nid: '1234567890',
-    mobile: '01712345678',
-    constituency: 'ঢাকা-১৩ (উত্তরা)',
-    pollingCenter: 'উত্তরা হাই স্কুল ও কলেজ',
-    address: 'সেক্টর ১, উত্তরা মডেল টাউন, ঢাকা-১২৩০',
-    mapLocation: {
-      lat: 23.8759,
-      lng: 90.3795,
-      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3648.564!2d90.3795!3d23.8759!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDUyJzMzLjIiTiA5MMKwMjInNDYuMiJF!5e0!3m2!1sen!2sbd!4v1234567890'
-    }
-  },
-  '9876543210': {
-    name: 'ফাতিমা খাতুন',
-    nid: '9876543210',
-    mobile: '01812345678',
-    constituency: 'ঢাকা-১৪ (মিরপুর)',
-    pollingCenter: 'মিরপুর বাংলা কলেজ',
-    address: 'মিরপুর-১০, ঢাকা-১২১৬',
-    mapLocation: {
-      lat: 23.8069,
-      lng: 90.3685,
-      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3649.0!2d90.3685!3d23.8069!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDQ4JzI0LjgiTiA5MMKwMjInMDYuNiJF!5e0!3m2!1sen!2sbd!4v1234567890'
-    }
-  },
-  '5555666777': {
-    name: 'আব্দুল মান্নান মিয়া',
-    nid: '5555666777',
-    mobile: '01922334455',
-    constituency: 'ঢাকা-১২ (গুলশান)',
-    pollingCenter: 'গুলশান সরকারি উচ্চ বিদ্যালয়',
-    address: 'গুলশান-১, ঢাকা-১২১২',
-    mapLocation: {
-      lat: 23.7808,
-      lng: 90.4172,
-      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3650.0!2d90.4172!3d23.7808!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDQ2JzUwLjkiTiA5MMKwMjUnMDIuMCJF!5e0!3m2!1sen!2sbd!4v1234567890'
-    }
-  },
-  '1111222333': {
-    name: 'রহিমা বেগম',
-    nid: '1111222333',
-    mobile: '01534567890',
-    constituency: 'ঢাকা-১৫ (ধানমন্ডি)',
-    pollingCenter: 'ধানমন্ডি সরকারি বালিকা উচ্চ বিদ্যালয়',
-    address: 'ধানমন্ডি-৩২, ঢাকা-১২০৯',
-    mapLocation: {
-      lat: 23.7465,
-      lng: 90.3763,
-      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.5!2d90.3763!3d23.7465!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDQ0JzQ3LjQiTiA5MMKwMjInMzQuNyJF!5e0!3m2!1sen!2sbd!4v1234567890'
-    }
-  },
-  '7788990011': {
-    name: 'সাকিব আহমেদ',
-    nid: '7788990011',
-    mobile: '01677889900',
-    constituency: 'ঢাকা-১০ (মোহাম্মদপুর)',
-    pollingCenter: 'মোহাম্মদপুর সরকারি উচ্চ বিদ্যালয়',
-    address: 'মোহাম্মদপুর, ঢাকা-১২০৭',
-    mapLocation: {
-      lat: 23.7639,
-      lng: 90.3567,
-      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.0!2d90.3567!3d23.7639!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDQ1JzUwLjAiTiA5MMKwMjEnMjQuMSJF!5e0!3m2!1sen!2sbd!4v1234567890'
-    }
-  },
-  '2233445566': {
-    name: 'নাসরিন আক্তার',
-    nid: '2233445566',
-    mobile: '01988776655',
-    constituency: 'ঢাকা-৮ (মতিঝিল)',
-    pollingCenter: 'মতিঝিল আইডিয়াল স্কুল',
-    address: 'মতিঝিল, ঢাকা-১০০০',
-    mapLocation: {
-      lat: 23.7330,
-      lng: 90.4172,
-      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.0!2d90.4172!3d23.7330!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDQzJzU4LjgiTiA5MMKwMjUnMDIuMCJF!5e0!3m2!1sen!2sbd!4v1234567890'
-    }
-  },
-  '3344556677': {
-    name: 'জাহিদ হাসান',
-    nid: '3344556677',
-    mobile: '01455667788',
-    constituency: 'ঢাকা-১৬ (কল্যাণপুর)',
-    pollingCenter: 'কল্যাণপুর সরকারি স্কুল',
-    address: 'কল্যাণপুর, ঢাকা-১২১৭',
-    mapLocation: {
-      lat: 23.7540,
-      lng: 90.3820,
-      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.3!2d90.3820!3d23.7540!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDQ1JzE0LjQiTiA5MMKwMjInNTUuMiJF!5e0!3m2!1sen!2sbd!4v1234567890'
-    }
-  },
-  '4455667788': {
-    name: 'সুমাইয়া রহমান',
-    nid: '4455667788',
-    mobile: '01366778899',
-    constituency: 'ঢাকা-১১ (বনানী)',
-    pollingCenter: 'বনানী বিদ্যানিকেতন স্কুল',
-    address: 'বনানী, ঢাকা-১২১৩',
-    mapLocation: {
-      lat: 23.7937,
-      lng: 90.4066,
-      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3650.2!2d90.4066!3d23.7937!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDQ3JzM3LjMiTiA5MMKwMjQnMjMuOCJF!5e0!3m2!1sen!2sbd!4v1234567890'
-    }
-  },
-  '6677889900': {
-    name: 'রফিকুল ইসলাম',
-    nid: '6677889900',
-    mobile: '01744332211',
-    constituency: 'ঢাকা-৯ (রমনা)',
-    pollingCenter: 'রমনা সরকারি মডেল স্কুল',
-    address: 'রমনা, ঢাকা-১০০০',
-    mapLocation: {
-      lat: 23.7380,
-      lng: 90.3978,
-      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.8!2d90.3978!3d23.7380!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDQ0JzE2LjgiTiA5MMKwMjMnNTIuMSJF!5e0!3m2!1sen!2sbd!4v1234567890'
-    }
-  },
-  '8899001122': {
-    name: 'শাহিনা আক্তার',
-    nid: '8899001122',
-    mobile: '01611223344',
-    constituency: 'ঢাকা-৭ (বাড্ডা)',
-    pollingCenter: 'বাড্ডা সরকারি প্রাথমিক বিদ্যালয়',
-    address: 'বাড্ডা, ঢাকা-১২১২',
-    mapLocation: {
-      lat: 23.7806,
-      lng: 90.4254,
-      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3650.4!2d90.4254!3d23.7806!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDQ2JzUwLjIiTiA5MMKwMjUnMzEuNCJF!5e0!3m2!1sen!2sbd!4v1234567890'
-    }
-  },
+interface Voter {
+  id: number;
+  uuid: string;
+  name: string;
+  address: string;
+  nid: string;
+  phone: string;
+  center: string;
+  educational_qualification: string | null;
+  picture: string | null;
+  status: string;
+  created_at: string;
+  updated_at: string;
+}
 
-  // ===== Mobile-based lookup =====
-  '01712345678': {
-    name: 'মোহাম্মদ করিম উদ্দিন',
-    nid: '1234567890',
-    mobile: '01712345678',
-    constituency: 'ঢাকা-১৩ (উত্তরা)',
-    pollingCenter: 'উত্তরা হাই স্কুল ও কলেজ',
-    address: 'সেক্টর ১, উত্তরা মডেল টাউন, ঢাকা-১২৩০',
-    mapLocation: {
-      lat: 23.8759,
-      lng: 90.3795,
-      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3648.564!2d90.3795!3d23.8759!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDUyJzMzLjIiTiA5MMKwMjInNDYuMiJF!5e0!3m2!1sen!2sbd!4v1234567890'
-    }
-  },
-  '01812345678': {
-    name: 'ফাতিমা খাতুন',
-    nid: '9876543210',
-    mobile: '01812345678',
-    constituency: 'ঢাকা-১৪ (মিরপুর)',
-    pollingCenter: 'মিরপুর বাংলা কলেজ',
-    address: 'মিরপুর-১০, ঢাকা-১২১৬',
-    mapLocation: {
-      lat: 23.8069,
-      lng: 90.3685,
-      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3649.0!2d90.3685!3d23.8069!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDQ4JzI0LjgiTiA5MMKwMjInMDYuNiJF!5e0!3m2!1sen!2sbd!4v1234567890'
-    }
-  },
-  '01922334455': {
-    name: 'আব্দুল মান্নান মিয়া',
-    nid: '5555666777',
-    mobile: '01922334455',
-    constituency: 'ঢাকা-১২ (গুলশান)',
-    pollingCenter: 'গুলশান সরকারি উচ্চ বিদ্যালয়',
-    address: 'গুলশান-১, ঢাকা-১২১২',
-    mapLocation: {
-      lat: 23.7808,
-      lng: 90.4172,
-      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3650.0!2d90.4172!3d23.7808!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDQ2JzUwLjkiTiA5MMKwMjUnMDIuMCJF!5e0!3m2!1sen!2sbd!4v1234567890'
-    }
-  },
-  '01534567890': {
-    name: 'রহিমা বেগম',
-    nid: '1111222333',
-    mobile: '01534567890',
-    constituency: 'ঢাকা-১৫ (ধানমন্ডি)',
-    pollingCenter: 'ধানমন্ডি সরকারি বালিকা উচ্চ বিদ্যালয়',
-    address: 'ধানমন্ডি-৩২, ঢাকা-১২০৯',
-    mapLocation: {
-      lat: 23.7465,
-      lng: 90.3763,
-      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.5!2d90.3763!3d23.7465!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDQ0JzQ3LjQiTiA5MMKwMjInMzQuNyJF!5e0!3m2!1sen!2sbd!4v1234567890'
-    }
-  },
-  '01677889900': {
-    name: 'সাকিব আহমেদ',
-    nid: '7788990011',
-    mobile: '01677889900',
-    constituency: 'ঢাকা-১০ (মোহাম্মদপুর)',
-    pollingCenter: 'মোহাম্মদপুর সরকারি উচ্চ বিদ্যালয়',
-    address: 'মোহাম্মদপুর, ঢাকা-১২০৭',
-    mapLocation: {
-      lat: 23.7639,
-      lng: 90.3567,
-      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.0!2d90.3567!3d23.7639!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDQ1JzUwLjAiTiA5MMKwMjEnMjQuMSJF!5e0!3m2!1sen!2sbd!4v1234567890'
-    }
-  },
-
-  // ===== Area-based lookup =====
-  'উত্তরা': {
-    name: 'ভোটার তথ্য',
-    constituency: 'ঢাকা-১৩ (উত্তরা)',
-    pollingCenter: 'উত্তরা হাই স্কুল ও কলেজ',
-    address: 'সেক্টর ১, উত্তরা মডেল টাউন, ঢাকা-১২৩০',
-    mapLocation: {
-      lat: 23.8759,
-      lng: 90.3795,
-      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3648.564!2d90.3795!3d23.8759!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDUyJzMzLjIiTiA5MMKwMjInNDYuMiJF!5e0!3m2!1sen!2sbd!4v1234567890'
-    }
-  },
-  'মিরপুর': {
-    name: 'ভোটার তথ্য',
-    constituency: 'ঢাকা-১৪ (মিরপুর)',
-    pollingCenter: 'মিরপুর বাংলা কলেজ',
-    address: 'মিরপুর-১০, ঢাকা-১২১৬',
-    mapLocation: {
-      lat: 23.8069,
-      lng: 90.3685,
-      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3649.0!2d90.3685!3d23.8069!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDQ4JzI0LjgiTiA5MMKwMjInMDYuNiJF!5e0!3m2!1sen!2sbd!4v1234567890'
-    }
-  },
-  'গুলশান': {
-    name: 'ভোটার তথ্য',
-    constituency: 'ঢাকা-১২ (গুলশান)',
-    pollingCenter: 'গুলশান সরকারি উচ্চ বিদ্যালয়',
-    address: 'গুলশান-১, ঢাকা-১২১২',
-    mapLocation: {
-      lat: 23.7808,
-      lng: 90.4172,
-      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3650.0!2d90.4172!3d23.7808!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDQ2JzUwLjkiTiA5MMKwMjUnMDIuMCJF!5e0!3m2!1sen!2sbd!4v1234567890'
-    }
-  },
-  'ধানমন্ডি': {
-    name: 'ভোটার তথ্য',
-    constituency: 'ঢাকা-১৫ (ধানমন্ডি)',
-    pollingCenter: 'ধানমন্ডি সরকারি বালিকা উচ্চ বিদ্যালয়',
-    address: 'ধানমন্ডি-৩২, ঢাকা-১২০৯',
-    mapLocation: {
-      lat: 23.7465,
-      lng: 90.3763,
-      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.5!2d90.3763!3d23.7465!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDQ0JzQ3LjQiTiA5MMKwMjInMzQuNyJF!5e0!3m2!1sen!2sbd!4v1234567890'
-    }
-  },
-  'মোহাম্মদপুর': {
-    name: 'ভোটার তথ্য',
-    constituency: 'ঢাকা-১০ (মোহাম্মদপুর)',
-    pollingCenter: 'মোহাম্মদপুর সরকারি উচ্চ বিদ্যালয়',
-    address: 'মোহাম্মদপুর, ঢাকা-১২০৭',
-    mapLocation: {
-      lat: 23.7639,
-      lng: 90.3567,
-      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.0!2d90.3567!3d23.7639!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDQ1JzUwLjAiTiA5MMKwMjEnMjQuMSJF!5e0!3m2!1sen!2sbd!4v1234567890'
-    }
-  },
-  'মতিঝিল': {
-    name: 'ভোটার তথ্য',
-    constituency: 'ঢাকা-৮ (মতিঝিল)',
-    pollingCenter: 'মতিঝিল আইডিয়াল স্কুল',
-    address: 'মতিঝিল, ঢাকা-১০০০',
-    mapLocation: {
-      lat: 23.7330,
-      lng: 90.4172,
-      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.0!2d90.4172!3d23.7330!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDQzJzU4LjgiTiA5MMKwMjUnMDIuMCJF!5e0!3m2!1sen!2sbd!4v1234567890'
-    }
-  },
-  'কল্যাণপুর': {
-    name: 'ভোটার তথ্য',
-    constituency: 'ঢাকা-১৬ (কল্যাণপুর)',
-    pollingCenter: 'কল্যাণপুর সরকারি স্কুল',
-    address: 'কল্যাণপুর, ঢাকা-১২১৭',
-    mapLocation: {
-      lat: 23.7540,
-      lng: 90.3820,
-      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.3!2d90.3820!3d23.7540!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDQ1JzE0LjQiTiA5MMKwMjInNTUuMiJF!5e0!3m2!1sen!2sbd!4v1234567890'
-    }
-  },
-  'বনানী': {
-    name: 'ভোটার তথ্য',
-    constituency: 'ঢাকা-১১ (বনানী)',
-    pollingCenter: 'বনানী বিদ্যানিকেতন স্কুল',
-    address: 'বনানী, ঢাকা-১২১৩',
-    mapLocation: {
-      lat: 23.7937,
-      lng: 90.4066,
-      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3650.2!2d90.4066!3d23.7937!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDQ3JzM3LjMiTiA5MMKwMjQnMjMuOCJF!5e0!3m2!1sen!2sbd!4v1234567890'
-    }
-  },
-  'রমনা': {
-    name: 'ভোটার তথ্য',
-    constituency: 'ঢাকা-৯ (রমনা)',
-    pollingCenter: 'রমনা সরকারি মডেল স্কুল',
-    address: 'রমনা, ঢাকা-১০০০',
-    mapLocation: {
-      lat: 23.7380,
-      lng: 90.3978,
-      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.8!2d90.3978!3d23.7380!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDQ0JzE2LjgiTiA5MMKwMjMnNTIuMSJF!5e0!3m2!1sen!2sbd!4v1234567890'
-    }
-  },
-  'বাড্ডা': {
-    name: 'ভোটার তথ্য',
-    constituency: 'ঢাকা-৭ (বাড্ডা)',
-    pollingCenter: 'বাড্ডা সরকারি প্রাথমিক বিদ্যালয়',
-    address: 'বাড্ডা, ঢাকা-১২১২',
-    mapLocation: {
-      lat: 23.7806,
-      lng: 90.4254,
-      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3650.4!2d90.4254!3d23.7806!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDQ2JzUwLjIiTiA5MMKwMjUnMzEuNCJF!5e0!3m2!1sen!2sbd!4v1234567890'
-    }
-  }
-};
+interface VoterApiResponse {
+  success: boolean;
+  message: string;
+  data: {
+    data: Voter[];
+    links: {
+      first: string;
+      last: string;
+      prev: string | null;
+      next: string | null;
+    };
+    meta: {
+      current_page: number;
+      from: number;
+      last_page: number;
+      path: string;
+      per_page: number;
+      to: number;
+      total: number;
+    };
+  };
+}
 
 export default function VoterCenterPage() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchResult, setSearchResult] = useState<any>(null);
+  const [searchResults, setSearchResults] = useState<Voter[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [notFound, setNotFound] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSearching(true);
     setNotFound(false);
+    setErrorMessage('');
 
-    // Simulate API call delay
-    setTimeout(() => {
-      const result = voterData[searchQuery] || voterData[searchQuery.toLowerCase()];
+    try {
+      const response = await fetch(
+        `https://admin.aminul-haque.com/api/v1/voters?search=${encodeURIComponent(searchQuery)}`
+      );
+      
+      const data: VoterApiResponse = await response.json();
 
-      if (result) {
-        setSearchResult(result);
+      if (data.success && data.data.data.length > 0) {
+        setSearchResults(data.data.data);
         setNotFound(false);
         setShowModal(true);
       } else {
-        setSearchResult(null);
+        setSearchResults([]);
         setNotFound(true);
         setShowModal(true);
       }
+    } catch (error) {
+      console.error('Error fetching voter data:', error);
+      setSearchResults([]);
+      setNotFound(true);
+      setErrorMessage('সার্ভারে সংযোগ করতে সমস্যা হয়েছে। অনুগ্রহ করে পরে আবার চেষ্টা করুন।');
+      setShowModal(true);
+    } finally {
       setIsSearching(false);
-    }, 1000);
+    }
   };
 
-  const getDirections = (lat: number, lng: number) => {
-    window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`, '_blank');
+  const handlePrint = () => {
+    if (searchResults.length === 0) return;
+
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      alert('পপআপ ব্লক করা হয়েছে। অনুগ্রহ করে পপআপ অনুমতি দিন।');
+      return;
+    }
+
+    const votersHtml = searchResults.map((voter, index) => `
+      <div style="margin-bottom: 30px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; page-break-inside: avoid;">
+        ${searchResults.length > 1 ? `<h3 style="text-align: center; color: #1e40af; margin-bottom: 15px;">ভোটার #${index + 1}</h3>` : ''}
+        
+        <h4 style="color: #1e293b; border-bottom: 2px solid #3b82f6; padding-bottom: 8px; margin-bottom: 15px;">ব্যক্তিগত তথ্য</h4>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+          <tr>
+            <td style="padding: 8px; background: #f8fafc; border: 1px solid #e2e8f0; width: 30%;"><strong>নাম</strong></td>
+            <td style="padding: 8px; border: 1px solid #e2e8f0;">${voter.name}</td>
+          </tr>
+          ${voter.nid ? `
+          <tr>
+            <td style="padding: 8px; background: #f8fafc; border: 1px solid #e2e8f0;"><strong>এনআইডি নম্বর</strong></td>
+            <td style="padding: 8px; border: 1px solid #e2e8f0;">${voter.nid}</td>
+          </tr>` : ''}
+          ${voter.phone ? `
+          <tr>
+            <td style="padding: 8px; background: #f8fafc; border: 1px solid #e2e8f0;"><strong>মোবাইল নম্বর</strong></td>
+            <td style="padding: 8px; border: 1px solid #e2e8f0;">${voter.phone}</td>
+          </tr>` : ''}
+          ${voter.educational_qualification ? `
+          <tr>
+            <td style="padding: 8px; background: #f8fafc; border: 1px solid #e2e8f0;"><strong>শিক্ষাগত যোগ্যতা</strong></td>
+            <td style="padding: 8px; border: 1px solid #e2e8f0;">${voter.educational_qualification}</td>
+          </tr>` : ''}
+        </table>
+
+        <h4 style="color: #1e293b; border-bottom: 2px solid #10b981; padding-bottom: 8px; margin-bottom: 15px;">ভোট কেন্দ্রের তথ্য</h4>
+        <table style="width: 100%; border-collapse: collapse;">
+          <tr>
+            <td style="padding: 8px; background: #f8fafc; border: 1px solid #e2e8f0; width: 30%;"><strong>ভোট কেন্দ্র</strong></td>
+            <td style="padding: 8px; border: 1px solid #e2e8f0;">${voter.center}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; background: #f8fafc; border: 1px solid #e2e8f0;"><strong>ঠিকানা</strong></td>
+            <td style="padding: 8px; border: 1px solid #e2e8f0;">${voter.address}</td>
+          </tr>
+        </table>
+      </div>
+    `).join('');
+
+    printWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>ভোটার তথ্য - প্রিন্ট</title>
+          <meta charset="UTF-8">
+          <style>
+            body {
+              font-family: 'Noto Sans Bengali', 'Hind Siliguri', Arial, sans-serif;
+              padding: 20px;
+              color: #1e293b;
+            }
+            .header {
+              text-align: center;
+              margin-bottom: 30px;
+              padding-bottom: 20px;
+              border-bottom: 3px solid #3b82f6;
+            }
+            .header h1 {
+              color: #1e40af;
+              margin: 0;
+              font-size: 24px;
+            }
+            .header p {
+              color: #64748b;
+              margin: 10px 0 0;
+            }
+            .notice {
+              background: #fef3c7;
+              border: 1px solid #f59e0b;
+              border-radius: 8px;
+              padding: 15px;
+              margin-top: 20px;
+            }
+            .notice h4 {
+              color: #92400e;
+              margin: 0 0 10px;
+            }
+            .notice ul {
+              margin: 0;
+              padding-left: 20px;
+              color: #92400e;
+            }
+            .footer {
+              text-align: center;
+              margin-top: 30px;
+              padding-top: 20px;
+              border-top: 1px solid #e2e8f0;
+              color: #64748b;
+              font-size: 12px;
+            }
+            @media print {
+              body { padding: 0; }
+              .no-print { display: none; }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <h1>ভোট কেন্দ্র তথ্য</h1>
+            <p>প্রিন্টের তারিখ: ${new Date().toLocaleDateString('bn-BD')}</p>
+          </div>
+          
+          ${votersHtml}
+          
+          <div class="notice">
+            <h4>📋 গুরুত্বপূর্ণ নির্দেশনা</h4>
+            <ul>
+              <li>ভোট দিতে যাওয়ার সময় অবশ্যই আপনার জাতীয় পরিচয়পত্র সাথে নিন</li>
+              <li>ভোট কেন্দ্রে যাওয়ার আগে সময়সূচী যাচাই করে নিন</li>
+              <li>কোনো সমস্যা হলে ভোট কেন্দ্রের কর্মকর্তাদের সাথে যোগাযোগ করুন</li>
+            </ul>
+          </div>
+          
+          <div class="footer">
+            <p>আমিনুল হক - ভোটার সেবা কেন্দ্র</p>
+          </div>
+        </body>
+      </html>
+    `);
+
+    printWindow.document.close();
+    printWindow.focus();
+    
+    setTimeout(() => {
+      printWindow.print();
+      printWindow.close();
+    }, 250);
+  };
+
+  const handlePrintSingle = (voter: Voter) => {
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      alert('পপআপ ব্লক করা হয়েছে। অনুগ্রহ করে পপআপ অনুমতি দিন।');
+      return;
+    }
+
+    const voterHtml = `
+      <div style="margin-bottom: 30px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px;">
+        <h4 style="color: #1e293b; border-bottom: 2px solid #3b82f6; padding-bottom: 8px; margin-bottom: 15px;">ব্যক্তিগত তথ্য</h4>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+          <tr>
+            <td style="padding: 8px; background: #f8fafc; border: 1px solid #e2e8f0; width: 30%;"><strong>নাম</strong></td>
+            <td style="padding: 8px; border: 1px solid #e2e8f0;">${voter.name}</td>
+          </tr>
+          ${voter.nid ? `
+          <tr>
+            <td style="padding: 8px; background: #f8fafc; border: 1px solid #e2e8f0;"><strong>এনআইডি নম্বর</strong></td>
+            <td style="padding: 8px; border: 1px solid #e2e8f0;">${voter.nid}</td>
+          </tr>` : ''}
+          ${voter.phone ? `
+          <tr>
+            <td style="padding: 8px; background: #f8fafc; border: 1px solid #e2e8f0;"><strong>মোবাইল নম্বর</strong></td>
+            <td style="padding: 8px; border: 1px solid #e2e8f0;">${voter.phone}</td>
+          </tr>` : ''}
+          ${voter.educational_qualification ? `
+          <tr>
+            <td style="padding: 8px; background: #f8fafc; border: 1px solid #e2e8f0;"><strong>শিক্ষাগত যোগ্যতা</strong></td>
+            <td style="padding: 8px; border: 1px solid #e2e8f0;">${voter.educational_qualification}</td>
+          </tr>` : ''}
+        </table>
+
+        <h4 style="color: #1e293b; border-bottom: 2px solid #10b981; padding-bottom: 8px; margin-bottom: 15px;">ভোট কেন্দ্রের তথ্য</h4>
+        <table style="width: 100%; border-collapse: collapse;">
+          <tr>
+            <td style="padding: 8px; background: #f8fafc; border: 1px solid #e2e8f0; width: 30%;"><strong>ভোট কেন্দ্র</strong></td>
+            <td style="padding: 8px; border: 1px solid #e2e8f0;">${voter.center}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; background: #f8fafc; border: 1px solid #e2e8f0;"><strong>ঠিকানা</strong></td>
+            <td style="padding: 8px; border: 1px solid #e2e8f0;">${voter.address}</td>
+          </tr>
+        </table>
+      </div>
+    `;
+
+    printWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>ভোটার তথ্য - ${voter.name}</title>
+          <meta charset="UTF-8">
+          <style>
+            body {
+              font-family: 'Noto Sans Bengali', 'Hind Siliguri', Arial, sans-serif;
+              padding: 20px;
+              color: #1e293b;
+            }
+            .header {
+              text-align: center;
+              margin-bottom: 30px;
+              padding-bottom: 20px;
+              border-bottom: 3px solid #3b82f6;
+            }
+            .header h1 {
+              color: #1e40af;
+              margin: 0;
+              font-size: 24px;
+            }
+            .header p {
+              color: #64748b;
+              margin: 10px 0 0;
+            }
+            .notice {
+              background: #fef3c7;
+              border: 1px solid #f59e0b;
+              border-radius: 8px;
+              padding: 15px;
+              margin-top: 20px;
+            }
+            .notice h4 {
+              color: #92400e;
+              margin: 0 0 10px;
+            }
+            .notice ul {
+              margin: 0;
+              padding-left: 20px;
+              color: #92400e;
+            }
+            .footer {
+              text-align: center;
+              margin-top: 30px;
+              padding-top: 20px;
+              border-top: 1px solid #e2e8f0;
+              color: #64748b;
+              font-size: 12px;
+            }
+            @media print {
+              body { padding: 0; }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <h1>ভোট কেন্দ্র তথ্য</h1>
+            <p>প্রিন্টের তারিখ: ${new Date().toLocaleDateString('bn-BD')}</p>
+          </div>
+          
+          ${voterHtml}
+          
+          <div class="notice">
+            <h4>📋 গুরুত্বপূর্ণ নির্দেশনা</h4>
+            <ul>
+              <li>ভোট দিতে যাওয়ার সময় অবশ্যই আপনার জাতীয় পরিচয়পত্র সাথে নিন</li>
+              <li>ভোট কেন্দ্রে যাওয়ার আগে সময়সূচী যাচাই করে নিন</li>
+              <li>কোনো সমস্যা হলে ভোট কেন্দ্রের কর্মকর্তাদের সাথে যোগাযোগ করুন</li>
+            </ul>
+          </div>
+          
+          <div class="footer">
+            <p>আমিনুল হক - ভোটার সেবা কেন্দ্র</p>
+          </div>
+        </body>
+      </html>
+    `);
+
+    printWindow.document.close();
+    printWindow.focus();
+    
+    setTimeout(() => {
+      printWindow.print();
+      printWindow.close();
+    }, 250);
   };
 
   return (
@@ -411,18 +420,14 @@ export default function VoterCenterPage() {
                       <form onSubmit={handleSearch} className="space-y-6">
                         <div>
                           <label className="block text-slate-700 font-bold mb-3 text-lg flex items-center gap-2 flex-wrap">
-                            <FaIdCard className="text-blue-600" />
-                            <span>এনআইডি নম্বর /</span>
-                            <FaPhone className="text-blue-600" />
-                            <span>মোবাইল নম্বর /</span>
-                            <FaMapPin className="text-blue-600" />
-                            <span>এলাকার নাম লিখুন</span>
+                            <FaSearch className="text-blue-600" />
+                            <span>নাম / এনআইডি / মোবাইল নম্বর দিয়ে খুঁজুন</span>
                           </label>
                           <input
                             type="text"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            placeholder="উদাহরণ: 1234567890 / 01712345678 / উত্তরা"
+                            placeholder="উদাহরণ: মোঃ কামাল হোসেন / 1002929220 / 1711951959"
                             className="w-full px-6 py-4 bg-slate-50 text-slate-900 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 transition-all text-lg"
                             required
                           />
@@ -501,8 +506,9 @@ export default function VoterCenterPage() {
                 <button
                   onClick={() => {
                     setShowModal(false);
-                    setSearchResult(null);
+                    setSearchResults([]);
                     setNotFound(false);
+                    setErrorMessage('');
                   }}
                   className="p-2 hover:bg-slate-100 rounded-xl transition-all"
                 >
@@ -521,115 +527,113 @@ export default function VoterCenterPage() {
                     <div className="text-6xl mb-4">❌</div>
                     <h3 className="text-2xl font-bold text-red-800 mb-2">তথ্য পাওয়া যায়নি</h3>
                     <p className="text-red-600">
-                      দয়া করে আপনার তথ্য যাচাই করে আবার চেষ্টা করুন
+                      {errorMessage || 'দয়া করে আপনার তথ্য যাচাই করে আবার চেষ্টা করুন'}
                     </p>
                   </motion.div>
-                ) : searchResult ? (
+                ) : searchResults.length > 0 ? (
                   <>
                     {/* Success Message */}
                     <div className="bg-green-50 border-2 border-green-200 rounded-2xl p-6 text-center">
                       <div className="text-5xl mb-3">✅</div>
-                      <h3 className="text-2xl font-bold text-green-800">তথ্য পাওয়া গেছে!</h3>
+                      <h3 className="text-2xl font-bold text-green-800">
+                        {searchResults.length === 1 ? 'তথ্য পাওয়া গেছে!' : `${searchResults.length} জন ভোটারের তথ্য পাওয়া গেছে!`}
+                      </h3>
                     </div>
 
+                    {searchResults.map((voter, index) => (
+                      <div key={voter.id} className="space-y-4">
+                        {searchResults.length > 1 && (
+                          <div className="text-center">
+                            <span className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-bold text-sm">
+                              ভোটার #{index + 1}
+                            </span>
+                          </div>
+                        )}
+
                     {/* Voter Information */}
-                    {searchResult.name && (
                       <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
+                          transition={{ delay: 0.1 * (index + 1) }}
                         className="bg-white rounded-2xl p-6 shadow-lg border border-slate-200"
                       >
                         <h3 className="text-xl font-black text-slate-900 mb-4 flex items-center gap-3">
-                          <FaIdCard className="text-blue-600" />
+                            <FaUser className="text-blue-600" />
                           ব্যক্তিগত তথ্য
                         </h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          {searchResult.name !== 'ভোটার তথ্য' && (
                             <div className="p-4 bg-slate-50 rounded-xl">
                               <p className="text-sm text-slate-600 mb-1">নাম</p>
-                              <p className="text-lg font-bold text-slate-900">{searchResult.name}</p>
+                              <p className="text-lg font-bold text-slate-900">{voter.name}</p>
                             </div>
-                          )}
-                          {searchResult.nid && (
+                            {voter.nid && (
                             <div className="p-4 bg-slate-50 rounded-xl">
                               <p className="text-sm text-slate-600 mb-1">এনআইডি নম্বর</p>
-                              <p className="text-lg font-bold text-slate-900">{searchResult.nid}</p>
+                                <p className="text-lg font-bold text-slate-900">{voter.nid}</p>
                             </div>
                           )}
-                          {searchResult.mobile && (
+                            {voter.phone && (
                             <div className="p-4 bg-slate-50 rounded-xl">
                               <p className="text-sm text-slate-600 mb-1">মোবাইল নম্বর</p>
-                              <p className="text-lg font-bold text-slate-900">{searchResult.mobile}</p>
+                                <p className="text-lg font-bold text-slate-900">{voter.phone}</p>
+                              </div>
+                            )}
+                            {voter.educational_qualification && (
+                              <div className="p-4 bg-slate-50 rounded-xl">
+                                <p className="text-sm text-slate-600 mb-1 flex items-center gap-2">
+                                  <FaGraduationCap className="text-blue-600" />
+                                  শিক্ষাগত যোগ্যতা
+                                </p>
+                                <p className="text-lg font-bold text-slate-900">{voter.educational_qualification}</p>
                             </div>
                           )}
                         </div>
                       </motion.div>
-                    )}
 
-                    {/* Constituency Information */}
+                        {/* Voting Center Information */}
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.2 }}
+                          transition={{ delay: 0.2 * (index + 1) }}
                       className="bg-white rounded-2xl p-6 shadow-lg border border-slate-200"
                     >
                       <h3 className="text-xl font-black text-slate-900 mb-4 flex items-center gap-3">
                         <FaBuilding className="text-emerald-600" />
-                        নির্বাচনী তথ্য
+                            ভোট কেন্দ্রের তথ্য
                       </h3>
                       <div className="space-y-4">
-                        <div className="p-4 bg-gradient-to-r from-emerald-50 to-green-50 rounded-xl border-l-4 border-emerald-600">
-                          <p className="text-sm text-slate-600 mb-1">নির্বাচনী এলাকা</p>
-                          <p className="text-xl font-black text-slate-900">{searchResult.constituency}</p>
-                        </div>
                         <div className="p-4 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl border-l-4 border-blue-600">
                           <p className="text-sm text-slate-600 mb-1">ভোট কেন্দ্র</p>
-                          <p className="text-xl font-black text-slate-900">{searchResult.pollingCenter}</p>
+                              <p className="text-xl font-black text-slate-900">{voter.center}</p>
                         </div>
                         <div className="p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl border-l-4 border-purple-600">
                           <p className="text-sm text-slate-600 mb-2">ঠিকানা</p>
                           <p className="text-base font-bold text-slate-900 flex items-start gap-3">
                             <FaMapMarkerAlt className="text-purple-600 mt-1 flex-shrink-0" />
-                            {searchResult.address}
+                                {voter.address}
                           </p>
                         </div>
                       </div>
                     </motion.div>
 
-                    {/* Google Maps */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3 }}
-                      className="bg-white rounded-2xl p-6 shadow-lg border border-slate-200"
-                    >
-                      <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
-                        <h3 className="text-xl font-black text-slate-900 flex items-center gap-3">
-                          <FaMapPin className="text-red-600" />
-                          মানচিত্রে অবস্থান
-                        </h3>
-                        <button
-                          onClick={() => getDirections(searchResult.mapLocation.lat, searchResult.mapLocation.lng)}
-                          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-600 to-pink-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:from-red-700 hover:to-pink-700 transition-all transform hover:scale-105 text-sm"
-                        >
-                          <FaDirections />
-                          দিক নির্দেশনা
-                        </button>
+                        {/* Individual Print Button */}
+                        {searchResults.length > 1 && (
+                          <div className="flex justify-center mt-4">
+                            <button
+                              onClick={() => handlePrintSingle(voter)}
+                              className="px-4 py-2 bg-gradient-to-r from-blue-500 to-cyan-600 text-white font-bold rounded-lg shadow-md hover:shadow-lg hover:from-blue-600 hover:to-cyan-700 transition-all transform hover:scale-105 flex items-center gap-2 text-sm"
+                            >
+                              <FaPrint />
+                              এই ভোটারের তথ্য প্রিন্ট করুন
+                            </button>
+                          </div>
+                        )}
+
+                        {searchResults.length > 1 && index < searchResults.length - 1 && (
+                          <hr className="border-slate-200 my-6" />
+                        )}
                       </div>
-                      <div className="aspect-video rounded-xl overflow-hidden shadow-xl">
-                        <iframe
-                          src={searchResult.mapLocation.embedUrl}
-                          width="100%"
-                          height="100%"
-                          style={{ border: 0 }}
-                          allowFullScreen
-                          loading="lazy"
-                          referrerPolicy="no-referrer-when-downgrade"
-                          title="ভোট কেন্দ্রের অবস্থান"
-                        />
-                      </div>
-                    </motion.div>
+                    ))}
 
                     {/* Important Notice */}
                     <motion.div
@@ -650,12 +654,22 @@ export default function VoterCenterPage() {
               </div>
 
               {/* Modal Footer */}
-              <div className="sticky bottom-0 bg-white border-t border-slate-200 px-6 py-4 flex justify-end">
+              <div className="sticky bottom-0 bg-white border-t border-slate-200 px-6 py-4 flex justify-end gap-3">
+                {searchResults.length > 0 && !notFound && (
+                  <button
+                    onClick={handlePrint}
+                    className="px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:from-blue-600 hover:to-cyan-700 transition-all transform hover:scale-105 flex items-center gap-2"
+                  >
+                    <FaPrint />
+                    {searchResults.length > 1 ? 'সকল প্রিন্ট করুন' : 'প্রিন্ট করুন'}
+                  </button>
+                )}
                 <button
                   onClick={() => {
                     setShowModal(false);
-                    setSearchResult(null);
+                    setSearchResults([]);
                     setNotFound(false);
+                    setErrorMessage('');
                     setSearchQuery('');
                   }}
                   className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:from-emerald-600 hover:to-green-700 transition-all transform hover:scale-105"
