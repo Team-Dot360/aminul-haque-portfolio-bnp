@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { FaFileAlt } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { toBanglaNumber } from '@/lib/utils';
 
 interface ProposalContent {
   id: number;
@@ -89,7 +90,7 @@ export default function ManifestoPage() {
 
         // Map API proposals to manifesto points
         const mappedPoints: ManifestoPoint[] = proposalsData.map((proposal: Proposal, index: number) => ({
-          number: proposal.serial || String(index + 1),
+          number: proposal.serial || toBanglaNumber(index + 1),
           title: proposal.title || '',
           description: proposal.description || '',
           color: defaultColors[index % defaultColors.length],

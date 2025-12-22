@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaComment, FaUser, FaPaperPlane, FaClock, FaHeart } from 'react-icons/fa';
 import Image from 'next/image';
+import { toBanglaNumber } from '@/lib/utils';
 
 interface Comment {
   id: number;
@@ -374,7 +375,7 @@ export default function CommentsClient({ initialComments }: CommentsClientProps)
                   সকল মন্তব্য
                 </h2>
                 <p className="text-slate-600">
-                  {comments.length} টি মন্তব্য পাওয়া গেছে
+                  {toBanglaNumber(comments.length)} টি মন্তব্য পাওয়া গেছে
                 </p>
               </div>
 
