@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { FaCalendar, FaMapMarkerAlt, FaClock, FaArrowRight, FaVideo } from 'react-icons/fa';
 
 export default function EventCard({
@@ -29,10 +30,13 @@ export default function EventCard({
         {/* Image/Header */}
         {image ? (
           <div className="relative w-full h-64 bg-gradient-to-br from-emerald-50 to-green-50 overflow-hidden flex items-center justify-center">
-            <img
+            <Image
               src={image}
               alt={title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-500"
+              unoptimized
+              loading="lazy"
             />
             {isPast && hasVideo && (
               <div className="absolute top-4 right-4 px-3 py-1.5 bg-red-600 text-white rounded-full text-xs font-bold shadow-lg flex items-center gap-1.5 z-10">

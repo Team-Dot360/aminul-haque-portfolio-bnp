@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 interface Program {
   id?: string | number;
@@ -169,11 +170,14 @@ export default function ProgramsClient({ programs: initialPrograms, error: initi
                   <div className={`flex flex-col ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'} gap-8 items-center`}>
                     {/* Image */}
                     <div className="w-full md:w-1/2">
-                      <div className="relative rounded-2xl overflow-hidden shadow-lg transition-all">
-                        <img
-                          src={program.image}
+                      <div className="relative rounded-2xl overflow-hidden shadow-lg transition-all h-[400px]">
+                        <Image
+                          src={program.image || ''}
                           alt={program.title}
-                          className="w-full h-[400px] object-cover group-hover:scale-105 transition-all duration-500"
+                          fill
+                          className="object-cover group-hover:scale-105 transition-all duration-500"
+                          unoptimized
+                          loading="lazy"
                         />
                       </div>
                     </div>

@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { FaCalendar, FaClock, FaMapMarkerAlt, FaArrowLeft, FaVideo, FaEnvelope, FaSms, FaCheckCircle } from 'react-icons/fa';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface EventDetailClientProps {
   event: any;
@@ -45,12 +46,15 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6 }}
-              className="relative rounded-3xl overflow-hidden shadow-2xl"
+              className="relative rounded-3xl overflow-hidden shadow-2xl h-[450px]"
             >
-              <img
+              <Image
                 src={event.image}
                 alt={event.title}
-                className="w-full h-[450px] object-cover bg-slate-50"
+                fill
+                className="object-cover bg-slate-50"
+                unoptimized
+                loading="lazy"
               />
               {event.isPast && (
                 <div className="absolute top-6 left-6 px-4 py-2 bg-slate-600 text-white rounded-full font-bold shadow-lg">

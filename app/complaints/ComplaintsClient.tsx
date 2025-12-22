@@ -13,6 +13,7 @@ import {
    FaPaperPlane,
     FaCheckCircle 
   } from 'react-icons/fa';
+import Image from 'next/image';
 
 interface Category {
   id: number;
@@ -195,11 +196,13 @@ export default function ComplaintsClient({ categories }: ComplaintsClientProps) 
               className="relative"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-orange-500 rounded-3xl blur-2xl opacity-20"></div>
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
-                <img
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white h-[500px]">
+                <Image
                   src="/aminul Haque/DSC00988.jpg"
                   alt="আমিনুল হক"
-                  className="w-full h-[500px] object-cover"
+                  fill
+                  className="object-cover"
+                  loading="lazy"
                 />
               </div>
             </motion.div>

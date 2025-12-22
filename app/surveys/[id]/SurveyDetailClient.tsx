@@ -281,6 +281,7 @@ export default function SurveyDetailClient({ survey }: SurveyDetailClientProps) 
                 fill
                 className="object-cover"
                 unoptimized
+                loading="lazy"
               />
             </motion.div>
           </div>

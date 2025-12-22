@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaTimes } from 'react-icons/fa';
+import Image from 'next/image';
 
 export default function WelcomeModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,10 +55,13 @@ export default function WelcomeModal() {
               </button>
 
               {/* Image Container */}
-              <img
+              <Image
                 src="/aminul_nomination_post.webp"
                 alt="আমিনুল হক মনোনয়ন পোস্ট"
+                width={600}
+                height={800}
                 className="max-w-full max-h-full object-contain rounded-2xl shadow-2xl"
+                loading="lazy"
               />
             </motion.div>
           </div>

@@ -1,6 +1,7 @@
 "use client";
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Hero() {
   return (
@@ -49,11 +50,13 @@ export default function Hero() {
           className="relative order-1 md:order-2"
         >
           <div className="absolute inset-0 bg-emerald-500 rounded-3xl blur-2xl opacity-20"></div>
-          <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
-            <img
-              src="/aminul Haque/DSC01096.JPG"
+          <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white h-[500px] md:h-[600px]">
+            <Image
+              src="/aminul Haque/hero.jpg"
               alt="আমিনুল হক"
-              className="w-full h-[500px] md:h-[600px] object-cover"
+              fill
+              className="object-cover"
+              priority
             />
           </div>
         </motion.div>

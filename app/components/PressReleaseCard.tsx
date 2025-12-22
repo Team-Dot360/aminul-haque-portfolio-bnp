@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { FaArrowRight, FaClock, FaNewspaper, FaImage } from 'react-icons/fa';
 
 export default function PressReleaseCard({
@@ -23,10 +24,13 @@ export default function PressReleaseCard({
         {/* Image Section */}
         {image && (
           <div className="relative h-48 bg-gradient-to-br from-blue-50 to-cyan-50 overflow-hidden">
-            <img
+            <Image
               src={image}
               alt={title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-500"
+              unoptimized
+              loading="lazy"
             />
             {hasVideo && (
               <div className="absolute top-4 right-4 px-3 py-1.5 bg-red-600 text-white rounded-full text-xs font-bold shadow-lg flex items-center gap-1.5">

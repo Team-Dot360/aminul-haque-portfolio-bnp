@@ -1,6 +1,7 @@
 "use client";
 import { motion } from 'framer-motion';
 import { FaFutbol, FaTrophy, FaMedal, FaFlag, FaStar, FaAward } from 'react-icons/fa';
+import Image from 'next/image';
 
 export default function AboutPage() {
   return (
@@ -84,10 +85,13 @@ export default function AboutPage() {
             >
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-green-500 rounded-3xl blur-2xl opacity-20"></div>
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-slate-100">
-                <img
+                <Image
                   src="/aminul Haque/DSC01131.jpg"
                   alt="আমিনুল হক"
+                  width={600}
+                  height={800}
                   className="w-full h-auto object-contain"
+                  loading="lazy"
                 />
               </div>
             </motion.div>

@@ -5,6 +5,7 @@ import { FaClock, FaFacebook, FaWhatsapp, FaLink, FaArrowLeft, FaVideo, FaImage 
 import { FaXTwitter } from 'react-icons/fa6';
 import Link from 'next/link';
 import { useState } from 'react';
+import Image from 'next/image';
 
 interface PressReleaseDetailClientProps {
   pressRelease: {
@@ -151,10 +152,14 @@ export default function PressReleaseDetailClient({ pressRelease }: PressReleaseD
               transition={{ duration: 0.6 }}
               className="relative rounded-3xl overflow-hidden shadow-2xl"
             >
-              <img
+              <Image
                 src={pressRelease.images[0]}
                 alt={pressRelease.title}
+                width={800}
+                height={600}
                 className="w-full h-auto object-cover"
+                unoptimized
+                loading="lazy"
               />
             </motion.div>
           </div>
@@ -199,12 +204,15 @@ export default function PressReleaseDetailClient({ pressRelease }: PressReleaseD
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: idx * 0.1 }}
-                  className="relative rounded-2xl overflow-hidden shadow-xl"
+                  className="relative rounded-2xl overflow-hidden shadow-xl h-64"
                 >
-                  <img
+                  <Image
                     src={image}
                     alt={`${pressRelease.title} - Image ${idx + 2}`}
-                    className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
+                    fill
+                    className="object-cover hover:scale-105 transition-transform duration-500"
+                    unoptimized
+                    loading="lazy"
                   />
                 </motion.div>
               ))}

@@ -194,6 +194,7 @@ export default function SurveysPage() {
                           fill
                           className="object-cover group-hover:scale-110 transition-transform duration-500"
                           unoptimized
+                          loading="lazy"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                       </div>

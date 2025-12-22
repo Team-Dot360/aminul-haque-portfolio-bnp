@@ -3,6 +3,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaCalendarAlt, FaMapMarkerAlt, FaImages, FaTimes, FaAngleLeft, FaAngleRight, FaFilter } from 'react-icons/fa';
 import ImageLightbox from '../components/ImageLightbox';
+import Image from 'next/image';
 
 interface Album {
   id: number;
@@ -568,10 +569,13 @@ export default function GalleryClient() {
                         className="group relative cursor-pointer rounded-xl overflow-hidden aspect-square shadow-lg hover:shadow-2xl transition-all"
                       >
                         <div className={`absolute inset-0 opacity-0 group-hover:opacity-75 transition-all z-10 ${isVideo ? 'bg-black/50' : ''}`}></div>
-                        <img
+                        <Image
                           src={imageSrc}
                           alt={isVideo ? `${event.title} - ভিডিও ${mediaIdx + 1}` : `${event.title} - ছবি ${mediaIdx + 1}`}
-                          className="w-full h-full object-cover"
+                          fill
+                          className="object-cover"
+                          unoptimized
+                          loading="lazy"
                         />
                         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all z-20">
                           {isVideo ? (

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useState, useEffect, useMemo } from 'react';
 import ImageLightbox from '../components/ImageLightbox';
 import { FaCalendarAlt, FaMapMarkerAlt, FaImages, FaAngleLeft, FaAngleRight, FaFilter } from 'react-icons/fa';
+import Image from 'next/image';
 
 interface Album {
   id: number;
@@ -497,10 +498,13 @@ export default function KheladhulaClient() {
                       className="group relative cursor-pointer rounded-xl overflow-hidden aspect-square shadow-lg hover:shadow-2xl transition-all"
                     >
                       <div className={`absolute inset-0 opacity-0 group-hover:opacity-75 transition-all z-10`}></div>
-                      <img
+                      <Image
                         src={image}
                         alt={`${event.title} - ছবি ${imageIdx + 1}`}
-                        className="w-full h-full object-cover"
+                        fill
+                        className="object-cover"
+                        unoptimized
+                        loading="lazy"
                       />
                       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all z-20">
                         <FaImages className="text-4xl text-white" />

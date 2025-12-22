@@ -390,10 +390,13 @@ export default function Home() {
                                 className="group relative cursor-pointer rounded-xl overflow-hidden aspect-square shadow-lg hover:shadow-2xl transition-all"
                               >
                                 <div className={`absolute inset-0 bg-gradient-to-t ${color} opacity-0 group-hover:opacity-75 transition-all z-10`}></div>
-                                <img
+                                <Image
                                   src={image}
                                   alt={`${album.bang_name} - ছবি ${imageIdx + 1}`}
-                                  className="w-full h-full object-cover"
+                                  fill
+                                  className="object-cover"
+                                  unoptimized
+                                  loading="lazy"
                                 />
                                 
                                 {/* Overlay for 4th image with remaining count */}
@@ -484,7 +487,7 @@ export default function Home() {
                     alt="আমিনুল হক"
                     fill
                     className="object-cover"
-                    unoptimized
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                 </div>
