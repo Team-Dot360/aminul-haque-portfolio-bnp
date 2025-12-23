@@ -38,14 +38,14 @@ export default function ContactPage() {
               {
                 icon: FaPhone,
                 title: 'ফোন',
-                value: '+৮৮০ ১৭১২-৩৪৫৬৭৮',
+                value: '+৮৮০ ১৭১২-৩৪৫****',
                 subtext: 'সোম-শুক্র, ৯টা-৬টা',
                 color: 'from-cyan-500 to-blue-600',
               },
               {
                 icon: FaEnvelope,
                 title: 'ইমেইল',
-                value: 'info@aminulhaque.bd',
+                value: 'info@****.bd',
                 subtext: '২৪ ঘণ্টার মধ্যে উত্তর',
                 color: 'from-blue-500 to-purple-600',
               },
@@ -183,7 +183,7 @@ export default function ContactPage() {
       </section>
 
       {/* Chat Widget */}
-      <ChatWidget />
+      {/* <ChatWidget /> */}
     </main>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 import { motion } from 'framer-motion';
 import { FaFileAlt, FaFlag } from 'react-icons/fa';
+import { toBanglaNumber } from '@/lib/utils';
 
 export default function BNP19PointPage() {
   const points = [
@@ -158,7 +159,7 @@ export default function BNP19PointPage() {
                 <div className="relative bg-white rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all border border-slate-200 h-full flex flex-col">
                   <div className="flex flex-col items-center text-center mb-4">
                     <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center text-white font-black text-2xl shadow-lg mb-3">
-                      {idx + 1}
+                      {toBanglaNumber(idx + 1)}
                     </div>
                     <h3 className="text-lg font-black text-slate-900 leading-tight">
                       {point.title}

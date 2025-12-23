@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import EventCard from '../components/EventCard';
 import { FaCalendarAlt, FaFilter } from 'react-icons/fa';
+import { toBanglaNumber } from '@/lib/utils';
 
 // Convert Bengali numerals to English numerals
 function convertBengaliToEnglish(bengaliStr: string): string {
@@ -262,7 +263,7 @@ export default function EventsClient({ upcomingEvents: initialUpcomingEvents, pa
                   : 'bg-white text-slate-700 border-2 border-slate-200 hover:border-emerald-500 hover:text-emerald-600 shadow-lg'
               }`}
             >
-              আসন্ন ইভেন্ট ({upcomingEvents.length})
+              আসন্ন ইভেন্ট ({toBanglaNumber(upcomingEvents.length)})
             </button>
             <button
               onClick={() => setFilter('past')}
@@ -272,7 +273,7 @@ export default function EventsClient({ upcomingEvents: initialUpcomingEvents, pa
                   : 'bg-white text-slate-700 border-2 border-slate-200 hover:border-slate-500 hover:text-slate-600 shadow-lg'
               }`}
             >
-              অতীতের ইভেন্ট ({pastEvents.length})
+              অতীতের ইভেন্ট ({toBanglaNumber(pastEvents.length)})
             </button>
           </motion.div>
 
@@ -320,7 +321,7 @@ export default function EventsClient({ upcomingEvents: initialUpcomingEvents, pa
             {/* Filter Summary and Clear Button */}
             <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-200">
               <div className="text-sm text-slate-600 font-medium">
-                {filteredEvents.length} টি ইভেন্ট পাওয়া গেছে
+              {toBanglaNumber(filteredEvents.length)} টি ইভেন্ট পাওয়া গেছে
                 {dateFilter && ` (তারিখ: ${formatDateInputToBengali(dateFilter)})`}
                 {titleFilter && ` (শিরোনাম: ${titleFilter})`}
               </div>

@@ -19,14 +19,15 @@ import {
   FaQuoteLeft
 } from 'react-icons/fa';
 import Image from 'next/image';
+import { toBanglaNumber } from '@/lib/utils';
 
 interface Album {
   id: number;
   uuid: string;
-  bang_name: string;
-  bang_description: string;
+  name: string;
+  description: string | null;
   date: string;
-  location: string;
+  location: string | null;
   status: string;
   media: Array<{
     id: number;
@@ -44,14 +45,25 @@ const defaultColors = [
   'from-red-500 to-rose-600',
 ];
 
-// Format date to Bengali
+// Format date - handles both YYYY-MM-DD and already formatted Bangla dates
 const formatDate = (dateString: string): string => {
+  if (!dateString) return '';
+  
+  // Check if date is already in Bangla format (contains Bangla characters)
+  const banglaPattern = /[০-৯]/;
+  if (banglaPattern.test(dateString)) {
+    return dateString.trim(); // Already in Bangla, return as-is
+  }
+  
   try {
     const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+      return dateString; // Invalid date, return original
+    }
     const months = ['জানুয়ারি', 'ফেব্রুয়ারি', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর'];
-    const day = date.getDate();
+    const day = toBanglaNumber(date.getDate());
     const month = months[date.getMonth()];
-    const year = date.getFullYear();
+    const year = toBanglaNumber(date.getFullYear());
     return `${day} ${month} ${year}`;
   } catch (error) {
     return dateString;
@@ -340,7 +352,7 @@ export default function Home() {
                       {/* Event Header */}
                       <div className="mb-8">
                         <h3 className="text-3xl md:text-4xl font-black text-slate-900 mb-2">
-                          {album.bang_name}
+                          {album.name}
                         </h3>
                         <div className="flex flex-wrap items-center gap-4 mb-4">
                           <div className="flex items-center gap-2 text-slate-700">
@@ -361,12 +373,12 @@ export default function Home() {
                             <div className={`p-2 bg-gradient-to-r ${color} rounded-lg`}>
                               <FaImages className="text-white" />
                             </div>
-                            <span>{allImages.length} ফটো</span>
+                            <span>{toBanglaNumber(allImages.length)} ফটো</span>
                           </div>
                         </div>
-                        {album.bang_description && (
+                        {album.description && (
                           <p className="text-slate-600 text-lg leading-relaxed mt-4">
-                            {album.bang_description}
+                            {album.description}
                           </p>
                         )}
                       </div>
@@ -392,7 +404,7 @@ export default function Home() {
                                 <div className={`absolute inset-0 bg-gradient-to-t ${color} opacity-0 group-hover:opacity-75 transition-all z-10`}></div>
                                 <Image
                                   src={image}
-                                  alt={`${album.bang_name} - ছবি ${imageIdx + 1}`}
+                                  alt={`${album.name} - ছবি ${toBanglaNumber(imageIdx + 1)}`}
                                   fill
                                   className="object-cover"
                                   unoptimized
@@ -404,7 +416,7 @@ export default function Home() {
                                   <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center z-30 group-hover:bg-black/80 transition-all">
                                     <div className="text-white text-center">
                                       {/* <FaPlus className="text-6xl mx-auto mb-3 opacity-90" /> */}
-                                      <div className="text-4xl font-black mb-1">{remainingCount}</div>
+                                      <div className="text-4xl font-black mb-1">{toBanglaNumber(remainingCount)}</div>
                                       <div className="text-sm font-semibold opacity-90">আরও ছবি</div>
                                     </div>
                                   </div>

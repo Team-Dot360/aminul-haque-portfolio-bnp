@@ -12,6 +12,7 @@ import {
   FaCalendarAlt,
   FaCheckCircle
 } from 'react-icons/fa';
+import { toBanglaNumber } from '@/lib/utils';
 
 // Sample data for Bangladesh districts, upazilas, and wards
 const districts = [
@@ -36,7 +37,7 @@ const upazilasByDistrict: { [key: string]: string[] } = {
   mymensingh: ['ময়মনসিংহ সদর', 'গফরগাঁও', 'গৌরীপুর', 'ঈশ্বরগঞ্জ'],
 };
 
-const wards = Array.from({ length: 9 }, (_, i) => `ওয়ার্ড ${i + 1}`);
+const wards = Array.from({ length: 9 }, (_, i) => `ওয়ার্ড ${toBanglaNumber(i + 1)}`);
 
 const skills = [
   'কম্পিউটার/প্রযুক্তি',

@@ -12,6 +12,7 @@ import {
   FaPrint
 } from 'react-icons/fa';
 import Image from 'next/image';
+import { toBanglaNumber } from '@/lib/utils';
 
 interface Voter {
   id: number;
@@ -103,7 +104,7 @@ export default function VoterCenterPage() {
 
     const votersHtml = searchResults.map((voter, index) => `
       <div style="margin-bottom: 30px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; page-break-inside: avoid;">
-        ${searchResults.length > 1 ? `<h3 style="text-align: center; color: #1e40af; margin-bottom: 15px;">ভোটার #${index + 1}</h3>` : ''}
+        ${searchResults.length > 1 ? `<h3 style="text-align: center; color: #1e40af; margin-bottom: 15px;">ভোটার #${toBanglaNumber(index + 1)}</h3>` : ''}
         
         <h4 style="color: #1e293b; border-bottom: 2px solid #3b82f6; padding-bottom: 8px; margin-bottom: 15px;">ব্যক্তিগত তথ্য</h4>
         <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
@@ -540,7 +541,7 @@ export default function VoterCenterPage() {
                     <div className="bg-green-50 border-2 border-green-200 rounded-2xl p-6 text-center">
                       <div className="text-5xl mb-3">✅</div>
                       <h3 className="text-2xl font-bold text-green-800">
-                        {searchResults.length === 1 ? 'তথ্য পাওয়া গেছে!' : `${searchResults.length} জন ভোটারের তথ্য পাওয়া গেছে!`}
+                        {searchResults.length === 1 ? 'তথ্য পাওয়া গেছে!' : `${toBanglaNumber(searchResults.length)} জন ভোটারের তথ্য পাওয়া গেছে!`}
                       </h3>
                     </div>
 
@@ -549,7 +550,7 @@ export default function VoterCenterPage() {
                         {searchResults.length > 1 && (
                           <div className="text-center">
                             <span className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-bold text-sm">
-                              ভোটার #{index + 1}
+                              ভোটার #{toBanglaNumber(index + 1)}
                             </span>
                           </div>
                         )}

@@ -4,14 +4,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaCalendarAlt, FaMapMarkerAlt, FaImages, FaTimes, FaAngleLeft, FaAngleRight, FaFilter } from 'react-icons/fa';
 import ImageLightbox from '../components/ImageLightbox';
 import Image from 'next/image';
+import { toBanglaNumber } from '@/lib/utils';
 
 interface Album {
   id: number;
   uuid: string;
-  bang_name: string;
-  bang_description: string;
+  name: string;
+  description: string | null;
   date: string;
-  location: string;
+  location: string | null;
   status: string;
   media_count: number;
   media: Array<{
@@ -56,38 +57,67 @@ const defaultColors = [
   'from-pink-500 to-rose-600',
 ];
 
-// Format date from YYYY-MM-DD to Bengali format
+// Format date - handles both YYYY-MM-DD and already formatted Bangla dates
 const formatDate = (dateString: string): string => {
+  if (!dateString) return '';
+  
+  // Check if date is already in Bangla format (contains Bangla characters)
+  const banglaPattern = /[০-৯]/;
+  if (banglaPattern.test(dateString)) {
+    return dateString.trim(); // Already in Bangla, return as-is
+  }
+  
   try {
     const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+      return dateString; // Invalid date, return original
+    }
     const months = ['জানুয়ারি', 'ফেব্রুয়ারি', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর'];
-    const day = date.getDate();
+    const day = toBanglaNumber(date.getDate());
     const month = months[date.getMonth()];
-    const year = date.getFullYear();
+    const year = toBanglaNumber(date.getFullYear());
     return `${day} ${month} ${year}`;
   } catch (error) {
     return dateString;
   }
 };
 
+// Convert Bangla number string to English number
+const fromBanglaNumber = (str: string): number => {
+  const banglaDigits: { [key: string]: string } = {
+    '০': '0', '১': '1', '২': '2', '৩': '3', '৪': '4',
+    '৫': '5', '৬': '6', '৭': '7', '৮': '8', '৯': '9'
+  };
+  const englishStr = str.split('').map(char => banglaDigits[char] || char).join('');
+  return parseInt(englishStr);
+};
+
 // Parse Bengali formatted date back to Date object
 const parseBengaliDate = (bengaliDate: string, originalDate: string): Date => {
   try {
-    // Try to use original date string if available
-    if (originalDate) {
+    // Try to use original date string if available (if it's in YYYY-MM-DD format)
+    if (originalDate && /^\d{4}-\d{2}-\d{2}/.test(originalDate)) {
       return new Date(originalDate);
     }
-    // Fallback: parse Bengali date
+    
+    // Fallback: parse Bengali date (handles both full and short month names)
     const months: { [key: string]: number } = {
-      'জানুয়ারি': 0, 'ফেব্রুয়ারি': 1, 'মার্চ': 2, 'এপ্রিল': 3,
-      'মে': 4, 'জুন': 5, 'জুলাই': 6, 'আগস্ট': 7,
-      'সেপ্টেম্বর': 8, 'অক্টোবর': 9, 'নভেম্বর': 10, 'ডিসেম্বর': 11
+      'জানুয়ারি': 0, 'জানু': 0, 'ফেব্রুয়ারি': 1, 'ফেব': 1, 'মার্চ': 2,
+      'এপ্রিল': 3, 'এপ্রি': 3, 'মে': 4, 'জুন': 5, 'জুলাই': 6, 'জুল': 6,
+      'আগস্ট': 7, 'আগ': 7, 'সেপ্টেম্বর': 8, 'সেপ্টে': 8, 'সেপ': 8,
+      'অক্টোবর': 9, 'অক্টো': 9, 'নভেম্বর': 10, 'নভে': 10, 'ডিসেম্বর': 11, 'ডিসে': 11
     };
-    const parts = bengaliDate.split(' ');
+    
+    // Clean the date string and split
+    const cleanDate = bengaliDate.replace(/,/g, '').trim();
+    const parts = cleanDate.split(/\s+/);
+    
     if (parts.length >= 3) {
-      const day = parseInt(parts[0]);
-      const month = months[parts[1]];
-      const year = parseInt(parts[2]);
+      const day = fromBanglaNumber(parts[0]);
+      const monthKey = parts[1];
+      const month = months[monthKey];
+      const year = fromBanglaNumber(parts[2]);
+      
       if (!isNaN(day) && month !== undefined && !isNaN(year)) {
         return new Date(year, month, day);
       }
@@ -103,9 +133,9 @@ const formatDateInputToBengali = (dateString: string): string => {
   try {
     const date = new Date(dateString);
     const months = ['জানুয়ারি', 'ফেব্রুয়ারি', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর'];
-    const day = date.getDate();
+    const day = toBanglaNumber(date.getDate());
     const month = months[date.getMonth()];
-    const year = date.getFullYear();
+    const year = toBanglaNumber(date.getFullYear());
     return `${day} ${month} ${year}`;
   } catch (error) {
     return dateString;
@@ -319,8 +349,8 @@ export default function GalleryClient() {
               date: formatDate(album.date),
               originalDate: album.date, // Store original date for filtering
               location: album.location || '',
-              title: album.bang_name || '',
-              description: album.bang_description || '',
+              title: album.name || '',
+              description: album.description || '',
               images: images,
               media: mediaItems,
               color: defaultColors[index % defaultColors.length],
@@ -485,7 +515,7 @@ export default function GalleryClient() {
               {/* Filter Summary and Clear Button */}
               <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-200">
                 <div className="text-sm text-slate-600 font-medium">
-                  {filteredAlbums.length} টি অ্যালবাম পাওয়া গেছে
+                  {toBanglaNumber(filteredAlbums.length)} টি অ্যালবাম পাওয়া গেছে
                   {selectedDate && ` (তারিখ: ${formatDateInputToBengali(selectedDate)})`}
                   {titleFilter && ` (শিরোনাম: ${titleFilter})`}
                   {dataFilter && ` (বিবরণ: ${dataFilter})`}
@@ -539,7 +569,7 @@ export default function GalleryClient() {
                       <div className={`p-2 bg-gradient-to-r ${event.color} rounded-lg`}>
                         <FaImages className="text-white" />
                       </div>
-                      <span>{event.media.length} মিডিয়া</span>
+                      <span>{toBanglaNumber(event.media.length)} মিডিয়া</span>
                     </div>
                   </div>
                   <p className="text-slate-600 text-lg leading-relaxed mt-4">
@@ -571,7 +601,7 @@ export default function GalleryClient() {
                         <div className={`absolute inset-0 opacity-0 group-hover:opacity-75 transition-all z-10 ${isVideo ? 'bg-black/50' : ''}`}></div>
                         <Image
                           src={imageSrc}
-                          alt={isVideo ? `${event.title} - ভিডিও ${mediaIdx + 1}` : `${event.title} - ছবি ${mediaIdx + 1}`}
+                          alt={isVideo ? `${event.title} - ভিডিও ${toBanglaNumber(mediaIdx + 1)}` : `${event.title} - ছবি ${toBanglaNumber(mediaIdx + 1)}`}
                           fill
                           className="object-cover"
                           unoptimized
@@ -665,7 +695,7 @@ export default function GalleryClient() {
                         : 'bg-white border border-slate-300 hover:bg-slate-50 text-slate-700'
                     }`}
                   >
-                    {page}
+                    {toBanglaNumber(page)}
                   </button>
                 );
               })}

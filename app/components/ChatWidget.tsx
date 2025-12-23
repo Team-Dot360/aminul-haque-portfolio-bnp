@@ -4,8 +4,8 @@ import { FaWhatsapp, FaFacebookMessenger } from 'react-icons/fa';
 
 export default function ChatWidget() {
   // WhatsApp number in international format (remove leading 0, add country code 880 for Bangladesh)
-  const whatsappNumber = '8801684918934'; // Format: country code + number without leading zero
-  const messengerUsername = 'saiful.meraz1'; // Replace with actual username
+  const whatsappNumber = ''; // Format: country code + number without leading zero
+  const messengerUsername = ''; // Replace with actual username
 
   const handleWhatsAppClick = () => {
     // WhatsApp requires international format: country code + number (no +, no spaces, no dashes)
