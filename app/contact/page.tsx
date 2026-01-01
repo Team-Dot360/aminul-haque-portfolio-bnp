@@ -38,7 +38,7 @@ export default function ContactPage() {
               {
                 icon: FaPhone,
                 title: 'ফোন',
-                value: '+৮৮০ ১৭১২-৩৪৫****',
+                value: '+৮৮০ ১৫৫২-১৬১৬১৬',
                 subtext: 'সোম-শুক্র, ৯টা-৬টা',
                 color: 'from-cyan-500 to-blue-600',
               },

@@ -64,7 +64,7 @@ export default function Navbar() {
               <div className="text-lg xl:text-xl font-black bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent">
                 আমিনুল হক
               </div>
-              <div className="text-[10px] xl:text-xs font-semibold text-slate-600 hidden sm:block">জনগণের সেবায় নিবেদিত</div>
+              <div className="text-[10px] xl:text-xs font-semibold text-slate-600 hidden sm:block">আমি আপনাদেরই একজন</div>
             </div>
           </Link>
 

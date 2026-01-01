@@ -123,7 +123,7 @@ export default function SiteFooter() {
                   <FaPhone className="text-white" />
                 </div>
                 <div>
-                  <p className="text-slate-700 font-semibold">+৮৮০ ১৭১২-৩৪৫৬৭৮</p>
+                  <p className="text-slate-700 font-semibold">+৮৮০ ১৫৫২-১৬১৬১৬</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -142,7 +142,7 @@ export default function SiteFooter() {
         <div className="pt-8 border-t border-slate-300">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-slate-600 font-semibold text-center md:text-left">
-              © {toBanglaNumber(new Date().getFullYear())} আর.কে.ও. শাহেদ। সর্বস্বত্ব সংরক্ষিত।
+              © {toBanglaNumber(new Date().getFullYear())} <Link href="https://www.facebook.com/rkoshahedhossain" target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:text-emerald-700 hover:underline transition-colors">আর.কে.ও. শাহেদ</Link>। সর্বস্বত্ব সংরক্ষিত।
             </p>
           </div>
         </div>
