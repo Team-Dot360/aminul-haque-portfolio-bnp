@@ -131,7 +131,7 @@ export default function SiteFooter() {
                   <FaEnvelope className="text-white" />
                 </div>
                 <div>
-                  <p className="text-slate-700 font-semibold">info@aminulhaque.bd</p>
+                  <p className="text-slate-700 font-semibold">captainaminulhoque<br /> dhaka16@gmail.com</p>
                 </div>
               </div>
             </div>

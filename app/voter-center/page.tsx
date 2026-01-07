@@ -470,7 +470,7 @@ export default function VoterCenterPage() {
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-3xl blur-2xl opacity-20"></div>
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
                 <Image
-                  src="/aminul Haque/DSC01026.jpg"
+                  src="/aminul Haque/voter-center.jpeg"
                   alt="আমিনুল হক"
                   width={600}
                   height={800}

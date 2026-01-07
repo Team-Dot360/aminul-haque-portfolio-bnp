@@ -495,7 +495,7 @@ export default function Home() {
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
                 <div className="relative aspect-[3/4]">
                   <Image
-                    src="/aminul Haque/DSC01043.jpg"
+                    src="/aminul Haque/quotes.jpeg"
                     alt="আমিনুল হক"
                     fill
                     className="object-cover"
