@@ -1,6 +1,7 @@
 "use client";
 import { motion } from 'framer-motion';
-import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
+import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaFacebook, FaTwitter, FaInstagram, FaTiktok, FaYoutube } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 import ContactForm from '../components/ContactForm';
 import ChatWidget from '../components/ChatWidget';
 
@@ -45,7 +46,7 @@ export default function ContactPage() {
               {
                 icon: FaEnvelope,
                 title: 'ইমেইল',
-                value: 'info@****.bd',
+                value: <>captainaminulhoque<br />dhaka16@gmail.com</>,
                 subtext: '২৪ ঘণ্টার মধ্যে উত্তর',
                 color: 'from-blue-500 to-purple-600',
               },
@@ -63,11 +64,11 @@ export default function ContactPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: idx * 0.1 }}
-                className="group relative"
+                className="group relative h-full"
               >
                 <div className={`absolute inset-0 bg-gradient-to-r ${info.color} rounded-2xl blur opacity-25 group-hover:opacity-50 transition-all`}></div>
-                <div className="relative bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all text-center border border-slate-200">
-                  <div className={`inline-flex p-4 bg-gradient-to-br ${info.color} rounded-xl mb-4 shadow-lg`}>
+                <div className="relative bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all text-center border border-slate-200 h-full flex flex-col justify-center">
+                  <div className={`inline-flex p-4 bg-gradient-to-br ${info.color} rounded-xl mb-4 shadow-lg mx-auto`}>
                     <info.icon className="text-3xl text-white" />
                   </div>
                   <h3 className="text-xl font-bold text-slate-900 mb-2">{info.title}</h3>
@@ -141,16 +142,21 @@ export default function ContactPage() {
                   <h3 className="text-2xl font-black text-slate-900 mb-6">সোশ্যাল মিডিয়া</h3>
                   <div className="flex gap-4">
                     {[
-                      { icon: FaFacebook, color: 'from-blue-600 to-blue-700' },
-                      { icon: FaTwitter, color: 'from-sky-500 to-blue-600' },
-                      { icon: FaInstagram, color: 'from-pink-500 to-purple-600' },
+                      { icon: FaFacebook, color: 'from-blue-600 to-blue-700', link: 'https://www.facebook.com/AminulBd07' },
+                      { icon: FaInstagram, color: 'from-pink-500 to-purple-600', link: 'https://www.instagram.com/captain_aminul_haque' },
+                      { icon: FaXTwitter, color: 'from-gray-800 to-black', link: 'https://x.com/Aminulhaque1980' },
+                      { icon: FaTiktok, color: 'from-gray-900 to-black', link: 'https://www.tiktok.com/@aminulhoqueofficial' },
+                      { icon: FaYoutube, color: 'from-red-600 to-red-700', link: 'https://youtube.com/@captainaminulhaquedhaka16' },
                     ].map((social, idx) => (
-                      <button
+                      <a
                         key={idx}
+                        href={social.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className={`p-4 bg-gradient-to-br ${social.color} rounded-xl text-white shadow-lg hover:shadow-2xl transition-all transform hover:scale-110`}
                       >
                         <social.icon className="text-2xl" />
-                      </button>
+                      </a>
                     ))}
                   </div>
                 </div>
@@ -183,7 +189,7 @@ export default function ContactPage() {
       </section>
 
       {/* Chat Widget */}
-      {/* <ChatWidget /> */}
+      <ChatWidget />
     </main>
   );
 }

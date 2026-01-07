@@ -13,15 +13,18 @@ export default function Hero() {
           transition={{ duration: 0.6 }}
           className="relative z-10 space-y-6 order-2 md:order-1"
         >
-          <span className="inline-block px-6 py-2 bg-emerald-100 text-emerald-700 rounded-full font-bold text-sm uppercase tracking-wider">
+          {/* <span className="inline-block px-6 py-2 bg-emerald-100 text-emerald-700 rounded-full font-bold text-sm uppercase tracking-wider">
             জনগণের সেবায়
-          </span>
-          <h1 className="text-5xl md:text-7xl font-black leading-tight text-slate-900">
-          সবার আগে 
-            {/* <br /> */}
-            <span className="block mt-2 bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent">
-            বাংলাদেশ
-            </span>
+          </span> */}
+          <h1>
+            <Image
+              src="/aminul Haque/sobarAgeBangladesh.jpeg"
+              alt="সবার আগে বাংলাদেশ"
+              width={400}
+              height={200}
+              className="w-full max-w-md h-auto"
+              priority
+            />
           </h1>
           <p className="text-slate-600 text-lg max-w-prose leading-relaxed">
           আপনার জীবনের সমস্যার সমাধানই আমাদের রাজনীতি,
@@ -52,13 +55,18 @@ export default function Hero() {
           <div className="absolute inset-0 bg-emerald-500 rounded-3xl blur-2xl opacity-20"></div>
           <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white h-[500px] md:h-[600px]">
             <Image
-              src="/aminul Haque/hero.jpg"
+              src="/aminul Haque/hero.jpeg"
               alt="আমিনুল হক"
               fill
               className="object-cover"
               priority
             />
           </div>
+          <div className="absolute bottom-[-60px] left-0 right-0 p-4">
+              <p className="text-black text-center font-semibold text-xl">
+                আমিনুল হক ~ আমি আপনাদেরই একজন।
+              </p>
+            </div>
         </motion.div>
       </div>
     </section>

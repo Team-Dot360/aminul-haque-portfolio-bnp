@@ -86,7 +86,7 @@ export default function AboutPage() {
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-green-500 rounded-3xl blur-2xl opacity-20"></div>
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-slate-100">
                 <Image
-                  src="/aminul Haque/DSC01131.jpg"
+                  src="/aminul Haque/about.jpeg"
                   alt="আমিনুল হক"
                   width={600}
                   height={800}
