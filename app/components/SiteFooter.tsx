@@ -1,13 +1,14 @@
 import Link from 'next/link';
-import { 
-  FaFacebook, 
-  FaTwitter, 
-  FaInstagram, 
-  FaYoutube, 
-  FaEnvelope, 
-  FaPhone, 
-  FaMapMarkerAlt 
+import {
+  FaFacebook,
+  FaInstagram,
+  FaYoutube,
+  FaEnvelope,
+  FaPhone,
+  FaMapMarkerAlt,
+  FaTiktok
 } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 import { toBanglaNumber } from '@/lib/utils';
 
 export default function SiteFooter() {
@@ -47,16 +48,19 @@ export default function SiteFooter() {
             <p className="text-slate-700 leading-relaxed mb-6">
               শিক্ষা, কৃষি, শিল্প ও সংস্কৃতিতে টেকসই উন্নয়নের মাধ্যমে একটি সমৃদ্ধ বাংলাদেশ গড়ার প্রতিশ্রুতি।
             </p>
-            <div className="flex gap-3">
+            <div className="flex gap-3 flex-wrap">
               {[
-                { icon: FaFacebook, href: '#', color: 'from-blue-600 to-blue-700' },
-                { icon: FaTwitter, href: '#', color: 'from-sky-500 to-blue-600' },
-                { icon: FaInstagram, href: '#', color: 'from-pink-500 to-purple-600' },
-                { icon: FaYoutube, href: '#', color: 'from-red-600 to-red-700' },
+                { icon: FaFacebook, color: 'from-blue-600 to-blue-700', link: 'https://www.facebook.com/AminulBd07' },
+                { icon: FaInstagram, color: 'from-pink-500 to-purple-600', link: 'https://www.instagram.com/captain_aminul_haque' },
+                { icon: FaXTwitter, color: 'from-gray-800 to-black', link: 'https://x.com/Aminulhaque1980' },
+                { icon: FaTiktok, color: 'from-gray-900 to-black', link: 'https://www.tiktok.com/@aminulhoqueofficial' },
+                { icon: FaYoutube, color: 'from-red-600 to-red-700', link: 'https://youtube.com/@captainaminulhaquedhaka16' },
               ].map((social, idx) => (
                 <a
                   key={idx}
-                  href={social.href}
+                  href={social.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`p-3 bg-gradient-to-br ${social.color} text-white rounded-xl hover:shadow-xl transition-all transform hover:scale-110`}
                   aria-label="সোশ্যাল মিডিয়া"
                 >
@@ -88,7 +92,7 @@ export default function SiteFooter() {
           {/* Programs */}
           <div>
             <h3 className="text-xl font-black text-slate-900 mb-6 pb-2 border-b-2 border-blue-500">
-            সেবা
+              সেবা
             </h3>
             <ul className="space-y-3">
               {services.map((service) => (
@@ -115,7 +119,7 @@ export default function SiteFooter() {
                   <FaMapMarkerAlt className="text-white" />
                 </div>
                 <div>
-                  <p className="text-slate-700 font-semibold">ঢাকা, বাংলাদেশ</p>
+                  <p className="text-slate-700 font-semibold">ডি/১৮৬, রোড- ডব্লিউ ৩, ইস্টার্ন হাউজিং ২য় পর্ব, পল্লবী, ঢাকা-১২১৬</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">

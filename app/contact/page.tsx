@@ -53,8 +53,8 @@ export default function ContactPage() {
               {
                 icon: FaMapMarkerAlt,
                 title: 'অফিস',
-                value: 'ঢাকা, বাংলাদেশ',
-                subtext: 'অ্যাপয়েন্টমেন্ট দ্বারা',
+                value: 'ডি/১৮৬, রোড- ডব্লিউ ৩, ইস্টার্ন হাউজিং ২য় পর্ব, পল্লবী, ঢাকা-১২১৬',
+                // subtext: 'অ্যাপয়েন্টমেন্ট দ্বারা',
                 color: 'from-purple-500 to-pink-600',
               },
             ].map((info, idx) => (
@@ -140,7 +140,7 @@ export default function ContactPage() {
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl blur opacity-20"></div>
                 <div className="relative bg-white rounded-2xl p-8 shadow-xl border border-slate-200">
                   <h3 className="text-2xl font-black text-slate-900 mb-6">সোশ্যাল মিডিয়া</h3>
-                  <div className="flex gap-4">
+                  <div className="flex gap-4 flex-wrap">
                     {[
                       { icon: FaFacebook, color: 'from-blue-600 to-blue-700', link: 'https://www.facebook.com/AminulBd07' },
                       { icon: FaInstagram, color: 'from-pink-500 to-purple-600', link: 'https://www.instagram.com/captain_aminul_haque' },

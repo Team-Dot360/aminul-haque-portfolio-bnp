@@ -50,10 +50,10 @@ export default function Hero() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="relative order-1 md:order-2"
+          className="relative order-1 md:order-2 mb-12 md:mb-0"
         >
           <div className="absolute inset-0 bg-emerald-500 rounded-3xl blur-2xl opacity-20"></div>
-          <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white h-[500px] md:h-[600px]">
+          <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white h-[400px] sm:h-[500px] md:h-[600px]">
             <Image
               src="/aminul Haque/hero.jpeg"
               alt="আমিনুল হক"
@@ -62,11 +62,11 @@ export default function Hero() {
               priority
             />
           </div>
-          <div className="absolute bottom-[-60px] left-0 right-0 p-4">
-              <p className="text-black text-center font-semibold text-xl">
-                আমিনুল হক ~ আমি আপনাদেরই একজন।
-              </p>
-            </div>
+          <div className="mt-4 md:absolute md:bottom-[-50px] md:left-0 md:right-0 p-2 md:p-4">
+            <p className="text-black text-center font-semibold text-lg md:text-xl">
+              আমিনুল হক ~ আমি আপনাদেরই একজন।
+            </p>
+          </div>
         </motion.div>
       </div>
     </section>
