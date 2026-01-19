@@ -4,40 +4,42 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaBars, FaTimes, FaChevronDown } from 'react-icons/fa';
+import { useTranslation } from '../i18n/I18nProvider';
 
+// Nav items with translation keys
 const navItems = [
-  { href: '/', label: 'হোম' },
-  { href: '/about', label: 'জীবনী' },
-  { href: '/aminul-manifesto', label: 'ইশতেহার' },
-  { href: '/programs', label: 'কর্মপরিকল্পনা' },
+  { href: '/', labelKey: 'nav.home' },
+  { href: '/about', labelKey: 'nav.about' },
+  { href: '/aminul-manifesto', labelKey: 'nav.manifesto' },
+  { href: '/programs', labelKey: 'nav.programs' },
   { 
-    label: 'পলিসি',
+    labelKey: 'nav.policy',
     hasDropdown: true,
     dropdownItems: [
-      { href: '/manifesto', label: 'ক্রীড়াউন্নয়ন' },
-      { href: '/bnp-31-point', label: 'বিএনপির ৩১ দফা' },
-      { href: '/bnp-19-point', label: 'বিএনপির ১৯ দফা' },
+      { href: '/manifesto', labelKey: 'nav.sportsdev' },
+      { href: '/bnp-31-point', labelKey: 'nav.bnp31' },
+      { href: '/bnp-19-point', labelKey: 'nav.bnp19' },
     ]
   },
   { 
-    label: 'তথ্য ও মিডিয়া',
+    labelKey: 'nav.media',
     hasDropdown: true,
     dropdownItems: [
-      { href: '/gallery', label: 'গ্যালারি' },
-      { href: '/kheladhula', label: 'খেলাধুলা' },
-      { href: '/events', label: 'ইভেন্ট' },
-      { href: '/press-release', label: 'প্রেস রিলিজ' },
-      { href: '/surveys', label: 'জরিপ' },
+      { href: '/gallery', labelKey: 'nav.gallery' },
+      { href: '/kheladhula', labelKey: 'nav.sports' },
+      { href: '/events', labelKey: 'nav.events' },
+      { href: '/press-release', labelKey: 'nav.pressRelease' },
+      { href: '/surveys', labelKey: 'nav.surveys' },
     ]
   },
   { 
-    label: 'সেবা',
+    labelKey: 'nav.service',
     hasDropdown: true,
     dropdownItems: [
-      { href: '/voter-center', label: 'ভোট কেন্দ্র' },
-      { href: '/volunteer', label: 'স্বেচ্ছাসেবক' },
-      { href: '/complaints', label: 'অভিযোগ' },
-      { href: '/comments', label: 'মন্তব্য' },
+      { href: '/voter-center', labelKey: 'nav.voterCenter' },
+      { href: '/volunteer', labelKey: 'nav.volunteer' },
+      { href: '/complaints', labelKey: 'nav.complaints' },
+      { href: '/comments', labelKey: 'nav.comments' },
     ]
   },
 ];
@@ -46,33 +48,15 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(null);
-  const [language, setLanguage] = useState<'bd' | 'en'>('bd');
-  const [isChangingLanguage, setIsChangingLanguage] = useState(false);
   const pathname = usePathname();
+  
+  // Use i18n context
+  const { language, setLanguage, t, isChangingLanguage } = useTranslation();
 
-  // Toggle language and call API
-  const toggleLanguage = async () => {
+  // Toggle language handler
+  const toggleLanguage = () => {
     const newLanguage = language === 'bd' ? 'en' : 'bd';
-    setIsChangingLanguage(true);
-    
-    try {
-      const response = await fetch('https://admin.aminul-haque.com/api/v1/settings/change-language', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ language: newLanguage }),
-      });
-
-      if (response.ok) {
-        setLanguage(newLanguage);
-        window.location.reload();
-      }
-    } catch (error) {
-      console.error('Failed to change language:', error);
-    } finally {
-      setIsChangingLanguage(false);
-    }
+    setLanguage(newLanguage);
   };
 
   return (
@@ -83,15 +67,14 @@ export default function Navbar() {
           <Link href="/" className="flex items-center space-x-2 xl:space-x-3 group flex-shrink-0">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-green-600 rounded-xl blur opacity-50 group-hover:opacity-75 transition-all"></div>
-              {/* <div className="relative w-12 h-12 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center">
-                <span className="text-white text-2xl font-black">আহ</span>
-              </div> */}
             </div>
             <div>
               <div className="text-lg xl:text-xl font-black bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent">
-                আমিনুল হক
+                {t('hero.title')}
               </div>
-              <div className="text-[10px] xl:text-xs font-semibold text-slate-600 hidden sm:block">আমি আপনাদেরই একজন</div>
+              <div className="text-[10px] xl:text-xs font-semibold text-slate-600 hidden sm:block">
+                {t('hero.subtitle')}
+              </div>
             </div>
           </Link>
 
@@ -100,11 +83,12 @@ export default function Navbar() {
             {navItems.map((item) => {
               if (item.hasDropdown && item.dropdownItems) {
                 const isDropdownActive = item.dropdownItems.some(dropItem => pathname === dropItem.href);
+                const translatedLabel = t(item.labelKey);
                 return (
                   <div
-                    key={item.label}
+                    key={item.labelKey}
                     className="relative"
-                    onMouseEnter={() => setOpenDropdown(item.label)}
+                    onMouseEnter={() => setOpenDropdown(item.labelKey)}
                     onMouseLeave={() => setOpenDropdown(null)}
                   >
                     <button
@@ -122,12 +106,12 @@ export default function Navbar() {
                           transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                         />
                       )}
-                      <span className="relative z-10 whitespace-nowrap">{item.label}</span>
-                      <FaChevronDown className={`relative z-10 text-xs transition-transform ${openDropdown === item.label ? 'rotate-180' : ''}`} />
+                      <span className="relative z-10 whitespace-nowrap">{translatedLabel}</span>
+                      <FaChevronDown className={`relative z-10 text-xs transition-transform ${openDropdown === item.labelKey ? 'rotate-180' : ''}`} />
                     </button>
                     
                     <AnimatePresence>
-                      {openDropdown === item.label && (
+                      {openDropdown === item.labelKey && (
                         <motion.div
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
@@ -147,7 +131,7 @@ export default function Navbar() {
                                     : 'text-slate-700 hover:bg-emerald-50 hover:text-emerald-600'
                                 }`}
                               >
-                                {dropItem.label}
+                                {t(dropItem.labelKey)}
                               </Link>
                             );
                           })}
@@ -177,7 +161,7 @@ export default function Navbar() {
                       transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                     />
                   )}
-                  <span className="relative z-10">{item.label}</span>
+                  <span className="relative z-10">{t(item.labelKey)}</span>
                 </Link>
               );
             })}
@@ -218,7 +202,7 @@ export default function Navbar() {
               href="/contact"
               className="px-4 xl:px-6 py-2 xl:py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold text-xs xl:text-sm rounded-xl shadow-lg hover:shadow-xl hover:from-emerald-600 hover:to-green-700 transition-all transform hover:scale-105 whitespace-nowrap"
             >
-              যোগাযোগ
+              {t('nav.contact')}
             </Link>
           </div>
 
@@ -287,14 +271,15 @@ export default function Navbar() {
               <div className="py-4 space-y-2">
                 {navItems.map((item) => {
                   if (item.hasDropdown && item.dropdownItems) {
-                    const isMobileDropdownOpen = openMobileDropdown === item.label;
+                    const isMobileDropdownOpen = openMobileDropdown === item.labelKey;
+                    const translatedLabel = t(item.labelKey);
                     return (
-                      <div key={item.label} className="space-y-1">
+                      <div key={item.labelKey} className="space-y-1">
                         <button
-                          onClick={() => setOpenMobileDropdown(isMobileDropdownOpen ? null : item.label)}
+                          onClick={() => setOpenMobileDropdown(isMobileDropdownOpen ? null : item.labelKey)}
                           className="w-full flex items-center justify-between px-4 py-2 font-bold text-sm text-emerald-700 bg-emerald-50 rounded-lg hover:bg-emerald-100 transition-all"
                         >
-                          <span>{item.label}</span>
+                          <span>{translatedLabel}</span>
                           <FaChevronDown className={`text-xs transition-transform ${isMobileDropdownOpen ? 'rotate-180' : ''}`} />
                         </button>
                         <AnimatePresence>
@@ -323,7 +308,7 @@ export default function Navbar() {
                                           : 'bg-slate-50 text-slate-700 hover:bg-slate-100'
                                       }`}
                                     >
-                                      {dropItem.label}
+                                      {t(dropItem.labelKey)}
                                     </Link>
                                   );
                                 })}
@@ -350,7 +335,7 @@ export default function Navbar() {
                           : 'bg-slate-50 text-slate-700 hover:bg-slate-100'
                       }`}
                     >
-                      {item.label}
+                      {t(item.labelKey)}
                     </Link>
                   );
                 })}
@@ -362,7 +347,7 @@ export default function Navbar() {
                   }}
                   className="block px-4 py-3 bg-gradient-to-r from-blue-500 to-cyan-600 text-white font-bold rounded-xl text-center shadow-lg"
                 >
-                  যোগাযোগ করুন
+                  {t('nav.contactUs')}
                 </Link>
               </div>
             </motion.div>
