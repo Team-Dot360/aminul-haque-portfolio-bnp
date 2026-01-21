@@ -24,7 +24,7 @@ export default function ContactForm() {
     setError(null);
 
     try {
-      const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://admin.arsonconsultancy.org/api/v1';
+      const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://admin.aminul-haque.com/api/v1';
       const response = await fetch(`${apiBaseUrl}/contacts`, {
         method: 'POST',
         headers: {
